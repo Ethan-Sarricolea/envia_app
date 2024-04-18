@@ -1,0 +1,22 @@
+
+------------------------------------
+            ENVIA
+------------------------------------
+
+Punto de venta: ENVIA
+Fecha y hora: 17/04/2024, 17:37:09
+Lugar: ENVIA, EL PALMAR AV. LAS
+        PALMAS 101 LOC X
+    COATZACOALCOS, VERACRUZ
+Compañia: Estafeta
+Tipo de envio: Terrestre
+Tiempo de espera: 1 dia
+Precio: $500
+Peso: 1kg
+Asesor: paquito
+Número de guia: 12345
+
+
+------------------------------------
+    ¡Gracias por tu compra!
+------------------------------------
