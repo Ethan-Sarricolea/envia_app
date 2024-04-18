@@ -15,7 +15,8 @@ class REOPC:
     def __init__(self) -> None:
         # Especificar la ruta al ejecutable de Tesseract
         pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-        self.priceList = ["c","C","r","e","a","r","n","v","i","o","w","x",">","m","\n"]
+        self.priceList = ["c","C","r","e","a","r","n","v","i","o","w",
+                          "x",">","m","\n","t","s","p","M","G","?"]
         self.daysList = ["@","}",")"]
         self.dias5 = ["S"]
         self.dias5mas = ["Sr"]
@@ -44,6 +45,12 @@ class REOPC:
         newtext = re.sub(r',{3}(.+?),{3}', r',\1,', newtext)
         newtext = newtext.replace("$","")
         final = newtext[1:].split(",")
+        i=0
+        for data in final:
+            if data=="" or data==None:
+                final.pop(i)
+            i+=1
+        final = list(filter(None,final))
         return final
     
     def correcion_tiempo(self,lista):
@@ -61,6 +68,7 @@ class REOPC:
     def recibe_tiempo(self,imagen):
         # convierte la imagen, elimina caracteres extra y salto de linea y elimina datos vacios
         newtext = self.convert(imagen)
+        print(newtext)
         for letter in self.daysList:
             newtext = newtext.replace(letter,"")
         newtext = newtext.split("\n")
@@ -69,13 +77,30 @@ class REOPC:
             if dato==" " or dato=="":
                 newtext.pop(i)
             i+=1
+        print(newtext)
         return self.correcion_tiempo(newtext)
 
-    
-#"""   
-lala = REOPC()
-precios = lala.recibe_precio("src\screenshots\screenshot5.jpg")
-print(precios)
+    def recibe_tipo(self,imagen):
+        # Falta correccion por alguna razon no lee el texto
+        newtext = self.convert(imagen)
+        newtext = newtext.replace("\n",",")
+        newtext = re.sub(r",{2}([a-zA-Z0-9\s]+),{2}",r",\1,",newtext)
+        newtext = newtext.split(",")
+        newtext.pop(0)
+        newtext = list(filter(None,newtext))
+        return newtext
+"""      
+    def trad_manuable(self):
+        esta se llamara despues de sacar las capturas y traducira todo
+#
 tiempos = lala.recibe_tiempo("src\screenshots\screenshot3.jpg")
 print(tiempos)
+precios = lala.recibe_precio("src\screenshots\screenshot5.jpg")
+print(precios)
+
+
+lala = REOPC()
+
+tipos = lala.recibe_tipo("src\screenshots\screenshot2.jpg")
+print(tipos)
 #"""

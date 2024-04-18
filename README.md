@@ -15,6 +15,8 @@ identificar el funcionamiento de texto de tesseract
 
 ### pendiente
 
+AHORA SOLO FUNCIONA EL PRECIO
+
 - tipos de envio en ocr
 - compañias en ocr (Considera usar otro metodo de comparación para asegurar que se detecten todas las compañias)
     idea: guardar los logos de compañias y detectar cuando aparecen en la ss

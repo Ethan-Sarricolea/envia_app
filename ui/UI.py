@@ -80,6 +80,7 @@ class App:
         self.SMALLSIZE = "200x100"
 
         self.organizador = organizier.CSVRegister()
+        self.camara = capturer.Capturer()
 
         self.win = Tk()
         self.win.geometry(self.LARGESIZE)
@@ -91,13 +92,16 @@ class App:
         #self.win.iconbitmap("")
 
         #Menu inicial
-        self.title = Label(self.win,text="Aplicación",font=("Arial",20))
+        self.logoEnvia = Image.open("src\images\logo.jpg")
+        self.logoEnvia = self.logoEnvia.resize((500,175))
+        self.logoEnvia = ImageTk.PhotoImage(self.logoEnvia)
         self.titleFrame = Frame(self.win,bg="gray30",width=self.ancho,height=150)
         self.lineFrame = Frame(self.win,bg="gold",width=self.ancho,height=30)
         self.goButtom = Button(self.win,text="Comenzar",bg="yellow",width=self.buttonsize,command=self.capture_mode)
         self.dayButtom =  Button(self.win,text="Venta diaria",bg="yellow",width=self.buttonsize,command=self.sales_list)
         self.optionsButtom = Button(self.win,text="Configuración",bg="gray30",width=self.buttonsize,command=None)
         self.exitButton = Button(self.win,bg="brown2",text="Salir",width=self.buttonsize,command=self.win.destroy)
+        self.title = Label(self.win,image=self.logoEnvia,bg="gold")
 
         # Modo captura
         self.sissors = Image.open("src\images\icono_tijeras.png")
@@ -136,12 +140,11 @@ class App:
         self.win.geometry(self.LARGESIZE)
         self.titleFrame.place(x=0,y=0)
         self.lineFrame.place(x=0,y=150)
-        self.title.place(x=500,y=10)
-        self.goButtom.place(x=530,y=260)
-        self.dayButtom.place(x=530,y=310)
-        self.optionsButtom.place(x=530,y=360)
-        self.exitButton.place(x=530,y=410)
-
+        self.goButtom.place(x=600,y=260,anchor=CENTER)
+        self.dayButtom.place(x=600,y=310,anchor=CENTER)
+        self.optionsButtom.place(x=600,y=360,anchor=CENTER)
+        self.exitButton.place(x=600,y=410,anchor=CENTER)
+        self.title.place(x=350,y=0)
 
     def list_menu(self):
         self.hide_all()
@@ -166,7 +169,6 @@ class App:
         self.combobox.bind("<<ComboboxSelected>>", self.selectDataCombobox)
         self.tabla.mostrar()
 
-
     def capture_mode(self):
         self.hide_all()
         self.win.geometry(self.SMALLSIZE)
@@ -174,7 +176,14 @@ class App:
         self.leaveIcon.place(x=110,y=10)
 
     def show_cotizaciones(self):
-        #capturer.Capturer.screnshot()
+        self.camara.manuable_scan()
+        # Se llama al ocr
+        # el ocr le pasa los datos a cotizaciones quien hace la lista
+        # cotizaciones retorna la lista y espera seleccion
+        # en seleccion se llama a organizier y se crea el json
+        # el json se pasa al csv
+        # el json se pasa al tiket
+        # se manda a imprimir el tiket
         self.list_menu()
 
     def run(self):
