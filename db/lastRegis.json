@@ -1,8 +1,1 @@
-{
-    "venta": {
-        "name":"FedEx",
-        "tiempo":"1 dia",
-        "price":400.00,
-        "utilidad":460.00
-    }
-}
+{"name": "Estafeta","tipo":"", "time": "1 dias aprox.", "price": 500, "utilidad": 50, "final": 550}

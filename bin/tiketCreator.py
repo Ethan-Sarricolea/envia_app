@@ -5,7 +5,7 @@ Creacion de tiket en formato pdf
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfReader, PdfWriter
-
+import organizier
 import clock
 
 class Printer:
@@ -15,7 +15,7 @@ class Printer:
         self.date_time = ""
         self.info = ""
 
-    def create_ticket(self,compañia,shipping_type,time,price,kg,colaborator,guide):
+    def create_ticket(self,venta,kg,colaborator,guide):
         filename = r"src\tikets\ticket.pdf"
         self.data = self.reloj.data().replace("-","/")
         self.date_time = f"{self.data}, {self.reloj.hour()}"
@@ -30,10 +30,10 @@ Lugar: ENVIA, EL PALMAR AV. LAS
         PALMAS 101 LOC X
     COATZACOALCOS, VERACRUZ
 
-Compañia: {compañia}
-Tipo de envio: {shipping_type}
-Tiempo de espera: {time}
-Precio: ${price}
+Compañia: {venta["name"]}
+Tipo de envio: {venta["tipo"]}
+Tiempo de espera: {venta["time"]}
+Precio: ${venta["final"]}
 Peso: {kg}kg
 
 Asesor: {colaborator}
@@ -73,12 +73,10 @@ Número de guia: {guide}
         with open(output_filename, 'wb') as f:
             output_pdf.write(f)
 
-
 #
 """ Generar el ticket en PDF
 impresora = Printer()
-impresora.create_ticket(compañia="Estafeta",shipping_type="Terrestre",time="1 dia",
-                        price="500",kg=1,colaborator="paquito",guide=12345)
+impresora.create_ticket(,kg=1,colaborator="paquito",guide=12345)
 
 # Ajustar el tamaño del PDF al tamaño de los tickets físicos (por ejemplo, 2" x 5.5")
 impresora.resize_pdf(r"src\tikets\ticket.pdf", r"src\tikets\ticket.pdf", (2 * 72), (5.5 * 72))  # 1 pulgada = 72 puntos

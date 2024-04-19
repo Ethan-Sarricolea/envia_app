@@ -8,8 +8,7 @@ Author: Ethan Yahel Sarricolea Cortés
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
-from bin import capturer
-from bin import organizier
+from bin import capturer,cotizaciones,OCR,organizier,tiketCreator
 
 class TablaDatos:
     def __init__(self,app) -> None:
@@ -79,8 +78,11 @@ class App:
         self.LARGESIZE = "1200x600"
         self.SMALLSIZE = "200x100"
 
-        self.organizador = organizier.CSVRegister()
+        self.organizador = organizier.Register()
         self.camara = capturer.Capturer()
+        self.teseract = OCR.REOPC()
+        self.listaCotizador = cotizaciones.ListaCotizaciones()
+        self.impresora = tiketCreator.Printer()
 
         self.win = Tk()
         self.win.geometry(self.LARGESIZE)
@@ -169,6 +171,11 @@ class App:
         self.combobox.bind("<<ComboboxSelected>>", self.selectDataCombobox)
         self.tabla.mostrar()
 
+    def configuration_mode(self):
+        self.hide_all()
+        self.win.geometry(self.LARGESIZE)
+        self.leaveToMenu.place(x=20,y=50)
+
     def capture_mode(self):
         self.hide_all()
         self.win.geometry(self.SMALLSIZE)
@@ -181,8 +188,11 @@ class App:
         # el ocr le pasa los datos a cotizaciones quien hace la lista
         # cotizaciones retorna la lista y espera seleccion
         # en seleccion se llama a organizier y se crea el json
+        self.organizador.writeJson()
         # el json se pasa al csv
+        self.organizador.add_venta()         
         # el json se pasa al tiket
+            # aqui sera con el formulario   
         # se manda a imprimir el tiket
         self.list_menu()
 
