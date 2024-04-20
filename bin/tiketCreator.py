@@ -5,8 +5,7 @@ Creacion de tiket en formato pdf
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfReader, PdfWriter
-import organizier
-import clock
+from bin import clock
 
 class Printer:
     def __init__(self) -> None:

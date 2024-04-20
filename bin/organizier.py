@@ -6,7 +6,7 @@ Author: Ethan Yahel Sarricolea Cortés
 import csv
 import os
 import json
-import clock
+from bin import clock
 
 class Register:
     def __init__(self) -> None:
@@ -95,7 +95,8 @@ class Register:
 
 
 
-#"""
+#
+"""
 jsoner = Register()
 #jsoner.writeJson("Estafeta","terrestre","1 dias aprox.",500,50,550)
 jsoner.add_venta()

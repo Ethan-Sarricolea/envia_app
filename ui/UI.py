@@ -6,7 +6,7 @@ Author: Ethan Yahel Sarricolea Cortés
 """
 
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
 from bin import capturer,cotizaciones,OCR,organizier,tiketCreator
 
@@ -73,6 +73,36 @@ class TablaCotizaciones:
         # Eliminar todas las filas de la tabla
         self.tabla.delete(*self.tabla.get_children())
 
+class TablaColaboradores:
+    def __init__(self,app) -> None:
+            # Crear Treeview    
+        self.app = app
+        self.tabla = ttk.Treeview(self.app.win)
+        self.tabla["columns"] = ("1")  # Definir las columnas
+        self.tabla.column("#0", width=400, minwidth=100, stretch=NO)  # Configurar la primera columna
+        self.tabla.heading("#0", text="Nombre", anchor=W)  # Encabezado de la primera columna
+        self.scrollbar = ttk.Scrollbar(self.app.win, orient="vertical", command=self.tabla.yview)
+        self.tabla.configure(yscrollcommand=self.scrollbar.set)
+
+    def mostrarNombres(self,datos):
+        for dato in datos:
+            self.tabla.insert("", END, text=dato)
+
+    def mostrar(self):
+        self.limpiar_tabla()
+        listanombres = self.app.acesores(1)
+        self.mostrarNombres(listanombres) if listanombres!=None else False
+        self.tabla.place(x=100,y=100)
+        
+    def limpiar_tabla(self):
+        # Eliminar todas las filas de la tabla
+        self.tabla.delete(*self.tabla.get_children())
+
+    def update(self):
+        self.limpiar_tabla()
+        listanombres = self.app.acesores(1)
+        self.mostrarNombres(listanombres) if listanombres!=None else False
+
 class App:
     def __init__(self) -> None:
         self.LARGESIZE = "1200x600"
@@ -101,7 +131,7 @@ class App:
         self.lineFrame = Frame(self.win,bg="gold",width=self.ancho,height=30)
         self.goButtom = Button(self.win,text="Comenzar",bg="yellow",width=self.buttonsize,command=self.capture_mode)
         self.dayButtom =  Button(self.win,text="Venta diaria",bg="yellow",width=self.buttonsize,command=self.sales_list)
-        self.optionsButtom = Button(self.win,text="Configuración",bg="gray30",width=self.buttonsize,command=None)
+        self.optionsButtom = Button(self.win,text="Configuración",bg="gray30",width=self.buttonsize,command=self.configuration_mode)
         self.exitButton = Button(self.win,bg="brown2",text="Salir",width=self.buttonsize,command=self.win.destroy)
         self.title = Label(self.win,image=self.logoEnvia,bg="gold")
 
@@ -120,13 +150,64 @@ class App:
         self.tabla = TablaDatos(self)
         self.leaveToMenu = Button(self.win,bg="IndianRed2",text="Volver",width=20,command=self.main_menu)
         self.limpiarButton = Button(self.win,text="Limpiar",bg="deep sky blue",width=20)
-        self.venderButton = Button(self.win,text="Vender",bg="SpringGreen2",width=20,command=None)
+        self.venderButton = Button(self.win,text="Vender",bg="SpringGreen2",width=20,command=self.forms_mode)
 
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
         self.combobox = ttk.Combobox(self.win,values=[],
                                      textvariable=self.combobox_variable,state="readonly")
+        
+        # Pantalla de config
+        self.tabla_acesores = TablaColaboradores(self)
+        self.colabs = ttk.Combobox(self.win,state="radonly",values=[])
+        #self.acesoresAdd = lambda: self.acesores(2)
+        #self.acesoresDel = lambda: self.acesores(3)
+        self.addColab = Button(self.win,width=20,text="Agregar",command=lambda: self.acesores(2))
+        self.deleteColab = Button(self.win,width=20,text="Eliminar",command=lambda: self.acesores(3))
+        self.updateColabs = Button(self.win,text="Actualizar",width=20,command=self.tabla_acesores.update)
 
+
+        #Pantalla de formulario
+        self.cancelButton = Button(self.win,text="Cancelar",width=20,bg="brown2",command=self.main_menu)
+        self.completButton = Button(self.win,text="Completar",width=20,bg="SpringGreen2",command=None)
+        self.envioLabel = Label(self.win,text="Envio")
+        self.paqueteLabel = Label(self.win,text="Paquete")
+        self.name = Entry(self.win)
+        self.type = Entry(self.win)
+        self.time = Entry(self.win)
+        self.acesor = ttk.Combobox(self.win,values=[]) #,state="readonly"
+        self.guia = Entry(self.win)
+        self.price_text = StringVar()
+        self.price = Entry(self.win,textvariable=self.price_text,state="readonly")
+
+    def acesores(self,option):
+        # 1=read 2=add 3=delete
+        lista = []
+        name = self.colabs.get()
+        if option==1:
+            with open("src\colaborators.txt","r") as acesoresList:
+                archivo = acesoresList.readlines()
+                for line in archivo:
+                    line = line.strip()
+                    lista.append(line)
+                if not lista:
+                    messagebox.showwarning("Advertencia",
+                                           "No se ha registrado ningún asesor en la lista. Para optimizar la eficiencia del proceso, se sugiere encarecidamente registrar su nombre en la sección de configuración del menú principal.")
+                else:
+                    return lista
+        elif option==2:
+            with open("src\colaborators.txt","a+") as acesoresList:
+                acesoresList.write(name+"\n")
+        elif option==3:
+            name = name+"\n"
+            with open("src\colaborators.txt","r") as archivo:
+                lines = archivo.readlines()
+                for nombre in lines:
+                    lista.append(nombre) if nombre!=name else False
+            with open("src\colaborators.txt","w") as archivo:
+                for nombre in lista:
+                    archivo.write(nombre)
+                    
     def selectDataCombobox(self,event):
         self.tabla.addDiaCotizacion(self.combobox.get())
 
@@ -175,6 +256,12 @@ class App:
         self.hide_all()
         self.win.geometry(self.LARGESIZE)
         self.leaveToMenu.place(x=20,y=50)
+        self.colabs.place(x=800,y=100)
+        self.addColab.place(x=800,y=150)
+        self.deleteColab.place(x=800,y=200)
+        self.updateColabs.place(x=800,y=250)
+        self.colabs['values'] = self.acesores(1)
+        self.tabla_acesores.mostrar()
 
     def capture_mode(self):
         self.hide_all()
@@ -183,7 +270,7 @@ class App:
         self.leaveIcon.place(x=110,y=10)
 
     def show_cotizaciones(self):
-        self.camara.manuable_scan()
+        """ self.camara.manuable_scan()
         # Se llama al ocr
         # el ocr le pasa los datos a cotizaciones quien hace la lista
         # cotizaciones retorna la lista y espera seleccion
@@ -194,7 +281,27 @@ class App:
         # el json se pasa al tiket
             # aqui sera con el formulario   
         # se manda a imprimir el tiket
+        """
         self.list_menu()
+
+    def forms_mode(self):
+        self.hide_all()
+        self.cancelButton.place(x=100,y=500)
+        self.completButton.place(x=500,y=500)
+        self.envioLabel.place(x=200,y=100)
+        self.paqueteLabel.place(x=400,y=100)
+        self.name.place(x=200,y=150)
+        self.name.insert(0,"Nombre")
+        self.type.place(x=200,y=200)
+        self.type.insert(0,"Tipo")
+        self.time.place(x=200,y=250)
+        self.time.insert(0,"Tiempo")
+        self.price_text.set("$")
+        self.price.place(x=200,y=300)
+        self.guia.place(x=400,y=200)
+        self.guia.insert(0,"No. de Guia")
+        self.acesor.place(x=400,y=150)
+        self.acesor['values'] = self.acesores(1)
 
     def run(self):
         self.main_menu()
