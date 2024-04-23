@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='Prototipo',
-    version='1.0.2',
+    version='1.0.3',
     #description='Una breve descripción de mi paquete',
     #long_description='Una descripción más detallada de mi paquete',
     author='Sarricolea Cortés Ethan Yahel',
