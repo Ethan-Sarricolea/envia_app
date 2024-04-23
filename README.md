@@ -12,3 +12,9 @@ OCR - comenzar desde (1,0) y aumentar y hasta identificar un logo, al identifica
     obtiene el texto de la fila, lo traduce y crea la cotizacion
     se repite hasta terminar las filas 
 
+Logros:
+    Deteccion de logos
+
+Objetivo:
+    Encontrar la forma de dividir la pantalla de manera correcta
+    determinar el proceso correcto

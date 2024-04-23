@@ -10,6 +10,8 @@ Ui llamara al OCR con los path recibidos para el analisis y esos
 
 """
 
+# OBSOLETO
+
 import pyautogui
 import win32api
 

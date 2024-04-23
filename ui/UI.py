@@ -8,7 +8,7 @@ Author: Ethan Yahel Sarricolea Cortés
 from tkinter import *
 from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
-from bin import capturer,cotizaciones,OCR,organizier,tiketCreator
+from bin import capturer,cotizaciones,OCR,organizier,tiketCreator,comparador
 
 class TablaDatos:
     def __init__(self,app) -> None:

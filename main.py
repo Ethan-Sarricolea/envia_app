@@ -4,7 +4,6 @@ Description: inicializador de aplicación
 """
 
 from ui import UI
-from tkinter import messagebox
 
 try:
     app = UI.App()
