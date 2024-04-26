@@ -34,7 +34,7 @@ class IMGcomaparator:
     def equalsImage(self):
         #Identificar igualdad total
         b, g, r = cv2.split(self.difference)
-        print(cv2.countNonZero(b))
+        #print(cv2.countNonZero(b))
         if (cv2.countNonZero(b) == 0 and cv2.countNonZero(g) == 0 and cv2.countNonZero(r) == 0):
             self.resultsList.append(100)
         else: 
@@ -42,7 +42,6 @@ class IMGcomaparator:
 
 
     def similitud(self):
-
         self.shift = cv2.xfeatures2d.SIFT_create()
         self.kp_1, self.desc_1 = self.shift.detectAndCompute(self.original, None)
         self.kp_2, self.desc_2 = self.shift.detectAndCompute(self.image_to_compare, None)
@@ -72,8 +71,12 @@ class IMGcomaparator:
 
     def comparacion_results(self):
         # Tomar el indice maximo de porcentaje y cambiarlo por nombre
-        i = self.resultsList.index(max(self.resultsList))
-        return self.nombres[i]
+        detect = all(valor == 0 for valor in self.resultsList)
+        if detect:
+            return False
+        else:
+            i = self.resultsList.index(max(self.resultsList))
+            return self.nombres[i]
 
 """lala = IMGcomaparator()
 print(lala.comparacion())"""

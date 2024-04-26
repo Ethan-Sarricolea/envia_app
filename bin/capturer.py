@@ -14,27 +14,46 @@ Ui llamara al OCR con los path recibidos para el analisis y esos
 
 import pyautogui
 import win32api
+#import OCR
+#from bin import OCR
 
 class Capturer:
     def __init__(self) -> None:
         self.ancho = win32api.GetSystemMetrics(0)
         self.alto = win32api.GetSystemMetrics(1)
-        self.row,self.column = self.alto/12,self.ancho/6
-        self.coords = [1,2,3,5]
+        self.xin = 340
+        self.yin = 147
+        self.columnCoord = [150,430,370,230,400]
+        self.ylimit = 1040
+        self.xlimit = 1770
+        self.rowSize = 85
         
-    def screnshot(self,number,x=0,y=0):
-        # Toma una captura de pantalla del escritorio
+    def screnshot_desk(self,x1,y1,x2,y2,numero):
+        # Toma y recorta la captura
         screenshot = pyautogui.screenshot()
-        #Recorta la captura
-        screenshot = screenshot.crop((x, y, x+self.column, self.alto-(self.row*0.48)))
-        # Guarda la captura de pantalla en un archivo
-        screenshot.save(f'src\screenshots\screenshot{number}.jpg')
+        screenshot = screenshot.crop((x1,y1,x2,y2))
+        # Guarda 
+        screenshot.save(f'src\screenshots\screenshot{numero}.jpg')
         # También puedes mostrar la captura de pantalla en una ventana emergente
-        #screenshot.show()
+        screenshot.show()
 
     def manuable_scan(self):
-        for i in self.coords:
-            self.screnshot(number=i,y=self.row*5.1,x=self.column*i)
+        x = self.xin
+        y = self.yin
+        # self.yin,self.ylimit,self.rowSize
+        #Cambia el 200 por self.ylimit
+        for row in range(self.yin,200,self.rowSize):
+            for i in range(0,5,1):
+                if x==1290:
+                    x += self.columnCoord[i]
+                    continue
+                else:
+                    self.screnshot_desk(x1=x,y1=row,x2=x+self.columnCoord[i],y2=y+self.rowSize,numero=i)
+                    x += self.columnCoord[i]
+                    #Llamada a OCR con el numero de opcion
+                    # Si la primera ves que se hace la identificacion retorna falso se pasa a la sig fila
+            y += self.rowSize
+
 
 #
 """
