@@ -7,17 +7,23 @@ identificar el funcionamiento de texto de tesseract
 ## Objetivos
 
 cambiar Capturas
-
-OCR - comenzar desde (1,0) y aumentar y hasta identificar un logo, al identificar hace la captura de toda la fila
-    obtiene el texto de la fila, lo traduce y crea la cotizacion
-    se repite hasta terminar las filas 
-
-Logros:
-    Deteccion de logos
+OCR practicamente listo, solo ajustar detalles
+Deteccion de logos
+Encontrar la forma de dividir la pantalla de manera correcta
+determinar el proceso correcto
 
 Objetivo:
-    Encontrar la forma de dividir la pantalla de manera correcta
-    determinar el proceso correcto
+    Ajustar proceso de que hacer en caso de no detectar un logo
+    una ves que se tome los datos de cotizacion que estos se organizcen con la lista de cotizaciones.py
+    de cotizaciones pasan a la tabla de del UI
+    una ves seleccionado y presionado vender en el UI, se obtienen los datos de la tabla y se introducen al json
+    Ya en el json y en la pestaña de forms se confirman los datos o se corrigen
+    al confirmar la venta se pasan los datos del json al csv y al creador de tikets
+    el creador de tikets imprime el tiket
+
+#### Nota
+Pensar en como cancelar una venta y como afecta a los datos.
+    
 
 ### librerias
 
