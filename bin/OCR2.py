@@ -9,14 +9,17 @@ Nota: La ruta se debe cambiar por la de tesseract en el usuario
 import cv2
 import pytesseract
 import re
+import comparador
+#from bin import comparador
 
 
 class REOPC:
     def __init__(self) -> None:
+        self.comparator = comparador.IMGcomaparator()
         # Especificar la ruta al ejecutable de Tesseract
         pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
         self.priceList = ["c","C","r","e","a","r","n","v","i","o","w",
-                          "x",">","m","\n","t","s","p","M","G","?"]
+                          "x",">","m","\n","t","s","p","M","G","?","u"]
         self.daysList = ["@","}",")"]
         self.dias5 = ["S"]
         self.dias5mas = ["Sr"]
@@ -39,19 +42,14 @@ class REOPC:
     def recibe_precio(self,imagen):
         # convierte la imagen, remplaza los espacios y caracteres extra, elimina comas extra y retorna una lista
         newtext = self.convert(imagen)
-        newtext = newtext.replace(" ",",")
+        newtext = newtext.replace(" ","")
         for letter in self.priceList:
             newtext = newtext.replace(letter,"")
         newtext = re.sub(r',{3}(.+?),{3}', r',\1,', newtext)
         newtext = newtext.replace("$","")
-        final = newtext[1:].split(",")
-        i=0
-        for data in final:
-            if data=="" or data==None:
-                final.pop(i)
-            i+=1
-        final = list(filter(None,final))
-        return final
+        #final = newtext[1:].split(",")
+        #final = filter(None,final)
+        return newtext #final
     
     def correcion_tiempo(self,lista):
         # corrige las palabras mal detectadas a las palabras que deberian ser
@@ -81,14 +79,30 @@ class REOPC:
         return self.correcion_tiempo(newtext)
 
     def recibe_tipo(self,imagen):
-        # Falta correccion por alguna razon no lee el texto
+        # Falta correccion / por alguna razon no lee el texto
         newtext = self.convert(imagen)
         newtext = newtext.replace("\n",",")
         newtext = re.sub(r",{2}([a-zA-Z0-9\s]+),{2}",r",\1,",newtext)
-        newtext = newtext.split(",")
-        newtext.pop(0)
-        newtext = list(filter(None,newtext))
+        #newtext.pop(0)
+        newtext = filter(None,newtext)
         return newtext
+    
+    def recibe(self,imagen,opcion):
+        if opcion==0:
+            print("xd")
+            #Logo
+            logo = self.comparator.comparacion(imagen)
+            return logo
+        elif opcion==1:
+            self.recibe_tipo(imagen)
+        elif opcion==2:
+            self.recibe_tiempo(imagen)
+        elif opcion==3:
+            pass
+        elif opcion==4:
+            return self.recibe_precio(imagen)
+
+
 """      
     def trad_manuable(self):
         esta se llamara despues de sacar las capturas y traducira todo
@@ -97,3 +111,8 @@ class REOPC:
     print(algo)
 
 #"""
+lala = REOPC()
+print(lala.recibe(r"src\screenshots\screenshot0.jpg",0))
+print(lala.recibe(r"src\screenshots\screenshot.jpg",4))
+
+# Error con shape del comparador (averigualo)

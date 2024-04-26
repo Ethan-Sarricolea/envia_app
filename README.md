@@ -18,3 +18,7 @@ Logros:
 Objetivo:
     Encontrar la forma de dividir la pantalla de manera correcta
     determinar el proceso correcto
+
+### librerias
+
+Instalación de pytesseract: https://github.com/UB-Mannheim/tesseract/wiki

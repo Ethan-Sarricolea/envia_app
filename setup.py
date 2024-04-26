@@ -1,13 +1,12 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Prototipo',
-    version='1.0.3',
-    #description='Una breve descripción de mi paquete',
-    #long_description='Una descripción más detallada de mi paquete',
+    name='Envia App',
+    version='1.0.4',
+    description='App de envia para colaboradores y administracion de negocio',
+    url='https://github.com/Ethan-Sarricolea/envia_app.git',
     author='Sarricolea Cortés Ethan Yahel',
     author_email='esarricolea@email.com',
-    #url='https://github.com/tu_usuario/mi_paquete',
     packages=find_packages(),  # Busca automáticamente todos los paquetes y módulos de Python en el directorio actual
     classifiers=[
         'Programming Language :: Python :: 3.11.9',

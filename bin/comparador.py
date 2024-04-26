@@ -15,11 +15,11 @@ class IMGcomaparator:
         self.nombres = ["DHL","Estafeta","FEDEX","J&T","PaqueteExpress","REDPACK","UPS"]
         
         
-    def comparacion(self):
+    def comparacion(self,image):
         # Comparacion de la imagen con los logos
         self.resultsList = []
         # src\screenshots\screenshot1.jpg
-        self.original = cv2.imread("src\screenshots\prueba2.jpg")
+        self.original = cv2.imread(image)
         for logo in self.logos:
             self.image_to_compare = cv2.imread(logo)
             self.redimension()
