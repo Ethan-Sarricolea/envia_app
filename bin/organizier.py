@@ -54,7 +54,7 @@ class Register:
         self.data_json["final"]=final
         with open("db\lastRegis.json","w") as jsonFile:
             json.dump(self.data_json,jsonFile)
-        return 
+        return #?
 
     def readJson(self):
         with open("db\lastRegis.json","r") as jsonFile:
@@ -69,6 +69,7 @@ class Register:
         self.create_csv(self.fecha.data(),self.jsonToList(self.readJson()))
 
     def cancel_venta(self):
+        # Eliminar datos del json
         self.data_json["name"] = ""
         self.data_json["tipo"] = ""
         self.data_json["time"] = ""
@@ -92,8 +93,6 @@ class Register:
                 escritor_csv.writerow(fila)
             # Truncar el archivo para eliminar cualquier contenido restante
             archivo.truncate()
-
-
 
 #
 """

@@ -3,21 +3,24 @@ Estrcutrura de cotizaciones y lista de cotizaciones
 Author: Ethan Yahel Sarricolea Cortés
 """
 
+UTILIDAD = 0.15
+
 class Cotizacion:
-    def __init__(self,name="",precio="",time="") -> None:
+    def __init__(self,name,tipo,time,precio) -> None:
         self.nombre = name
         self.precio = float(precio)
         self.tiempo = time
-        self.porcentaje = 0.15      # porcentaje de utilidad
-        self.utilidad = self.precio+self.precio*self.porcentaje
+        self.type = tipo
+        self.utilidad = round(self.precio*UTILIDAD,2)
+        self.final = round(self.precio+self.utilidad,2)
         self.siguiente = None
 
 class ListaCotizaciones:
     def __init__(self) -> None:
         self.head = None
 
-    def addCotizacion(self,name,price,time):        # Agregar al final
-        newCot = Cotizacion(name,price,time)
+    def addCotizacion(self,name,tipo,tiempo,precio):        # Agregar al final
+        newCot = Cotizacion(name,tipo,tiempo,precio)
         if self.head:
             actualCot = self.head
             while (actualCot.siguiente!=None):
@@ -32,17 +35,23 @@ class ListaCotizaciones:
             actualCot = self.head
             while(actualCot!=None):
                 array.append((actualCot.nombre,
-                              actualCot.precio,
+                              actualCot.type,
                               actualCot.tiempo,
-                              actualCot.utilidad))
+                              actualCot.final))
+                """,
+                              actualCot.utilidad,
+                              actualCot.precio"""
                 actualCot = actualCot.siguiente
             return array
         else:
             print("No hay cotizaciones en la lista")
 
+#
 """
 lista = ListaCotizaciones()
 lista.generarLista()
-lista.addCotizacion("Estafeta",150,"+5 dias")
-lista.addCotizacion("FedEx",200,"2 dias")
-print(lista.generarLista()) """
+lista.addCotizacion("Estafeta","Dia siguiente","1 Dia(S) aprox.",244.75)
+print(lista.generarLista())
+lista.addCotizacion("FedEx","Standard Overnight","1 Dia(S) aprox.",211.39)
+print(lista.generarLista())
+#"""

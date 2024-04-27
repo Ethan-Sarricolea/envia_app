@@ -1,5 +1,6 @@
 """
 Creacion de tiket en formato pdf
+Author = ethan Yahel Sarricolea Cortés
 """
 
 from reportlab.lib.pagesizes import letter
@@ -14,10 +15,11 @@ class Printer:
         self.date_time = ""
         self.info = ""
 
-    def create_ticket(self,venta,kg,colaborator,guide):
+    def create_ticket(self,venta,colaborator,guide):
         filename = r"src\tikets\ticket.pdf"
         self.data = self.reloj.data().replace("-","/")
         self.date_time = f"{self.data}, {self.reloj.hour()}"
+        # Formato de tiket
         self.info = f"""
 ------------------------------------
             ENVIA
@@ -33,7 +35,6 @@ Compañia: {venta["name"]}
 Tipo de envio: {venta["tipo"]}
 Tiempo de espera: {venta["time"]}
 Precio: ${venta["final"]}
-Peso: {kg}kg
 
 Asesor: {colaborator}
 Número de guia: {guide}

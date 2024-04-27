@@ -9,6 +9,7 @@ from tkinter import *
 from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
 from bin import capturer,cotizaciones,OCR,organizier,tiketCreator,comparador
+import time
 
 class TablaDatos:
     def __init__(self,app) -> None:
@@ -51,27 +52,42 @@ class TablaCotizaciones:
             # Crear Treeview    
         self.app = app
         self.tabla = ttk.Treeview(self.app.win)
-        self.tabla["columns"] = ("1", "2")  # Definir las columnas
-        self.tabla.column("#0", width=330, minwidth=100, stretch=NO)  # Configurar la primera columna
-        self.tabla.column("1", width=330, minwidth=100, stretch=NO)
-        self.tabla.column("2", width=330, minwidth=100, stretch=NO)
-        self.tabla.heading("#0", text="Nombre", anchor=W)  # Encabezado de la primera columna
-        self.tabla.heading("1", text="Tiempo", anchor=W)  # Encabezado de la segunda columna
-        self.tabla.heading("2", text="Precio", anchor=W)  # Encabezado de la tercera columna
+        self.tabla["columns"] = ("1", "2","3","4")  # Definir las columnas
+        self.tabla.column("#0", width=1, minwidth=100, stretch=NO)  # Configurar la primera columna
+        self.tabla.column("1", width=200, minwidth=100, stretch=NO)
+        self.tabla.column("2", width=200, minwidth=100, stretch=NO)
+        self.tabla.column("3", width=200, minwidth=100, stretch=NO)
+        self.tabla.column("4", width=200, minwidth=100, stretch=NO)
+        self.tabla.heading("#0", text="", anchor=W)  # Encabezado de la primera columna
+        self.tabla.heading("1", text="Nombre", anchor=W)
+        self.tabla.heading("2", text="Tipo", anchor=W)
+        self.tabla.heading("3", text="Tiempo", anchor=W)  # Encabezado de la segunda columna
+        self.tabla.heading("4", text="Precio", anchor=W)  # Encabezado de la tercera columna
         self.scrollbar = ttk.Scrollbar(self.app.win, orient="vertical", command=self.tabla.yview)
         self.tabla.configure(yscrollcommand=self.scrollbar.set)
 
-    def addCotizaciones(self,datos):
-        for dato in datos:
-            self.tabla.insert("", END, text=dato[0], values=(dato[1], dato[2], dato[3],dato[4]))
+    def addCotizaciones(self,lista):
+        for fila in lista:
+            self.tabla.insert("", "end", values=tuple(fila))
 
-    def mostrar(self):
+    def mostrar(self,lista):
         self.limpiar_tabla()
-        self.tabla.place(x=100,y=100)
+        self.addCotizaciones(lista)
+        self.tabla.place(x=100,y=100,height=400)
         
     def limpiar_tabla(self):
         # Eliminar todas las filas de la tabla
         self.tabla.delete(*self.tabla.get_children())
+    
+    def obtener_fila_seleccionada(self):
+        # Obtener el ID de la fila seleccionada
+        seleccion = self.tabla.focus()
+        if seleccion:
+            # Obtener los valores de la fila seleccionada
+            valores = self.tabla.item(seleccion, 'values')
+            return valores
+        else:
+            messagebox.showwarning("Advertencia","Ninguna fila seleccionada.")
 
 class TablaColaboradores:
     def __init__(self,app) -> None:
@@ -110,9 +126,9 @@ class App:
 
         self.organizador = organizier.Register()
         self.camara = capturer.Capturer()
-        self.teseract = OCR.REOPC()
-        self.listaCotizador = cotizaciones.ListaCotizaciones()
-        self.impresora = tiketCreator.Printer()
+        #self.teseract = OCR.REOPC()
+        #self.listaCotizador = cotizaciones.ListaCotizaciones()
+        #self.impresora = tiketCreator.Printer()
 
         self.win = Tk()
         self.win.geometry(self.LARGESIZE)
@@ -171,11 +187,11 @@ class App:
         self.cancelButton = Button(self.win,text="Cancelar",width=20,bg="brown2",command=self.main_menu)
         self.completButton = Button(self.win,text="Completar",width=20,bg="SpringGreen2",command=None)
         self.envioLabel = Label(self.win,text="Envio")
-        self.paqueteLabel = Label(self.win,text="Paquete")
+        self.infolabel = Label(self.win,text="Informacion")
         self.name = Entry(self.win)
         self.type = Entry(self.win)
         self.time = Entry(self.win)
-        self.acesor = ttk.Combobox(self.win,values=[]) #,state="readonly"
+        self.acesor = ttk.Combobox(self.win,values=[],state="readonly")
         self.guia = Entry(self.win)
         self.price_text = StringVar()
         self.price = Entry(self.win,textvariable=self.price_text,state="readonly")
@@ -229,17 +245,17 @@ class App:
         self.exitButton.place(x=600,y=410,anchor=CENTER)
         self.title.place(x=350,y=0)
 
-    def list_menu(self):
+    def list_menu(self,lista):
         self.hide_all()
         self.win.geometry(self.LARGESIZE)
         self.leaveToMenu.place(x=20,y=50)
-        self.limpiarButton.place(x=100,y=400)
+        self.limpiarButton.place(x=100,y=510)
         self.limpiarButton.config(command=self.tablaCot.limpiar_tabla)
-        self.venderButton.place(x=950,y=400)
-        self.combobox.place(x=500,y=50)
-        self.combobox.configure(values=[])
-        self.combobox.bind("<<ComboboxSelected>>", self.ventaConfirm)
-        self.tablaCot.mostrar()
+        self.venderButton.place(x=950,y=510)
+        """self.combobox.place(x=500,y=50)
+        self.combobox.configure(values=lista)
+        self.combobox.bind("<<ComboboxSelected>>", self.ventaConfirm)"""
+        self.tablaCot.mostrar(lista)
 
     def sales_list(self):
         self.hide_all()
@@ -270,38 +286,39 @@ class App:
         self.leaveIcon.place(x=110,y=10)
 
     def show_cotizaciones(self):
-        """ self.camara.manuable_scan()
-        # Se llama al ocr
-        # el ocr le pasa los datos a cotizaciones quien hace la lista
-        # cotizaciones retorna la lista y espera seleccion
-        # en seleccion se llama a organizier y se crea el json
-        self.organizador.writeJson()
-        # el json se pasa al csv
-        self.organizador.add_venta()         
-        # el json se pasa al tiket
-            # aqui sera con el formulario   
-        # se manda a imprimir el tiket
-        """
-        self.list_menu()
+        self.win.withdraw()
+        time.sleep(5)
+        cotizacionesMan =self.camara.manuable_scan()
+        #messagebox.showinfo("",f"{self.camara.manuable_scan()}")
+        time.sleep(0.1)
+        self.win.deiconify()
+        self.list_menu(cotizacionesMan)
 
     def forms_mode(self):
+        datos = self.tablaCot.obtener_fila_seleccionada()
+        self.tablaCot.limpiar_tabla()
         self.hide_all()
         self.cancelButton.place(x=100,y=500)
         self.completButton.place(x=500,y=500)
         self.envioLabel.place(x=200,y=100)
-        self.paqueteLabel.place(x=400,y=100)
+        self.infolabel.place(x=400,y=100)
         self.name.place(x=200,y=150)
-        self.name.insert(0,"Nombre")
+        self.name.insert(0,datos[0] if datos[0]=="False" or datos[0]==False else "Nombre")
         self.type.place(x=200,y=200)
-        self.type.insert(0,"Tipo")
+        self.type.insert(0,datos[1])
         self.time.place(x=200,y=250)
-        self.time.insert(0,"Tiempo")
-        self.price_text.set("$")
+        self.time.insert(0,datos[2])
+        self.price_text.set(f"${datos[3]}")
         self.price.place(x=200,y=300)
         self.guia.place(x=400,y=200)
         self.guia.insert(0,"No. de Guia")
         self.acesor.place(x=400,y=150)
         self.acesor['values'] = self.acesores(1)
+
+        # funcion de venta
+        # pasar a json
+        # json a tiket
+        # json a registro
 
     def run(self):
         self.main_menu()

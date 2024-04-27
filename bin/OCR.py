@@ -9,9 +9,8 @@ Nota: La ruta se debe cambiar por la de tesseract en el usuario
 import cv2
 import pytesseract
 import re
-import comparador
-#from bin import comparador
-
+from bin import comparador
+#import comparador
 
 class REOPC:
     def __init__(self) -> None:
@@ -24,8 +23,9 @@ class REOPC:
         self.dias5 = ["S","5"]
         self.dias5mas = ["Sr","5+"]
         self.dias1 = ["A","L","a","d","1"]
-        self.dias2 = []
-        self.dias3 = []
+        self.dias2 = ["2"]
+        self.dias3 = ["3"]
+        self.dias4 = ["4"]
 
     def convert(self,img):
         # Cargar imagen img = cv2.imread("screenshot.jpg")
@@ -54,11 +54,17 @@ class REOPC:
     def correcion_tiempo(self,texto):
         # corrige las palabras mal detectadas a las palabras que deberian ser
         if texto[0] in self.dias5:
-            texto = "5 dia(s) aprox."
-        if texto[:2] in self.dias5mas:
-            texto = "5+ dia(s) aprox."
+            texto = "5 Dia(s) aprox."
+            if texto[:2] in self.dias5mas:
+                texto = "5+ Dia(s) aprox."
+        elif texto[0] in self.dias4:
+            texto = "4 Dia(s) aprox."
+        elif texto[0] in self.dias3:
+            texto = "3 Dia(s) aprox."
+        elif texto[0] in self.dias2:
+            texto = "2 Dia(s) aprox."
         elif texto[0] in self.dias1:
-           texto = "1 dia(s) aprox."
+           texto = "1 Dia aprox."
         return texto
 
     def recibe_tiempo(self,imagen):
@@ -83,7 +89,6 @@ class REOPC:
     
     def recibe(self,imagen="",opcion=0):
         if opcion==0:
-            print("xd")
             #Logo
             logo = self.comparator.comparacion(imagen)
             return logo
@@ -96,19 +101,11 @@ class REOPC:
         elif opcion==4:
             return self.recibe_precio(imagen)
 
-
-"""      
-    def trad_manuable(self):
-        esta se llamara despues de sacar las capturas y traducira todo
-    #lala = REOPC()
-    algo = lala.recibe_tipo(r"src\screenshots\prueba.jpg")
-    print(algo)
-
-#"""
-lala = REOPC()
-print(lala.recibe(r'src\screenshots\screenshot0.jpg',0)) #LOGo
-print(lala.recibe(r"src\screenshots\screenshot1.jpg",1)) #Tipo
-print(lala.recibe(r"src\screenshots\screenshot2.jpg",2)) # tiempo
-print(lala.recibe(r'src\screenshots\screenshot4.jpg',4)) # precio
+"""lala = REOPC()
+helloWorld = [lala.recibe(r'src\screenshots\screenshot0.jpg',0),#LOGo
+              lala.recibe(r"src\screenshots\screenshot1.jpg",1),#Tipo
+              lala.recibe(r"src\screenshots\screenshot2.jpg",2),# tiempo
+              lala.recibe(r'src\screenshots\screenshot4.jpg',4)]# precio
+print(helloWorld)"""
 
 # Error con shape del comparador (averigualo)

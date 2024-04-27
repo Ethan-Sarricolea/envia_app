@@ -4,13 +4,11 @@
 
 identificar el funcionamiento de texto de tesseract
 
-## Objetivos
+# Objetivo a corto plazo
 
-cambiar Capturas
-OCR practicamente listo, solo ajustar detalles
-Deteccion de logos
-Encontrar la forma de dividir la pantalla de manera correcta
-determinar el proceso correcto
+Añadir contraseña para entrar a venta diaria
+
+## Objetivos
 
 Objetivo:
     Ajustar proceso de que hacer en caso de no detectar un logo
@@ -24,7 +22,25 @@ Objetivo:
 #### Nota
 Pensar en como cancelar una venta y como afecta a los datos.
     
+# status
+capturer.py =       55
+clock.py =          22
+comparador.py =     80
+cotizaciones.py =   46
+OCR.py =            100
+organizier.py =     95
+tiketCreator.py =   75
+UI.py =             308
+main.py =           14
+T =                 795
 
 ### librerias
 
 Instalación de pytesseract: https://github.com/UB-Mannheim/tesseract/wiki
+
+## advertencia
+
+error: [ WARN:0@0.675] global shadow_sift.hpp:15 cv::xfeatures2d::SIFT_create DEPRECAs://github.com/PRECATED: cv.xfeatures2d.SIFT_create() is deprecated due SIFT tranfer to ain r
+the main repository. https://github.com/opencv/opencv/issues/16736 
+
+Resumen: Es posible que en otras versiones de openCV deje de funcionar la funcion xfeatures2d por lo que es necesario tomarlo en cuenta para las proximas versiones de la aplicacion
