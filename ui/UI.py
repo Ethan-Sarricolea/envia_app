@@ -128,7 +128,7 @@ class App:
         self.camara = capturer.Capturer()
         #self.teseract = OCR.REOPC()
         #self.listaCotizador = cotizaciones.ListaCotizaciones()
-        #self.impresora = tiketCreator.Printer()
+        self.impresora = tiketCreator.Printer()
 
         self.win = Tk()
         self.win.geometry(self.LARGESIZE)
@@ -316,6 +316,12 @@ class App:
         self.acesor['values'] = self.acesores(1)
 
         # funcion de venta
+        """
+        impresora y organizador
+        llamar creacion de json con los datos del forms
+        llamar creacion y apertura de archivo txt con info json
+        
+        """
         # pasar a json
         # json a tiket
         # json a registro
