@@ -21,29 +21,32 @@ class Printer:
         self.date_time = f"{self.data}, {self.reloj.hour()}"
         # Formato de tiket
         self.info = f"""
-------------------------------------
+--------------------------------
             ENVIA
-------------------------------------
+--------------------------------
 
 Punto de venta: ENVIA
 Fecha y hora: {self.date_time}
-Lugar: ENVIA, EL PALMAR AV. LAS
-        PALMAS 101 LOC X
-    COATZACOALCOS, VERACRUZ
+Lugar: ENVIA, EL PALMAR AV. LAS PALMAS 101 LOC X COATZACOALCOS, VERACRUZ
+
+
 
 Compañia: {venta["name"]}
 Tipo de envio: {venta["tipo"]}
 Tiempo de espera: {venta["time"]}
 Precio: ${venta["final"]}
 
+
+
 Asesor: {colaborator}
 Número de guia: {guide}
 
 
-------------------------------------
+--------------------------------
     ¡Gracias por tu compra!
-------------------------------------
+--------------------------------
 """
+        
         txtpath = filename.replace(".pdf",".txt")
         txt = open(txtpath,"w+")
         txt.write(self.info)
