@@ -6,7 +6,9 @@ Author = ethan Yahel Sarricolea Cortés
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfReader, PdfWriter
-from bin import clock
+#from bin import clock
+import clock
+import subprocess
 
 class Printer:
     def __init__(self) -> None:
@@ -22,10 +24,12 @@ class Printer:
         # Formato de tiket
         self.info = f"""
 --------------------------------
+
             ENVIA
+            
 --------------------------------
 
-Punto de venta: ENVIA
+Punto de venta: ENVIA LAS PALMAS
 Fecha y hora: {self.date_time}
 Lugar: ENVIA, EL PALMAR AV. LAS PALMAS 101 LOC X COATZACOALCOS, VERACRUZ
 
@@ -43,7 +47,9 @@ Número de guia: {guide}
 
 
 --------------------------------
+
     ¡Gracias por tu compra!
+
 --------------------------------
 """
         
@@ -51,10 +57,12 @@ Número de guia: {guide}
         txt = open(txtpath,"w+")
         txt.write(self.info)
         txt.close()
+        subprocess.Popen(["notepad.exe", txtpath])
 
-        #""" TIKET EN PDF
+        #
+        """ TIKET EN PDF
         c = canvas.Canvas(filename, pagesize=letter)
-        c.drawImage("src\images\logo.jpg", 100, 500, width=400, height=200)  # Ajusta las coordenadas y el tamaño según sea necesario
+        c.drawImage("src\images\logo.jpg", 100, 500, width=200, height=200)  # Ajusta las coordenadas y el tamaño según sea necesario
         c.setFont("Helvetica", 12)
         textobject = c.beginText(100, 500)
         textobject.textLines(self.info)
@@ -76,11 +84,10 @@ Número de guia: {guide}
         with open(output_filename, 'wb') as f:
             output_pdf.write(f)
 
-#
-""" Generar el ticket en PDF
+#""" Generar el ticket en PDF
 impresora = Printer()
-impresora.create_ticket(,kg=1,colaborator="paquito",guide=12345)
+impresora.create_ticket(venta={"name": "Estafeta","tipo":"", "time": "1 dias aprox.", "price": 500, "utilidad": 50, "final": 550},colaborator="paquito",guide=12345)
 
 # Ajustar el tamaño del PDF al tamaño de los tickets físicos (por ejemplo, 2" x 5.5")
-impresora.resize_pdf(r"src\tikets\ticket.pdf", r"src\tikets\ticket.pdf", (2 * 72), (5.5 * 72))  # 1 pulgada = 72 puntos
+#impresora.resize_pdf(r"src\tikets\ticket.pdf", r"src\tikets\ticket.pdf", (2 * 72), (5.5 * 72))   1 pulgada = 72 puntos
 #"""
