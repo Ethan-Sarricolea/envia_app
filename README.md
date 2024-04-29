@@ -1,12 +1,16 @@
 # Prototipo
 
+EnviApp
+
 ## Notas personales
 
 identificar el funcionamiento de texto de tesseract
 
 # Objetivo a corto plazo
 
-Añadir contraseña para entrar a venta diaria
+Conectar app a creacion de tiket
+conectar venta diaria a lectura de tikets
+evitar que aparezca el archivo json en venta diaria
 
 ## Objetivos
 
@@ -19,20 +23,12 @@ Objetivo:
     al confirmar la venta se pasan los datos del json al csv y al creador de tikets
     el creador de tikets imprime el tiket
 
+
+## Seguridad 
+Usar la libreria bcrypt para las contraseñas
+
 #### Nota
 Pensar en como cancelar una venta y como afecta a los datos.
-    
-# status
-capturer.py =       55
-clock.py =          22
-comparador.py =     80
-cotizaciones.py =   46
-OCR.py =            100
-organizier.py =     95
-tiketCreator.py =   75
-UI.py =             308
-main.py =           14
-T =                 795
 
 ### librerias
 

@@ -6,8 +6,8 @@ Author = ethan Yahel Sarricolea Cortés
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfReader, PdfWriter
-#from bin import clock
-import clock
+from bin import clock
+#import clock
 import subprocess
 
 class Printer:
@@ -84,7 +84,8 @@ Número de guia: {guide}
         with open(output_filename, 'wb') as f:
             output_pdf.write(f)
 
-#""" Generar el ticket en PDF
+#
+""" Generar el ticket en PDF
 impresora = Printer()
 impresora.create_ticket(venta={"name": "Estafeta","tipo":"", "time": "1 dias aprox.", "price": 500, "utilidad": 50, "final": 550},colaborator="paquito",guide=12345)
 

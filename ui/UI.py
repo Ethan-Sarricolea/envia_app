@@ -9,6 +9,7 @@ from tkinter import *
 from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
 from bin import capturer,cotizaciones,OCR,organizier,tiketCreator,comparador
+from ui import user
 import time
 
 class TablaDatos:
@@ -124,20 +125,21 @@ class App:
         self.LARGESIZE = "1200x600"
         self.SMALLSIZE = "200x100"
 
+        self.win = Tk()
+        self.win.geometry(self.LARGESIZE)
+        self.ancho,self.alto = 1200,600
+        self.win.configure(bg="gray70")
+        self.win.title("EnviApp")
+        self.win.resizable(0,0)
+        self.buttonsize = 20
+        #self.win.iconbitmap("")
+
         self.organizador = organizier.Register()
         self.camara = capturer.Capturer()
         #self.teseract = OCR.REOPC()
         #self.listaCotizador = cotizaciones.ListaCotizaciones()
         self.impresora = tiketCreator.Printer()
-
-        self.win = Tk()
-        self.win.geometry(self.LARGESIZE)
-        self.ancho,self.alto = 1200,600
-        self.win.configure(bg="gray70")
-        self.win.title("Aplicación")
-        self.win.resizable(0,0)
-        self.buttonsize = 20
-        #self.win.iconbitmap("")
+        self.admin = user.ModalSesionInit()
 
         #Menu inicial
         self.logoEnvia = Image.open("src\images\logo.jpg")
@@ -258,15 +260,21 @@ class App:
         self.tablaCot.mostrar(lista)
 
     def sales_list(self):
-        self.hide_all()
-        self.win.geometry(self.LARGESIZE)
-        self.leaveToMenu.place(x=20,y=50)
-        self.limpiarButton.place(x=100,y=400)
-        self.limpiarButton.config(command=self.tabla.limpiar_tabla)
-        self.combobox.place(x=500,y=50)
-        self.combobox.configure(values=self.organizador.leer_database())
-        self.combobox.bind("<<ComboboxSelected>>", self.selectDataCombobox)
-        self.tabla.mostrar()
+        self.admin.run()
+        self.admin.window.wait_window()
+        if self.admin.readPass():
+            self.hide_all()
+            self.win.geometry(self.LARGESIZE)
+            self.leaveToMenu.place(x=20,y=50)
+            self.limpiarButton.place(x=100,y=400)
+            self.limpiarButton.config(command=self.tabla.limpiar_tabla)
+            self.combobox.place(x=500,y=50)
+            self.combobox.configure(values=self.organizador.leer_database())
+            self.combobox.bind("<<ComboboxSelected>>", self.selectDataCombobox)
+            self.tabla.mostrar()
+        else:
+            pass
+        
 
     def configuration_mode(self):
         self.hide_all()

@@ -1,10 +1,12 @@
 
 --------------------------------
+
             ENVIA
+            
 --------------------------------
 
-Punto de venta: ENVIA
-Fecha y hora: 26/04/2024, 19:44:11
+Punto de venta: ENVIA LAS PALMAS
+Fecha y hora: 29/04/2024, 15:31:10
 Lugar: ENVIA, EL PALMAR AV. LAS PALMAS 101 LOC X COATZACOALCOS, VERACRUZ
 
 
@@ -21,5 +23,7 @@ Número de guia: 12345
 
 
 --------------------------------
+
     ¡Gracias por tu compra!
+
 --------------------------------
