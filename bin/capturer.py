@@ -16,11 +16,11 @@ import pyautogui
 import win32api
 import time
 #import OCR,cotizaciones
-from bin import OCR,cotizaciones
+from bin import OCR
 
 class Capturer:
-    def __init__(self) -> None:
-        self.cotiz = cotizaciones.ListaCotizaciones()
+    def __init__(self,cotizador) -> None:
+        self.cotiz = cotizador
         self.ocr = OCR.REOPC()
         self.ancho = win32api.GetSystemMetrics(0)
         self.alto = win32api.GetSystemMetrics(1)
@@ -64,7 +64,7 @@ class Capturer:
                     self.actualCot.append(dato)
                 time.sleep(0.1)
             #print(self.actualCot)
-            if self.actualCot[0]==False and self.actualCot[1]=="" and self.actualCot[2]=="" and self.actualCot[4]=="":
+            if self.actualCot[0]==False and self.actualCot[1]=="" and self.actualCot[2]=="" or self.actualCot[4]=="":
                 pass
             else:
                 #print("Y = ",row)

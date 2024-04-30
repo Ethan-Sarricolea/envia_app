@@ -135,9 +135,9 @@ class App:
         #self.win.iconbitmap("")
 
         self.organizador = organizier.Register()
-        self.camara = capturer.Capturer()
+        self.listaCotizador = cotizaciones.ListaCotizaciones()
+        self.camara = capturer.Capturer(self.listaCotizador)
         #self.teseract = OCR.REOPC()
-        #self.listaCotizador = cotizaciones.ListaCotizaciones()
         self.impresora = tiketCreator.Printer()
         self.admin = user.ModalSesionInit()
 
@@ -187,7 +187,7 @@ class App:
 
         #Pantalla de formulario
         self.cancelButton = Button(self.win,text="Cancelar",width=20,bg="brown2",command=self.main_menu)
-        self.completButton = Button(self.win,text="Completar",width=20,bg="SpringGreen2",command=None)
+        self.completButton = Button(self.win,text="Completar",width=20,bg="SpringGreen2",command=self.venta)
         self.envioLabel = Label(self.win,text="Envio")
         self.infolabel = Label(self.win,text="Informacion")
         self.name = Entry(self.win)
@@ -254,9 +254,6 @@ class App:
         self.limpiarButton.place(x=100,y=510)
         self.limpiarButton.config(command=self.tablaCot.limpiar_tabla)
         self.venderButton.place(x=950,y=510)
-        """self.combobox.place(x=500,y=50)
-        self.combobox.configure(values=lista)
-        self.combobox.bind("<<ComboboxSelected>>", self.ventaConfirm)"""
         self.tablaCot.mostrar(lista)
 
     def sales_list(self):
@@ -274,7 +271,6 @@ class App:
             self.tabla.mostrar()
         else:
             pass
-        
 
     def configuration_mode(self):
         self.hide_all()
@@ -311,7 +307,7 @@ class App:
         self.envioLabel.place(x=200,y=100)
         self.infolabel.place(x=400,y=100)
         self.name.place(x=200,y=150)
-        self.name.insert(0,datos[0] if datos[0]=="False" or datos[0]==False else "Nombre")
+        self.name.insert(0,"Nombre" if datos[0]=="False" or datos[0]==False else datos[0])
         self.type.place(x=200,y=200)
         self.type.insert(0,datos[1])
         self.time.place(x=200,y=250)
@@ -323,15 +319,16 @@ class App:
         self.acesor.place(x=400,y=150)
         self.acesor['values'] = self.acesores(1)
 
-        # funcion de venta
-        """
-        impresora y organizador
-        llamar creacion de json con los datos del forms
-        llamar creacion y apertura de archivo txt con info json
-        
-        """
-        # pasar a json
-        # json a tiket
+    def venta(self):
+        cotVent = self.listaCotizador.search(price=self.price.get().replace("$",""))
+        self.organizador.writeJson(name=cotVent[0],
+                                   tipo=cotVent[1],
+                                   time=cotVent[2],
+                                   price=cotVent[3],
+                                   utilidad=cotVent[4],
+                                   final=cotVent[5])
+        self.impresora.create_ticket(venta=self.organizador.readJson(),
+                                     colaborator=self.acesor.get(),guide=self.guia.get())
         # json a registro
 
     def run(self):

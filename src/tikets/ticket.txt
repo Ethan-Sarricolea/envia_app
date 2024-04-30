@@ -6,20 +6,20 @@
 --------------------------------
 
 Punto de venta: ENVIA LAS PALMAS
-Fecha y hora: 29/04/2024, 15:31:10
+Fecha y hora: 29/04/2024, 19:51:41
 Lugar: ENVIA, EL PALMAR AV. LAS PALMAS 101 LOC X COATZACOALCOS, VERACRUZ
 
 
 
-Compañia: Estafeta
-Tipo de envio: 
-Tiempo de espera: 1 dias aprox.
-Precio: $550
+Compañia: PaqueteExpress
+Tipo de envio: Estandar
+Tiempo de espera: 5 Dia(s) aprox.
+Precio: $223.56
 
 
 
-Asesor: paquito
-Número de guia: 12345
+Asesor: Ethan
+Número de guia: 34567
 
 
 --------------------------------

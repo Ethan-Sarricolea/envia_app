@@ -8,6 +8,7 @@ identificar el funcionamiento de texto de tesseract
 
 # Objetivo a corto plazo
 
+CREAR EL JSON CON LOS DATOS DE LA LISTA (la lista arropja error)
 Conectar app a creacion de tiket
 conectar venta diaria a lectura de tikets
 evitar que aparezca el archivo json en venta diaria
