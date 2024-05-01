@@ -8,11 +8,14 @@ identificar el funcionamiento de texto de tesseract
 
 # Objetivo a corto plazo
 
-agregar registros de json a csv
-conectar venta diaria a lectura de tikets
 evitar que aparezca el archivo json en venta diaria
+reseteo de lista de cotizaziones !!!!!!!
+Limpieza de entrys
 
 ## Objetivos
+
+# nuevos
+Crear un capturador / recortador de pantalla y usarlo para detectar el texto
 
 Objetivo:
     Ajustar proceso de que hacer en caso de no detectar un logo
@@ -22,6 +25,7 @@ Objetivo:
     Ya en el json y en la pestaña de forms se confirman los datos o se corrigen
     al confirmar la venta se pasan los datos del json al csv y al creador de tikets
     el creador de tikets imprime el tiket
+    añadir seguridad a los registros
 
 
 ## Seguridad 

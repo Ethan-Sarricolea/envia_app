@@ -19,8 +19,7 @@ import time
 from bin import OCR
 
 class Capturer:
-    def __init__(self,cotizador) -> None:
-        self.cotiz = cotizador
+    def __init__(self) -> None:
         self.ocr = OCR.REOPC()
         self.ancho = win32api.GetSystemMetrics(0)
         self.alto = win32api.GetSystemMetrics(1)
@@ -40,7 +39,8 @@ class Capturer:
         # También puedes mostrar la captura de pantalla en una ventana emergente
         #screenshot.show()
 
-    def manuable_scan(self):
+    def manuable_scan(self,cotizador):
+        self.cotiz = cotizador
         x = self.xin
         #y = self.yin
         self.actualCot = []

@@ -39,7 +39,7 @@ class TablaDatos:
     def addDiaCotizacion(self,archivo):
         self.limpiar_tabla()
         archivo = "db\\"+archivo
-        file = organizier.CSVRegister.leer_csv(archivo)
+        file = organizier.Register.leer_csv(archivo)
         for dato in file[1]:
             self.tabla.insert("", END, text=dato[0], values=(dato[1], dato[2], dato[3],dato[4]))
         file[0].close()
@@ -89,6 +89,7 @@ class TablaCotizaciones:
             return valores
         else:
             messagebox.showwarning("Advertencia","Ninguna fila seleccionada.")
+            return False
 
 class TablaColaboradores:
     def __init__(self,app) -> None:
@@ -135,8 +136,7 @@ class App:
         #self.win.iconbitmap("")
 
         self.organizador = organizier.Register()
-        self.listaCotizador = cotizaciones.ListaCotizaciones()
-        self.camara = capturer.Capturer(self.listaCotizador)
+        self.camara = capturer.Capturer()
         #self.teseract = OCR.REOPC()
         self.impresora = tiketCreator.Printer()
         self.admin = user.ModalSesionInit()
@@ -168,7 +168,8 @@ class App:
         self.tabla = TablaDatos(self)
         self.leaveToMenu = Button(self.win,bg="IndianRed2",text="Volver",width=20,command=self.main_menu)
         self.limpiarButton = Button(self.win,text="Limpiar",bg="deep sky blue",width=20)
-        self.venderButton = Button(self.win,text="Vender",bg="SpringGreen2",width=20,command=self.forms_mode)
+        self.venderButton = Button(self.win,text="Vender",bg="SpringGreen2",width=20,
+                                   command=self.forms_mode)
 
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
@@ -186,7 +187,7 @@ class App:
 
 
         #Pantalla de formulario
-        self.cancelButton = Button(self.win,text="Cancelar",width=20,bg="brown2",command=self.main_menu)
+        self.cancelButton = Button(self.win,text="Cancelar",width=20,bg="brown2",command=self.cancelVent)
         self.completButton = Button(self.win,text="Completar",width=20,bg="SpringGreen2",command=self.venta)
         self.envioLabel = Label(self.win,text="Envio")
         self.infolabel = Label(self.win,text="Informacion")
@@ -197,6 +198,13 @@ class App:
         self.guia = Entry(self.win)
         self.price_text = StringVar()
         self.price = Entry(self.win,textvariable=self.price_text,state="readonly")
+
+    def cancelVent(self):
+        status = messagebox.askyesnocancel("Cancelar venta","Estas a punto de cancelar la venta, presiona OK para continuar")
+        if status:
+            self.listaCotizador.clear()
+            self.tablaCot.limpiar_tabla()
+            self.main_menu()
 
     def acesores(self,option):
         # 1=read 2=add 3=delete
@@ -229,15 +237,13 @@ class App:
     def selectDataCombobox(self,event):
         self.tabla.addDiaCotizacion(self.combobox.get())
 
-    def ventaConfirm(self,event):
-        print("venta") # de aqui se registra el dato en el csv y en el json y del json se crea tiket
-
     def hide_all(self):
         for widget in self.win.winfo_children():
             widget.place_forget()
 
     def main_menu(self):
         self.hide_all()
+        self.tablaCot.limpiar_tabla()
         self.win.geometry(self.LARGESIZE)
         self.titleFrame.place(x=0,y=0)
         self.lineFrame.place(x=0,y=150)
@@ -247,13 +253,21 @@ class App:
         self.exitButton.place(x=600,y=410,anchor=CENTER)
         self.title.place(x=350,y=0)
 
+    # En esta funcion se debe arreglar el problema de la tabla
     def list_menu(self,lista):
         self.hide_all()
+        #self.listaCotizador = cotizaciones.ListaCotizaciones()
+        #### self.listaCotizador.clear() 
+        self.tablaCot.limpiar_tabla()
         self.win.geometry(self.LARGESIZE)
         self.leaveToMenu.place(x=20,y=50)
         self.limpiarButton.place(x=100,y=510)
         self.limpiarButton.config(command=self.tablaCot.limpiar_tabla)
         self.venderButton.place(x=950,y=510)
+        #Agregar boton de hacer otra captura
+        #Agregar boton de llenar una cotizacion
+            # Esta opcion debe implementar seguridad como un aviso al administrador o una marca de registro
+            #Tambien se podria agregar una captura de todas las cotizaciones de manuable para asegurarse de un buen uso de la info
         self.tablaCot.mostrar(lista)
 
     def sales_list(self):
@@ -291,45 +305,58 @@ class App:
 
     def show_cotizaciones(self):
         self.win.withdraw()
-        time.sleep(5)
-        cotizacionesMan =self.camara.manuable_scan()
+        time.sleep(3)
+        self.tablaCot.limpiar_tabla()
+        self.listaCotizador = cotizaciones.ListaCotizaciones()
+        data = self.camara.manuable_scan(self.listaCotizador)
         #messagebox.showinfo("",f"{self.camara.manuable_scan()}")
         time.sleep(0.1)
         self.win.deiconify()
-        self.list_menu(cotizacionesMan)
+        self.list_menu(data)                        # Aqui tambien podria estar el error
 
     def forms_mode(self):
         datos = self.tablaCot.obtener_fila_seleccionada()
-        self.tablaCot.limpiar_tabla()
-        self.hide_all()
-        self.cancelButton.place(x=100,y=500)
-        self.completButton.place(x=500,y=500)
-        self.envioLabel.place(x=200,y=100)
-        self.infolabel.place(x=400,y=100)
-        self.name.place(x=200,y=150)
-        self.name.insert(0,"Nombre" if datos[0]=="False" or datos[0]==False else datos[0])
-        self.type.place(x=200,y=200)
-        self.type.insert(0,datos[1])
-        self.time.place(x=200,y=250)
-        self.time.insert(0,datos[2])
-        self.price_text.set(f"${datos[3]}")
-        self.price.place(x=200,y=300)
-        self.guia.place(x=400,y=200)
-        self.guia.insert(0,"No. de Guia")
-        self.acesor.place(x=400,y=150)
-        self.acesor['values'] = self.acesores(1)
+        if datos!=False:
+            self.tablaCot.limpiar_tabla()
+            self.hide_all()
+            self.cancelButton.place(x=100,y=500)
+            self.completButton.place(x=500,y=500)
+            self.envioLabel.place(x=200,y=100)
+            self.infolabel.place(x=400,y=100)
+            self.name.place(x=200,y=150)
+            self.name.delete(0, END)
+            self.name.insert(0,"Nombre" if datos[0]=="False" or datos[0]==False else datos[0])
+            self.type.place(x=200,y=200)
+            self.type.delete(0, END)
+            self.type.insert(0,datos[1])
+            self.time.place(x=200,y=250)
+            self.time.delete(0, END)
+            self.time.insert(0,datos[2])
+            self.price_text.set(f"${datos[3]}")
+            self.price.place(x=200,y=300)
+            self.guia.place(x=400,y=200)
+            self.guia.delete(0, END)
+            self.guia.insert(0,"No. de Guia")
+            self.acesor.place(x=400,y=150)
+            self.acesor['values'] = self.acesores(1)
 
     def venta(self):
         cotVent = self.listaCotizador.search(price=self.price.get().replace("$",""))
-        self.organizador.writeJson(name=cotVent[0],
-                                   tipo=cotVent[1],
-                                   time=cotVent[2],
+        self.organizador.writeJson(name=(cotVent[0] if cotVent[0]==self.name.get() else self.name.get()),
+                                   tipo=(cotVent[1] if cotVent[1]==self.type.get() else self.type.get()),
+                                   time=(cotVent[2] if cotVent[2]==self.time.get() else self.time.get()),
                                    price=cotVent[3],
                                    utilidad=cotVent[4],
                                    final=cotVent[5])
+        messagebox.showinfo("Proceso completado","La venta ha sido registrada exitosamente, continua para imprimir el tiket.")
         self.impresora.create_ticket(venta=self.organizador.readJson(),
                                      colaborator=self.acesor.get(),guide=self.guia.get())
-        # json a registro
+        jsonVent = self.organizador.readJson()
+        #print(cotVent)
+        #self.listaCotizador.clear()
+        self.organizador.create_csv(f"{jsonVent['name']},{jsonVent['tipo']},{jsonVent['time']},{jsonVent['price']},{jsonVent['utilidad']},{jsonVent['final']}")
+        self.tablaCot.limpiar_tabla()
+        self.main_menu()
 
     def run(self):
         self.main_menu()

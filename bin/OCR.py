@@ -18,7 +18,7 @@ class REOPC:
         # Especificar la ruta al ejecutable de Tesseract
         pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
         self.priceList = ["c","C","r","e","a","r","n","v","i","o","w",
-                          "x",">","m","\n","t","s","p","M","G","?","u"]
+                          "x",">","m","\n","t","s","p","M","G","?","u","|"]
         self.daysList = ["@","}",")"]
         self.dias5 = ["S","5"]
         self.dias5mas = ["Sr","5+"]
@@ -39,6 +39,11 @@ class REOPC:
         # Imprimir el texto extraído
         return(text)
     
+    def validate_number(self,text=""):
+        if text and not text[-1].isdigit():
+            text = text[:-1]  # Eliminar el último caracter
+        return text
+
     def recibe_precio(self,imagen):
         # convierte la imagen, remplaza los espacios y caracteres extra, elimina comas extra y retorna una lista
         newtext = self.convert(imagen)
@@ -49,7 +54,7 @@ class REOPC:
         newtext = newtext.replace("$","")
         #final = newtext[1:].split(",")
         #final = filter(None,final)
-        return newtext #final
+        return self.validate_number(newtext) #final
     
     def correcion_tiempo(self,texto):
         # corrige las palabras mal detectadas a las palabras que deberian ser

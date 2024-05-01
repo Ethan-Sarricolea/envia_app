@@ -43,9 +43,6 @@ class ListaCotizaciones:
                               actualCot.type,
                               actualCot.tiempo,
                               actualCot.final))
-                """,
-                              actualCot.utilidad,
-                              actualCot.precio"""
                 actualCot = actualCot.siguiente
             return array
         else:
@@ -64,7 +61,14 @@ class ListaCotizaciones:
         else:
             print("No hay cabeza")
 
-        
+    def clear(self):
+        actual = self.head
+        while actual:
+            siguiente = actual.siguiente
+            del actual
+            actual = siguiente
+        self.cabeza = None
+           
 #
 """
 lista = ListaCotizaciones()
