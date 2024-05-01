@@ -6,20 +6,20 @@
 --------------------------------
 
 Punto de venta: ENVIA LAS PALMAS
-Fecha y hora: 30/04/2024, 17:59:05
+Fecha y hora: 30/04/2024, 18:43:35
 Lugar: ENVIA, EL PALMAR AV. LAS PALMAS 101 LOC X COATZACOALCOS, VERACRUZ
 
 
 
-Compañia: UPS
-Tipo de envio: UPS Worldwide Saver
+Compañia: PaqueteExpress
+Tipo de envio: Estandar
 Tiempo de espera: 5 Dia(s) aprox.
-Precio: $417.12
+Precio: $261.81
 
 
 
 Asesor: Ethan
-Número de guia: 25637
+Número de guia: 12633
 
 
 --------------------------------

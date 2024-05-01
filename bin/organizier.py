@@ -29,7 +29,9 @@ class Register:
         
     def leer_database(self):
         ruta = "db"
-        return os.listdir(ruta)
+        datos = os.listdir(ruta)
+        del datos[-1]
+        return datos
 
     def ubicar_archivo(self,name):
         return (True if os.path.exists(name) else False)
@@ -43,7 +45,7 @@ class Register:
                 archivo.write(contenido)    # contenido se remplazara por la info
         else:
             with open(str(self.nombre_archivo), 'w+') as archivo:
-                archivo.write("Nombre,Tipo,Tiempo,$original,utilidad,$final\n")
+                #archivo.write("Nombre,Tipo,Tiempo,$original,utilidad,$final\n")
                 archivo.write(contenido)
 
     def writeJson(self,name,tipo,time,price,utilidad,final):

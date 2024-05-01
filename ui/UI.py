@@ -17,17 +17,19 @@ class TablaDatos:
             # Crear Treeview    
         self.app = app
         self.tabla = ttk.Treeview(self.app.win)
-        self.tabla["columns"] = ("1", "2", "3","4")  # Definir las columnas
-        self.tabla.column("#0", width=200, minwidth=100, stretch=NO)  # Configurar la primera columna
-        self.tabla.column("1", width=200, minwidth=100, stretch=NO)
+        self.tabla["columns"] = ("1", "2", "3","4","5")  # Definir las columnas
+        self.tabla.column("#0", width=150, minwidth=100, stretch=NO)  # Configurar la primera columna
+        self.tabla.column("1", width=180, minwidth=100, stretch=NO)
         self.tabla.column("2", width=200, minwidth=100, stretch=NO)
-        self.tabla.column("3", width=200, minwidth=100, stretch=NO)
-        self.tabla.column("3", width=200, minwidth=100, stretch=NO)
+        self.tabla.column("3", width=150, minwidth=100, stretch=NO)
+        self.tabla.column("4", width=150, minwidth=100, stretch=NO)
+        self.tabla.column("5", width=150, minwidth=100, stretch=NO)
         self.tabla.heading("#0", text="Nombre", anchor=W)  # Encabezado de la primera columna
-        self.tabla.heading("1", text="Tiempo", anchor=W)  # Encabezado de la segunda columna
-        self.tabla.heading("2", text="Precio", anchor=W)  # Encabezado de la tercera columna
-        self.tabla.heading("3", text="Final", anchor=W)  # Encabezado de la cuarta columna
-        self.tabla.heading("4", text="Utilidad", anchor=W)
+        self.tabla.heading("1", text="Tipo", anchor=W)
+        self.tabla.heading("2", text="Tiempo", anchor=W)  # Encabezado de la segunda columna
+        self.tabla.heading("3", text="Precio", anchor=W)  # Encabezado de la tercera columna
+        self.tabla.heading("4", text="Utilidad", anchor=W)  # Encabezado de la cuarta columna
+        self.tabla.heading("5", text="Final", anchor=W)
         self.scrollbar = ttk.Scrollbar(self.app.win, orient="vertical", command=self.tabla.yview)
         self.tabla.configure(yscrollcommand=self.scrollbar.set)
 
@@ -41,7 +43,7 @@ class TablaDatos:
         archivo = "db\\"+archivo
         file = organizier.Register.leer_csv(archivo)
         for dato in file[1]:
-            self.tabla.insert("", END, text=dato[0], values=(dato[1], dato[2], dato[3],dato[4]))
+            self.tabla.insert("", END, text=dato[0], values=(dato[1], dato[2], dato[3],dato[4],dato[5]))
         file[0].close()
 
     def limpiar_tabla(self):
@@ -280,7 +282,7 @@ class App:
             self.limpiarButton.place(x=100,y=400)
             self.limpiarButton.config(command=self.tabla.limpiar_tabla)
             self.combobox.place(x=500,y=50)
-            self.combobox.configure(values=self.organizador.leer_database())
+            self.combobox.configure(values=(self.organizador.leer_database()))
             self.combobox.bind("<<ComboboxSelected>>", self.selectDataCombobox)
             self.tabla.mostrar()
         else:
