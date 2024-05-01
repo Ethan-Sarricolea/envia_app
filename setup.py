@@ -13,5 +13,10 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
+    entry_points={
+        'console_scripts': [
+            'mi_ejecutable = main:main',  # Entrada para el ejecutable
+        ],
+    },
     python_requires='>=3.6',  # Versión mínima de Python requerida
 )

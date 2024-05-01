@@ -1,29 +1,21 @@
-
 --------------------------------
-
             ENVIA
-            
 --------------------------------
 
 Punto de venta: ENVIA LAS PALMAS
-Fecha y hora: 30/04/2024, 18:43:35
-Lugar: ENVIA, EL PALMAR AV. LAS PALMAS 101 LOC X COATZACOALCOS, VERACRUZ
+Fecha y hora: 30/04/2024, 19:06:02
+Lugar: ENVIA, EL PALMAR AV. LAS
+       PALMAS 101 LOC X
+    COATZACOALCOS, VERACRUZ
 
-
-
-Compañia: PaqueteExpress
-Tipo de envio: Estandar
-Tiempo de espera: 5 Dia(s) aprox.
-Precio: $261.81
-
-
+Compaï¿½ia: DHL
+Tipo de envio: Express Domestic
+Tiempo de espera: 1 Dia(s) aprox.
+Precio: $141.65
 
 Asesor: Ethan
-Número de guia: 12633
-
+Nï¿½mero de guia: 34537
 
 --------------------------------
-
-    ¡Gracias por tu compra!
-
+    ï¿½Gracias por tu compra!
 --------------------------------
