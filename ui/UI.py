@@ -105,6 +105,7 @@ class TablaColaboradores:
         self.tabla.configure(yscrollcommand=self.scrollbar.set)
 
     def mostrarNombres(self,datos):
+        self.limpiar_tabla()
         for dato in datos:
             self.tabla.insert("", END, text=dato)
 
@@ -135,7 +136,6 @@ class App:
         self.win.title("EnviApp")
         self.win.resizable(0,0)
         self.buttonsize = 20
-        #self.win.iconbitmap("")
 
         self.organizador = organizier.Register()
         self.camara = capturer.Capturer()
@@ -144,16 +144,17 @@ class App:
         self.admin = user.ModalSesionInit()
 
         #Menu inicial
-        self.logoEnvia = Image.open("src\images\logo.jpg")
-        self.logoEnvia = self.logoEnvia.resize((500,175))
+        self.logoEnvia = Image.open("src\images\logo2.png")
+        self.logoEnvia = self.logoEnvia.resize((400,150))
         self.logoEnvia = ImageTk.PhotoImage(self.logoEnvia)
         self.titleFrame = Frame(self.win,bg="gray30",width=self.ancho,height=150)
+        self.title = Label(self.win,image=self.logoEnvia,foreground="gold",background="gray30")#,bg="gold"
         self.lineFrame = Frame(self.win,bg="gold",width=self.ancho,height=30)
         self.goButtom = Button(self.win,text="Comenzar",bg="yellow",width=self.buttonsize,command=self.capture_mode)
         self.dayButtom =  Button(self.win,text="Venta diaria",bg="yellow",width=self.buttonsize,command=self.sales_list)
         self.optionsButtom = Button(self.win,text="Configuración",bg="gray30",width=self.buttonsize,command=self.configuration_mode)
         self.exitButton = Button(self.win,bg="brown2",text="Salir",width=self.buttonsize,command=self.win.destroy)
-        self.title = Label(self.win,image=self.logoEnvia,bg="gold")
+        
 
         # Modo captura
         self.sissors = Image.open("src\images\icono_tijeras.png")
@@ -183,9 +184,9 @@ class App:
         self.colabs = ttk.Combobox(self.win,state="radonly",values=[])
         #self.acesoresAdd = lambda: self.acesores(2)
         #self.acesoresDel = lambda: self.acesores(3)
-        self.addColab = Button(self.win,width=20,text="Agregar",command=lambda: self.acesores(2))
-        self.deleteColab = Button(self.win,width=20,text="Eliminar",command=lambda: self.acesores(3))
-        self.updateColabs = Button(self.win,text="Actualizar",width=20,command=self.tabla_acesores.update)
+        self.addColab = Button(self.win,width=20,text="Agregar",command=lambda: self.acesores(2))       # add
+        self.deleteColab = Button(self.win,width=20,text="Eliminar",command=lambda: self.acesores(3))       # del
+        #self.updateColabs = Button(self.win,text="Actualizar",width=20,command=self.tabla_acesores.update)
 
 
         #Pantalla de formulario
@@ -226,6 +227,8 @@ class App:
         elif option==2:
             with open("src\colaborators.txt","a+") as acesoresList:
                 acesoresList.write(name+"\n")
+            self.colabs['values'] = self.acesores(1)
+            self.tabla_acesores.update()
         elif option==3:
             name = name+"\n"
             with open("src\colaborators.txt","r") as archivo:
@@ -235,6 +238,8 @@ class App:
             with open("src\colaborators.txt","w") as archivo:
                 for nombre in lista:
                     archivo.write(nombre)
+            self.colabs['values'] = self.acesores(1)
+            self.tabla_acesores.update()
                     
     def selectDataCombobox(self,event):
         self.tabla.addDiaCotizacion(self.combobox.get())
@@ -253,7 +258,8 @@ class App:
         self.dayButtom.place(x=600,y=310,anchor=CENTER)
         self.optionsButtom.place(x=600,y=360,anchor=CENTER)
         self.exitButton.place(x=600,y=410,anchor=CENTER)
-        self.title.place(x=350,y=0)
+        # self.title.place(x=400,y=6)
+        self.title.place(x=400,y=0)
 
     # En esta funcion se debe arreglar el problema de la tabla
     def list_menu(self,lista):
@@ -295,8 +301,8 @@ class App:
         self.colabs.place(x=800,y=100)
         self.addColab.place(x=800,y=150)
         self.deleteColab.place(x=800,y=200)
-        self.updateColabs.place(x=800,y=250)
-        self.colabs['values'] = self.acesores(1)
+        #self.updateColabs.place(x=800,y=250)
+        self.colabs['values'] = self.acesores(1)        # Read
         self.tabla_acesores.mostrar()
 
     def capture_mode(self):
@@ -340,7 +346,7 @@ class App:
             self.guia.delete(0, END)
             self.guia.insert(0,"No. de Guia")
             self.acesor.place(x=400,y=150)
-            self.acesor['values'] = self.acesores(1)
+            self.acesor['values'] = self.acesores(1)        # read
 
     def venta(self):
         cotVent = self.listaCotizador.search(price=self.price.get().replace("$",""))

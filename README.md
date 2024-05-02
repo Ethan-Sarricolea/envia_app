@@ -8,9 +8,7 @@ identificar el funcionamiento de texto de tesseract
 
 # Objetivo a corto plazo
 
-evitar que aparezca el archivo json en venta diaria
-reseteo de lista de cotizaziones !!!!!!!
-Limpieza de entrys
+Mejorar la configuracion
 
 ## Objetivos
 
