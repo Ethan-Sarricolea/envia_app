@@ -10,6 +10,8 @@ Usar la libreria bcrypt para las contraseñas
 #### Nota
 Pensar en como cancelar una venta y como afecta a los datos.
 
+Agregar total de venta diaria   (LISTO)
+
 ### librerias
 
 Instalación de pytesseract: https://github.com/UB-Mannheim/tesseract/wiki

@@ -35,20 +35,29 @@ class TablaDatos:
 
     def mostrar(self):
         self.limpiar_tabla()
-        self.tabla.place(x=100,y=100)
+        self.tabla.place(x=100,y=100,relheight=400/600)
         #self.scrollbar.pack(side="right", fill="y")
 
     def addDiaCotizacion(self,archivo):
+        price = 0
+        util = 0
+        coste = 0
         self.limpiar_tabla()
         archivo = "db\\"+archivo
         file = organizier.Register.leer_csv(archivo)
         for dato in file[1]:
             self.tabla.insert("", END, text=dato[0], values=(dato[1], dato[2], dato[3],dato[4],dato[5]))
+            price+=float(dato[5])
+            util+=float(dato[4])
+            coste+=float(dato[3])
         file[0].close()
+        print(price)
+        self.app.totalLabel.config(text=f"Costo={coste} / Ganancia={util} / Total={price}")
 
     def limpiar_tabla(self):
         # Eliminar todas las filas de la tabla
         self.tabla.delete(*self.tabla.get_children())
+        self.app.totalLabel.config(text="Costo= / Ganancia= / Total=")
 
 class TablaCotizaciones:
     def __init__(self,app) -> None:
@@ -76,7 +85,7 @@ class TablaCotizaciones:
     def mostrar(self,lista):
         self.limpiar_tabla()
         self.addCotizaciones(lista)
-        self.tabla.place(x=100,y=100,height=400)
+        self.tabla.place(x=100,y=100)
         
     def limpiar_tabla(self):
         # Eliminar todas las filas de la tabla
@@ -169,6 +178,7 @@ class App:
         #Muestra de cotizaciones
         self.tablaCot = TablaCotizaciones(self)
         self.tabla = TablaDatos(self)
+        self.totalLabel = Label(self.win,text="Costo= / Ganancia= / Total=")
         self.leaveToMenu = Button(self.win,bg="IndianRed2",text="Volver",width=20,command=self.main_menu)
         self.limpiarButton = Button(self.win,text="Limpiar",bg="deep sky blue",width=20)
         self.venderButton = Button(self.win,text="Vender",bg="SpringGreen2",width=20,
@@ -285,8 +295,9 @@ class App:
             self.hide_all()
             self.win.geometry(self.LARGESIZE)
             self.leaveToMenu.place(x=20,y=50)
-            self.limpiarButton.place(x=100,y=400)
+            self.limpiarButton.place(x=100,y=510)
             self.limpiarButton.config(command=self.tabla.limpiar_tabla)
+            self.totalLabel.place(x=630,y=515)
             self.combobox.place(x=500,y=50)
             self.combobox.configure(values=(self.organizador.leer_database()))
             self.combobox.bind("<<ComboboxSelected>>", self.selectDataCombobox)
