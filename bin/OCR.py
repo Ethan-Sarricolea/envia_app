@@ -58,18 +58,19 @@ class REOPC:
     
     def correcion_tiempo(self,texto):
         # corrige las palabras mal detectadas a las palabras que deberian ser
-        if texto[0] in self.dias5:
-            texto = "5 Dia(s) aprox."
-            if texto[:2] in self.dias5mas:
-                texto = "5+ Dia(s) aprox."
-        elif texto[0] in self.dias4:
-            texto = "4 Dia(s) aprox."
-        elif texto[0] in self.dias3:
-            texto = "3 Dia(s) aprox."
-        elif texto[0] in self.dias2:
-            texto = "2 Dia(s) aprox."
-        elif texto[0] in self.dias1:
-           texto = "1 Dia aprox."
+        if texto:
+            if texto[0] in self.dias5:
+                texto = "5 Dia(s) aprox."
+                if texto[:2] in self.dias5mas:
+                    texto = "5+ Dia(s) aprox."
+            elif texto[0] in self.dias4:
+                texto = "4 Dia(s) aprox."
+            elif texto[0] in self.dias3:
+                texto = "3 Dia(s) aprox."
+            elif texto[0] in self.dias2:
+                texto = "2 Dia(s) aprox."
+            elif texto[0] in self.dias1:
+                texto = "1 Dia aprox."
         return texto
 
     def recibe_tiempo(self,imagen):

@@ -144,7 +144,7 @@ class App:
         self.admin = user.ModalSesionInit()
 
         #Menu inicial
-        self.logoEnvia = Image.open("src\images\logo2.png")
+        self.logoEnvia = Image.open(r"src\images\logo.png")
         self.logoEnvia = self.logoEnvia.resize((400,150))
         self.logoEnvia = ImageTk.PhotoImage(self.logoEnvia)
         self.titleFrame = Frame(self.win,bg="gray30",width=self.ancho,height=150)
@@ -157,10 +157,10 @@ class App:
         
 
         # Modo captura
-        self.sissors = Image.open("src\images\icono_tijeras.png")
+        self.sissors = Image.open(r"src\images\icono_tijeras.png")
         self.sissors = self.sissors.resize((60,70))
         self.sissorsTk = ImageTk.PhotoImage(self.sissors)
-        self.exitIcon = Image.open("src\images\Salir_icono.png")
+        self.exitIcon = Image.open(r"src\images\Salir_icono.png")
         self.exitIcon = self.exitIcon.resize((70,70))
         self.exitIcon = ImageTk.PhotoImage(self.exitIcon)
         self.captureButton = Button(self.win,image=self.sissorsTk,command=self.show_cotizaciones)
