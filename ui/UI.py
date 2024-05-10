@@ -51,7 +51,6 @@ class TablaDatos:
             util+=float(dato[4])
             coste+=float(dato[3])
         file[0].close()
-        print(price)
         self.app.totalLabel.config(text=f"Costo={coste} / Ganancia={util} / Total={price}")
 
     def limpiar_tabla(self):
