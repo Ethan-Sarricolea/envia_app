@@ -61,6 +61,19 @@ class ListaCotizaciones:
         else:
             print("No hay cabeza")
 
+    def searchNew(self,price):
+        actualCot = self.head
+        if actualCot:
+            while actualCot is not None:
+                #print("Precio final de la cotización actual:", actualCot.final)
+                if actualCot.precio == price or actualCot.precio == float(price):
+                    return [actualCot.nombre, actualCot.type, actualCot.tiempo, actualCot.precio, actualCot.utilidad, actualCot.final]
+                actualCot = actualCot.siguiente
+            #print("No se encontró ninguna cotización con el precio dado.")
+            return None
+        else:
+            print("No hay cabeza")
+
     def clear(self):
         actual = self.head
         while actual:

@@ -6,20 +6,20 @@
 --------------------------------
 
 Punto de venta: ENVIA LAS PALMAS
-Fecha y hora: 02/05/2024, 17:39:55
+Fecha y hora: 10/05/2024, 19:06:44
 Lugar: ENVIA, EL PALMAR AV. LAS PALMAS 101 LOC X COATZACOALCOS, VERACRUZ
 
 
 
-Compañia: FEDEX
-Tipo de envio: Standard Overnight
-Tiempo de espera: 4 Dia(s) aprox.
-Precio: $148.75
+Compañia: DHL
+Tipo de envio: Express Domestic
+Tiempo de espera: 1 dia
+Precio: $171.48
 
 
 
 Asesor: Ethan
-Número de guia: 2354
+Número de guia: 29687394
 
 
 --------------------------------

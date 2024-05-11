@@ -4,6 +4,20 @@ EnviApp
 
 V: Beta
 
+# Nueva tarea
+Agregar contador en 1 por cotizacion cada que se realiza una captura
+cuando se presiona el boton de agregar el contador pasa a 0
+cuando el contador esta en 0 el boton desaparece
+
+task:
+analiza la funcion nde agregar cotizacion
+
+process: 
+nueva ventana para agregar un producto
+colocar info y presionar boton  de continuar
+al ñpresionar continuar el toplevel obtiene y retorna la informacion a la pagina principal
+la pagina principal llama a agregar uin producto a la lista con esa informacion
+
 ## Seguridad 
 Usar la libreria bcrypt para las contraseñas
 

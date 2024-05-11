@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='EnviApp',
-    version='1.1.1',
+    version='1.1.5',
     description='App de envia para colaboradores y administracion de negocio',
     url='https://github.com/Ethan-Sarricolea/envia_app.git',
     author='Sarricolea Cortés Ethan Yahel',

@@ -8,10 +8,11 @@ Author: Ethan Yahel Sarricolea Cortés
 from tkinter import *
 from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
-from bin import capturer,cotizaciones,OCR,organizier,tiketCreator,comparador
+from bin import capturer,cotizaciones,organizier,tiketCreator,otherproduct
 from ui import user
 import time
 
+# Tabla de venta diaria
 class TablaDatos:
     def __init__(self,app) -> None:
             # Crear Treeview    
@@ -53,11 +54,14 @@ class TablaDatos:
         file[0].close()
         self.app.totalLabel.config(text=f"Costo={coste} / Ganancia={util} / Total={price}")
 
+
+
     def limpiar_tabla(self):
         # Eliminar todas las filas de la tabla
         self.tabla.delete(*self.tabla.get_children())
         self.app.totalLabel.config(text="Costo= / Ganancia= / Total=")
 
+# Tabla de cotizaciones
 class TablaCotizaciones:
     def __init__(self,app) -> None:
             # Crear Treeview    
@@ -81,10 +85,16 @@ class TablaCotizaciones:
         for fila in lista:
             self.tabla.insert("", "end", values=tuple(fila))
 
+    def addIndivcot(self,lista):
+        #self.tabla.insert("", "end", values=tuple(lista))
+        self.tabla.insert("", END, values=(lista[0], lista[1], lista[2], lista[5]))
+        self.tabla.place_forget()
+        self.tabla.place(x=100,y=100,relheight=350/600)
+
     def mostrar(self,lista):
         self.limpiar_tabla()
         self.addCotizaciones(lista)
-        self.tabla.place(x=100,y=100)
+        self.tabla.place(x=100,y=100,relheight=350/600)
         
     def limpiar_tabla(self):
         # Eliminar todas las filas de la tabla
@@ -101,6 +111,7 @@ class TablaCotizaciones:
             messagebox.showwarning("Advertencia","Ninguna fila seleccionada.")
             return False
 
+# Tabla de colaboradores
 class TablaColaboradores:
     def __init__(self,app) -> None:
             # Crear Treeview    
@@ -147,7 +158,7 @@ class App:
 
         self.organizador = organizier.Register()
         self.camara = capturer.Capturer()
-        #self.teseract = OCR.REOPC()
+        self.adderProd = otherproduct.Adder()
         self.impresora = tiketCreator.Printer()
         self.admin = user.ModalSesionInit()
 
@@ -162,8 +173,6 @@ class App:
         self.dayButtom =  Button(self.win,text="Venta diaria",bg="yellow",width=self.buttonsize,command=self.sales_list)
         self.optionsButtom = Button(self.win,text="Configuración",bg="gray30",width=self.buttonsize,command=self.configuration_mode)
         self.exitButton = Button(self.win,bg="brown2",text="Salir",width=self.buttonsize,command=self.win.destroy)
-        
-
         # Modo captura
         self.sissors = Image.open(r"src\images\icono_tijeras.png")
         self.sissors = self.sissors.resize((60,70))
@@ -182,6 +191,7 @@ class App:
         self.limpiarButton = Button(self.win,text="Limpiar",bg="deep sky blue",width=20)
         self.venderButton = Button(self.win,text="Vender",bg="SpringGreen2",width=20,
                                    command=self.forms_mode)
+        self.agregarCot = Button(self.win,text="Añadir cotizacion",width=self.buttonsize,bg="yellow",command=self.productAddition)
 
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
@@ -270,6 +280,18 @@ class App:
         # self.title.place(x=400,y=6)
         self.title.place(x=400,y=0)
 
+    def productAddition(self):
+        self.adderProd.run()
+        self.adderProd.win.wait_window()
+        status = self.adderProd.returnToWindow()
+        if not status:
+            pass
+        else:
+            self.listaCotizador.addCotizacion(name=status[0],tipo=status[1],tiempo=status[2],precio=status[3])
+            newdate = self.listaCotizador.searchNew(status[3])
+            self.tablaCot.addIndivcot(newdate)
+            self.agregarCot.place_forget()
+
     # En esta funcion se debe arreglar el problema de la tabla
     def list_menu(self,lista):
         self.hide_all()
@@ -281,10 +303,7 @@ class App:
         self.limpiarButton.place(x=100,y=510)
         self.limpiarButton.config(command=self.tablaCot.limpiar_tabla)
         self.venderButton.place(x=950,y=510)
-        #Agregar boton de hacer otra captura
-        #Agregar boton de llenar una cotizacion
-            # Esta opcion debe implementar seguridad como un aviso al administrador o una marca de registro
-            #Tambien se podria agregar una captura de todas las cotizaciones de manuable para asegurarse de un buen uso de la info
+        self.agregarCot.place(x=500,y=510)
         self.tablaCot.mostrar(lista)
 
     def sales_list(self):
