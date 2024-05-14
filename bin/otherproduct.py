@@ -52,7 +52,7 @@ class Adder:
         self.__time.pack(pady=5)
         self.__time.insert(0,"Tiempo de envio")
         self.__price.pack(pady=5)
-        self.__price.insert(0,"Tipo de envio")
+        self.__price.insert(0,"Precio de envio")
         self.cancelButton.pack(side="left",padx=20)
         self.continuebutton.pack(side="right",padx=20)
 
