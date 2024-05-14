@@ -13,31 +13,32 @@ import time
 # Tabla de venta diaria
 class TablaDatos:
     def __init__(self,app) -> None:
-            # Crear Treeview    
+        # Crear Treeview    
         self.app = app
         self.tabla = ttk.Treeview(self.app.win)
         self.tabla["columns"] = ("1", "2", "3","4","5")  # Definir las columnas
-        self.tabla.column("#0", width=150, minwidth=100, stretch=NO)  # Configurar la primera columna
+        self.tabla.column("#0", width=150, minwidth=100, stretch=NO)  # Columnas
         self.tabla.column("1", width=180, minwidth=100, stretch=NO)
         self.tabla.column("2", width=200, minwidth=100, stretch=NO)
         self.tabla.column("3", width=150, minwidth=100, stretch=NO)
         self.tabla.column("4", width=150, minwidth=100, stretch=NO)
         self.tabla.column("5", width=150, minwidth=100, stretch=NO)
-        self.tabla.heading("#0", text="Nombre", anchor=W)  # Encabezado de la primera columna
+        self.tabla.heading("#0", text="Nombre", anchor=W)  # Encabezados
         self.tabla.heading("1", text="Tipo", anchor=W)
-        self.tabla.heading("2", text="Tiempo", anchor=W)  # Encabezado de la segunda columna
-        self.tabla.heading("3", text="Precio", anchor=W)  # Encabezado de la tercera columna
-        self.tabla.heading("4", text="Utilidad", anchor=W)  # Encabezado de la cuarta columna
+        self.tabla.heading("2", text="Tiempo", anchor=W)
+        self.tabla.heading("3", text="Precio", anchor=W)
+        self.tabla.heading("4", text="Utilidad", anchor=W)
         self.tabla.heading("5", text="Final", anchor=W)
         self.scrollbar = ttk.Scrollbar(self.app.win, orient="vertical", command=self.tabla.yview)
         self.tabla.configure(yscrollcommand=self.scrollbar.set)
 
     def mostrar(self):
+        # Mostrar tabla en ventana principal
         self.limpiar_tabla()
         self.tabla.place(x=100,y=100,relheight=400/600)
-        #self.scrollbar.pack(side="right", fill="y")
 
     def addDiaCotizacion(self,archivo):
+        # Agregar cotizaciones a tabla y calcular totales
         price = 0
         util = 0
         coste = 0
@@ -64,30 +65,32 @@ class TablaCotizaciones:
         self.app = app
         self.tabla = ttk.Treeview(self.app.win)
         self.tabla["columns"] = ("1", "2","3","4")  # Definir las columnas
-        self.tabla.column("#0", width=1, minwidth=100, stretch=NO)  # Configurar la primera columna
+        self.tabla.column("#0", width=1, minwidth=100, stretch=NO)  # Columnas
         self.tabla.column("1", width=200, minwidth=100, stretch=NO)
         self.tabla.column("2", width=200, minwidth=100, stretch=NO)
         self.tabla.column("3", width=200, minwidth=100, stretch=NO)
         self.tabla.column("4", width=200, minwidth=100, stretch=NO)
-        self.tabla.heading("#0", text="", anchor=W)  # Encabezado de la primera columna
+        self.tabla.heading("#0", text="", anchor=W)  # Encabezados
         self.tabla.heading("1", text="Nombre", anchor=W)
         self.tabla.heading("2", text="Tipo", anchor=W)
-        self.tabla.heading("3", text="Tiempo", anchor=W)  # Encabezado de la segunda columna
-        self.tabla.heading("4", text="Precio", anchor=W)  # Encabezado de la tercera columna
+        self.tabla.heading("3", text="Tiempo", anchor=W)
+        self.tabla.heading("4", text="Precio", anchor=W)
         self.scrollbar = ttk.Scrollbar(self.app.win, orient="vertical", command=self.tabla.yview)
         self.tabla.configure(yscrollcommand=self.scrollbar.set)
 
     def addCotizaciones(self,lista):
+        # Insertar lista de cotizaciones
         for fila in lista:
             self.tabla.insert("", "end", values=tuple(fila))
 
     def addIndivcot(self,lista):
-        #self.tabla.insert("", "end", values=tuple(lista))
+        # Insertar la cotizacion individual
         self.tabla.insert("", END, values=(lista[0], lista[1], lista[2], lista[5]))
         self.tabla.place_forget()
         self.tabla.place(x=100,y=100,relheight=350/600)
 
     def mostrar(self,lista):
+        # Mostrar tabla en ventana principal
         self.limpiar_tabla()
         self.addCotizaciones(lista)
         self.tabla.place(x=100,y=100,relheight=350/600)
@@ -110,7 +113,7 @@ class TablaCotizaciones:
 # Tabla de colaboradores
 class TablaColaboradores:
     def __init__(self,app) -> None:
-            # Crear Treeview    
+        # Crear Treeview    
         self.app = app
         self.tabla = ttk.Treeview(self.app.win)
         self.tabla["columns"] = ("1")  # Definir las columnas
@@ -120,11 +123,13 @@ class TablaColaboradores:
         self.tabla.configure(yscrollcommand=self.scrollbar.set)
 
     def mostrarNombres(self,datos):
+        # Llenar tabla co0n datos
         self.limpiar_tabla()
         for dato in datos:
             self.tabla.insert("", END, text=dato)
 
     def mostrar(self):
+        # Mostrar tabla en ventana principal
         self.limpiar_tabla()
         listanombres = self.app.acesores(1)
         self.mostrarNombres(listanombres) if listanombres!=None else False
@@ -135,6 +140,7 @@ class TablaColaboradores:
         self.tabla.delete(*self.tabla.get_children())
 
     def update(self):
+        # Actualizar datos de la tabla
         self.limpiar_tabla()
         listanombres = self.app.acesores(1)
         self.mostrarNombres(listanombres) if listanombres!=None else False
