@@ -1,9 +1,11 @@
 """
 Description: Detecta el porcentaje de similitud con cada logo y retorna el nombre del logo de mayor coincidencia.
+Por cada logo hace una comparación
+obtiene el logo original y lo redimensiona, luego identifica la igualdad,
+similitud y genera una lista de porcentajes, en base a la lista retorna el nombre del logo con mayor %
 """
 
 import cv2
-import numpy as np
 
 class IMGcomaparator:
     def __init__(self) -> None:
@@ -19,7 +21,6 @@ class IMGcomaparator:
     def comparacion(self,image):            # Funcion a llamar para obtener el logo
         # Comparacion de la imagen con los logos
         self.resultsList = []
-        # src\screenshots\screenshot1.jpg
         self.original = cv2.imread(image)
         for logo in self.logos:
             self.image_to_compare = cv2.imread(logo)
@@ -43,6 +44,7 @@ class IMGcomaparator:
 
 
     def similitud(self):
+        # Detectar 
         self.shift = cv2.xfeatures2d.SIFT_create()
         self.kp_1, self.desc_1 = self.shift.detectAndCompute(self.original, None)
         self.kp_2, self.desc_2 = self.shift.detectAndCompute(self.image_to_compare, None)

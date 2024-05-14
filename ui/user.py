@@ -1,5 +1,6 @@
 """
-Ventana de inicio de sesion de administrador
+Description: Ventana de inicio de sesion de administrador
+Author: Sarricolea Cortés Ethan Yahel
 """
 
 from tkinter import Toplevel,Entry,Label,Button
@@ -7,13 +8,16 @@ from bin import security
 
 class ModalSesionInit:
     def view_status(self):
+        # Cambiar visibilidad de texto
         self.entry.config(show="") if self._visibility_val else self.entry.config(show="*")
         self._visibility_val = False if self._visibility_val else True
 
     def config_label(self):
+        # Quitar texto de error
         self.errorlabel.configure(text="")
 
     def passwordVerifi(self):
+        # verificar contraseña
         if self.locker.iniciar_sesion_admin(self.entry.get()):
             self._status = True
             self.window.destroy()
@@ -22,11 +26,13 @@ class ModalSesionInit:
             self.errorlabel.after(3000,self.config_label)
 
     def readPass(self):
+        # Retornar estado de la contraseña (correcta o incorrecta)
         self.status = self._status
         self._status = False
         return self.status
 
     def run(self):
+        # Mostrar ventana secundaria
         self.window = Toplevel()
         self.window.title("")
         self.window.geometry("250x100")

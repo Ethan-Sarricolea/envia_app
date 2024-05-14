@@ -24,7 +24,8 @@ class ListaCotizaciones:
     def __init__(self) -> None:
         self.head = None
 
-    def addCotizacion(self,name,tipo,tiempo,precio):        # Agregar al final
+    def addCotizacion(self,name,tipo,tiempo,precio):
+        # Agregar cotizacion al final
         newCot = Cotizacion(name,tipo,tiempo,precio)
         if self.head:
             actualCot = self.head
@@ -35,6 +36,7 @@ class ListaCotizaciones:
             self.head = newCot
 
     def generarLista(self):
+        # Generar array de la lista de cotizaciones
         if self.head:
             array = []
             actualCot = self.head
@@ -49,32 +51,31 @@ class ListaCotizaciones:
             print("No hay cotizaciones en la lista")
 
     def search(self, price):
+        # Busqueda de cotización agregada en captura
         actualCot = self.head
         if actualCot:
             while actualCot is not None:
-                #print("Precio final de la cotización actual:", actualCot.final)
                 if actualCot.final == price or actualCot.final == float(price):
                     return [actualCot.nombre, actualCot.type, actualCot.tiempo, actualCot.precio, actualCot.utilidad, actualCot.final]
                 actualCot = actualCot.siguiente
-            #print("No se encontró ninguna cotización con el precio dado.")
             return None
         else:
             print("No hay cabeza")
 
     def searchNew(self,price):
+        # Busqueda de cotizacion recientemente creada
         actualCot = self.head
         if actualCot:
             while actualCot is not None:
-                #print("Precio final de la cotización actual:", actualCot.final)
                 if actualCot.precio == price or actualCot.precio == float(price):
                     return [actualCot.nombre, actualCot.type, actualCot.tiempo, actualCot.precio, actualCot.utilidad, actualCot.final]
                 actualCot = actualCot.siguiente
-            #print("No se encontró ninguna cotización con el precio dado.")
             return None
         else:
             print("No hay cabeza")
 
     def clear(self):
+        # Limpiar lista
         actual = self.head
         while actual:
             siguiente = actual.siguiente

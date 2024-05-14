@@ -10,12 +10,9 @@ Ui llamara al OCR con los path recibidos para el analisis y esos
 
 """
 
-# OBSOLETO
-
 import pyautogui
 import win32api
 import time
-#import OCR,cotizaciones
 from bin import OCR
 
 class Capturer:
@@ -40,11 +37,10 @@ class Capturer:
         #screenshot.show()
 
     def manuable_scan(self,cotizador):
+        # Captura una fraccion de la pantalla y llama la identificacion OCR
         self.cotiz = cotizador
         x = self.xin
-        #y = self.yin
         self.actualCot = []
-        # self.yin,self.ylimit,self.rowSize
         #Cambia el 200 por self.ylimit
         for row in range(self.yin,self.ylimit,self.rowSize):
             x = self.xin
@@ -60,14 +56,11 @@ class Capturer:
                     #Llamada a OCR con el numero de opcion
                     dato = self.ocr.recibe(imagen=f'src\screenshots\screenshot{i}.jpg',opcion=i)
                     # Si la primera ves que se hace la identificacion retorna falso se pasa a la sig fila
-                    #print(dato)
                     self.actualCot.append(dato)
                 time.sleep(0.1)
-            #print(self.actualCot)
             if self.actualCot[0]==False and self.actualCot[1]=="" and self.actualCot[2]=="" or self.actualCot[4]=="":
                 pass
             else:
-                #print("Y = ",row)
                 self.cotiz.addCotizacion(name=self.actualCot[0],tipo=self.actualCot[1],
                                         tiempo=self.actualCot[2],precio=self.actualCot[4])
             self.actualCot.clear()
@@ -75,7 +68,7 @@ class Capturer:
 
 #
 """
-
+import OCR
 time.sleep(3)
 camara = Capturer()
 camara.manuable_scan()

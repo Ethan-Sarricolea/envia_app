@@ -6,20 +6,20 @@
 --------------------------------
 
 Punto de venta: ENVIA LAS PALMAS
-Fecha y hora: 14/05/2024, 14:48:06
+Fecha y hora: 14/05/2024, 16:20:59
 Lugar: ENVIA, EL PALMAR AV. LAS PALMAS 101 LOC X COATZACOALCOS, VERACRUZ
 
 
 
-Compañia: REDPACK
-Tipo de envio: Express
-Tiempo de espera: 1 día
-Precio: $240.55
+Compañia: FEDEX
+Tipo de envio: Standard Overnight
+Tiempo de espera: 1 Dia aprox.
+Precio: $243.12
 
 
 
 Asesor: 
-Número de guia: 37301
+Número de guia: No. de Guia
 
 
 --------------------------------

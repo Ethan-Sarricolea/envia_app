@@ -4,7 +4,6 @@ Author: Ethan Yahel Sarricolea Cortés
 """
 
 import datetime
-import time
 
 class Clock:
     def __init__(self) -> None:
@@ -22,6 +21,7 @@ class Clock:
         return self.hora
     
 """
+import time
 reloj = Clock()
 print(reloj.hour())
 time.sleep(5)

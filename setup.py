@@ -2,11 +2,11 @@ from setuptools import setup, find_packages
 
 setup(
     name='EnviApp',
-    version='1.1.5',
-    description='App de envia para colaboradores y administracion de negocio',
+    version='1.2.0',
+    description='App para colaboradores y administracion de Envia',
     url='https://github.com/Ethan-Sarricolea/envia_app.git',
     author='Sarricolea Cortés Ethan Yahel',
-    author_email='esarricolea@email.com',
+    author_email='esarricolea@gmail.com',
     packages=find_packages(),  # Busca automáticamente todos los paquetes y módulos de Python en el directorio actual
     classifiers=[
         'Programming Language :: Python :: 3.11.9',

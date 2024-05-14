@@ -1,13 +1,12 @@
 """
-Creacion de tiket en formato pdf
-Author = ethan Yahel Sarricolea Cortés
+Description: Creacion de tiket en formato txt / proximamente a pdf tambien
+Author: Ethan Yahel Sarricolea Cortés
 """
 
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from PyPDF2 import PdfReader, PdfWriter
+#from reportlab.lib.pagesizes import letter
+#from reportlab.pdfgen import canvas
+#from PyPDF2 import PdfReader, PdfWriter
 from bin import clock
-#import clock
 import subprocess
 
 class Printer:
@@ -51,44 +50,9 @@ Número de guia: {guide}
     ¡Gracias por tu compra!
 
 --------------------------------
-"""
-        
+""" 
         txtpath = filename.replace(".pdf",".txt")
         txt = open(txtpath,"w+")
         txt.write(self.info)
         txt.close()
         subprocess.Popen(["notepad.exe", txtpath])
-
-        #
-        """ TIKET EN PDF
-        c = canvas.Canvas(filename, pagesize=letter)
-        c.drawImage("src\images\logo.jpg", 100, 500, width=200, height=200)  # Ajusta las coordenadas y el tamaño según sea necesario
-        c.setFont("Helvetica", 12)
-        textobject = c.beginText(100, 500)
-        textobject.textLines(self.info)
-        c.drawText(textobject)
-
-        c.showPage()
-        c.save()
-        #"""
-
-    def resize_pdf(self,input_filename, output_filename, width, height):
-        input_pdf = PdfReader(input_filename)
-        output_pdf = PdfWriter()
-
-        for page in input_pdf.pages:
-            page.mediabox.lower_Left = (0, 0)
-            page.mediabox.upper_Right = (width, height)
-            output_pdf.add_page(page)
-
-        with open(output_filename, 'wb') as f:
-            output_pdf.write(f)
-
-#
-""" Generar el ticket en PDF
-impresora = Printer()
-impresora.create_ticket(venta={"name": "Estafeta","tipo":"", "time": "1 dias aprox.", "price": 500, "utilidad": 50, "final": 550},colaborator="paquito",guide=12345)
-
-# Ajustar el tamaño del PDF al tamaño de los tickets físicos (por ejemplo, 2" x 5.5")
-#impresora.resize_pdf(r"src\tikets\ticket.pdf", r"src\tikets\ticket.pdf", (2 * 72), (5.5 * 72))   1 pulgada = 72 puntos
-#"""

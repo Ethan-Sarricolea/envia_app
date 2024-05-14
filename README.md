@@ -1,16 +1,6 @@
 # Prototipo
 
-EnviApp
-
-V: Beta
-git add .
-## Seguridad 
-Usar la libreria bcrypt para las contraseñas
-
-#### Nota
-Pensar en como cancelar una venta y como afecta a los datos.
-
-Agregar total de venta diaria   (LISTO)
+EnviApp Beta
 
 ### librerias
 

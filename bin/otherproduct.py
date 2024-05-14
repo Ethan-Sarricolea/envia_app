@@ -7,27 +7,33 @@ from tkinter import Label,Toplevel,Entry,ttk,StringVar,Frame,Button,messagebox
 
 class Adder:
     def continuar(self):
+        # Confitmar datos de cotizacion individual añadida
         self.adition = True
-        self.lista = [self.__name.get(),
+        try:
+            float(self.__price.get())
+            self.lista = [self.__name.get(),
                     self.__type.get(),
                     self.__time.get(),
                     self.__price.get()]
-        for element in self.lista:
-            status = True
-            if not element:
-                messagebox.showerror("Error","Asegurate de agregar todos los elementos de la cotizacion")
-                status = not status
-        if status:      
-            self.win.destroy()
+            for element in self.lista:
+                status = True
+                if not element:
+                    messagebox.showerror("Error","Asegurate de agregar todos los elementos de la cotizacion")
+                    status = not status
+            if status:      
+                self.win.destroy()
+        except:
+            messagebox.showerror("Error","asegurate de colocar correctamente el precio.")
 
     def returnToWindow(self):
+        # Retornar status de uso de ventana
         if self.adition:
             return self.lista
         else:
             return False
         
     def run(self):
-        #self.win = Tk()
+        # Iniciar ventana toplavel
         self.adition = False
         self.win = Toplevel()
         self.win.geometry("300x200")
@@ -56,7 +62,6 @@ class Adder:
         self.cancelButton.pack(side="left",padx=20)
         self.continuebutton.pack(side="right",padx=20)
 
-        #self.win.mainloop()
 """
 lala = Adder()
 lala.run()"""

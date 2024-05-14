@@ -1,3 +1,8 @@
+"""
+Description: Codigo para convertir a ejecutable de la app
+Author: Sarricolea Cortés Ethan Yahel
+"""
+
 import subprocess
 
 # Ruta al archivo secundario que deseas ejecutar

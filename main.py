@@ -1,6 +1,6 @@
 """
 Autor: Sarricolea Cortés Ethan Yahel
-Description: inicializador de aplicación
+Description: iniciador de aplicación
 """
 
 from ui import UI
@@ -11,4 +11,3 @@ try:
     
 except Exception as e:
     print(f"Error type: {e}")
-    #messagebox.showerror("Ha ocurrido un error",f"Error type: {e}
