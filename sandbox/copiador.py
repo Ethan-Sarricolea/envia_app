@@ -2,12 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 
 # URL de inicio de sesión
-login_url = 'https://www.example.com/login'
+login_url = 'https://www.instagram.com/' #https://www.example.com/login
 
 # Datos de inicio de sesión
 payload = {
-    'username': 'tu_usuario',
-    'password': 'tu_contraseña'
+    'username': 'esarricolea@gmail.com',
+    'password': ''
 }
 
 # Crear una sesión para mantener la autenticación
@@ -19,7 +19,7 @@ login_response = session.post(login_url, data=payload)
 # Verificar si el inicio de sesión fue exitoso
 if login_response.status_code == 200:
     # Ahora puedes hacer solicitudes a páginas protegidas
-    protected_page_url = 'https://www.example.com/protected-page'
+    protected_page_url = 'https://www.instagram.com/' #https://www.example.com/protected-page
     protected_page_response = session.get(protected_page_url)
     
     # Verificar si la solicitud a la página protegida fue exitosa

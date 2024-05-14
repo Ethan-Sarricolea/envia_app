@@ -52,7 +52,7 @@ class TablaDatos:
             util+=float(dato[4])
             coste+=float(dato[3])
         file[0].close()
-        self.app.totalLabel.config(text=f"Costo={coste} / Ganancia={util} / Total={price}")
+        self.app.totalLabel.config(text=f"Costo={'{:.2f}'.format(coste)} / Ganancia={'{:.2f}'.format(util)} / Total={'{:.2f}'.format(price)}")
 
 
 

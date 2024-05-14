@@ -21,7 +21,7 @@ def get_text_from_url(url):
         return None
 
 # URL de la página web que deseas copiar
-url = 'https://dle.rae.es/monolito'
+url = 'https://chatgpt.com/c/89ffdc96-457c-40ef-b6e0-e0052986b284'
 
 # Obtener el texto de la página web
 web_text = get_text_from_url(url)
