@@ -290,11 +290,15 @@ class App:
             self.listaCotizador.addCotizacion(name=status[0],tipo=status[1],tiempo=status[2],precio=status[3])
             newdate = self.listaCotizador.searchNew(status[3])
             self.tablaCot.addIndivcot(newdate)
-            self.agregarCot.place_forget()
+            self.adds_count+=1
+            if self.adds_count == 2:
+                self.agregarCot.place_forget()
+                self.adds_count=0
 
     # En esta funcion se debe arreglar el problema de la tabla
     def list_menu(self,lista):
         self.hide_all()
+        self.adds_count=0
         #self.listaCotizador = cotizaciones.ListaCotizaciones()
         #### self.listaCotizador.clear() 
         self.tablaCot.limpiar_tabla()
