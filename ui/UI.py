@@ -1,7 +1,5 @@
 """
 Description: Interfaz grafica de usuario
-- Tabla de datos
-- App
 Author: Ethan Yahel Sarricolea Cortés
 """
 
@@ -53,8 +51,6 @@ class TablaDatos:
             coste+=float(dato[3])
         file[0].close()
         self.app.totalLabel.config(text=f"Costo={'{:.2f}'.format(coste)} / Ganancia={'{:.2f}'.format(util)} / Total={'{:.2f}'.format(price)}")
-
-
 
     def limpiar_tabla(self):
         # Eliminar todas las filas de la tabla
@@ -145,9 +141,11 @@ class TablaColaboradores:
 
 class App:
     def __init__(self) -> None:
+        #Const
         self.LARGESIZE = "1200x600"
         self.SMALLSIZE = "200x100"
 
+        #window
         self.win = Tk()
         self.win.geometry(self.LARGESIZE)
         self.ancho,self.alto = 1200,600
@@ -156,6 +154,7 @@ class App:
         self.win.resizable(0,0)
         self.buttonsize = 20
 
+        #Package
         self.organizador = organizier.Register()
         self.camara = capturer.Capturer()
         self.adderProd = otherproduct.Adder()
@@ -201,12 +200,8 @@ class App:
         # Pantalla de config
         self.tabla_acesores = TablaColaboradores(self)
         self.colabs = ttk.Combobox(self.win,state="radonly",values=[])
-        #self.acesoresAdd = lambda: self.acesores(2)
-        #self.acesoresDel = lambda: self.acesores(3)
         self.addColab = Button(self.win,width=20,text="Agregar",command=lambda: self.acesores(2))       # add
         self.deleteColab = Button(self.win,width=20,text="Eliminar",command=lambda: self.acesores(3))       # del
-        #self.updateColabs = Button(self.win,text="Actualizar",width=20,command=self.tabla_acesores.update)
-
 
         #Pantalla de formulario
         self.cancelButton = Button(self.win,text="Cancelar",width=20,bg="brown2",command=self.cancelVent)
@@ -222,14 +217,15 @@ class App:
         self.price = Entry(self.win,textvariable=self.price_text,state="readonly")
 
     def cancelVent(self):
-        status = messagebox.askyesnocancel("Cancelar venta","Estas a punto de cancelar la venta, presiona OK para continuar")
+        # Mensaje de ancelar venta
+        status = messagebox.askyesnocancel("Cancelar venta","Estas a punto de cancelar la venta, presiona SI para continuar")
         if status:
             self.listaCotizador.clear()
             self.tablaCot.limpiar_tabla()
             self.main_menu()
 
     def acesores(self,option):
-        # 1=read 2=add 3=delete
+        # 1=read 2=add 3=delete / manipulacion de registros de acesores
         lista = []
         name = self.colabs.get()
         if option==1:
@@ -240,7 +236,7 @@ class App:
                     lista.append(line)
                 if not lista:
                     messagebox.showwarning("Advertencia",
-                                           "No se ha registrado ningún asesor en la lista. Para optimizar la eficiencia del proceso, se sugiere encarecidamente registrar su nombre en la sección de configuración del menú principal.")
+                                           "No se ha registrado ningún asesor en la lista.")
                 else:
                     return lista
         elif option==2:
@@ -261,13 +257,16 @@ class App:
             self.tabla_acesores.update()
                     
     def selectDataCombobox(self,event):
+        # Mostrar datos de cotizaciones del dia
         self.tabla.addDiaCotizacion(self.combobox.get())
 
     def hide_all(self):
+        # Limpieza de ventana principal
         for widget in self.win.winfo_children():
             widget.place_forget()
 
     def main_menu(self):
+        # Mostrar el menu princial
         self.hide_all()
         self.tablaCot.limpiar_tabla()
         self.win.geometry(self.LARGESIZE)
@@ -277,10 +276,10 @@ class App:
         self.dayButtom.place(x=600,y=310,anchor=CENTER)
         self.optionsButtom.place(x=600,y=360,anchor=CENTER)
         self.exitButton.place(x=600,y=410,anchor=CENTER)
-        # self.title.place(x=400,y=6)
         self.title.place(x=400,y=0)
 
     def productAddition(self):
+        # Mostrar ventana Toplevel de agregar producto
         self.adderProd.run()
         self.adderProd.win.wait_window()
         status = self.adderProd.returnToWindow()
@@ -295,12 +294,10 @@ class App:
                 self.agregarCot.place_forget()
                 self.adds_count=0
 
-    # En esta funcion se debe arreglar el problema de la tabla
     def list_menu(self,lista):
+        # Mostrar Tabla de cotizaciones de manuable
         self.hide_all()
         self.adds_count=0
-        #self.listaCotizador = cotizaciones.ListaCotizaciones()
-        #### self.listaCotizador.clear() 
         self.tablaCot.limpiar_tabla()
         self.win.geometry(self.LARGESIZE)
         self.leaveToMenu.place(x=20,y=50)
@@ -311,6 +308,7 @@ class App:
         self.tablaCot.mostrar(lista)
 
     def sales_list(self):
+        # Mostrar registros de ventas
         self.admin.run()
         self.admin.window.wait_window()
         if self.admin.readPass():
@@ -328,34 +326,36 @@ class App:
             pass
 
     def configuration_mode(self):
+        # Mostrar tabla de adicion de colaboradores
         self.hide_all()
         self.win.geometry(self.LARGESIZE)
         self.leaveToMenu.place(x=20,y=50)
         self.colabs.place(x=800,y=100)
         self.addColab.place(x=800,y=150)
         self.deleteColab.place(x=800,y=200)
-        #self.updateColabs.place(x=800,y=250)
         self.colabs['values'] = self.acesores(1)        # Read
         self.tabla_acesores.mostrar()
 
     def capture_mode(self):
+        # Configurar ventana a modo de captura de pantalla
         self.hide_all()
         self.win.geometry(self.SMALLSIZE)
         self.captureButton.place(x=15,y=10)
         self.leaveIcon.place(x=110,y=10)
 
     def show_cotizaciones(self):
+        # Capturar la pantalla y obtener cotizaciones de manuable
         self.win.withdraw()
         time.sleep(3)
         self.tablaCot.limpiar_tabla()
         self.listaCotizador = cotizaciones.ListaCotizaciones()
         data = self.camara.manuable_scan(self.listaCotizador)
-        #messagebox.showinfo("",f"{self.camara.manuable_scan()}")
         time.sleep(0.1)
         self.win.deiconify()
-        self.list_menu(data)                        # Aqui tambien podria estar el error
+        self.list_menu(data)
 
     def forms_mode(self):
+        # configurar ventana a modo formulario de correccion
         datos = self.tablaCot.obtener_fila_seleccionada()
         if datos!=False:
             self.tablaCot.limpiar_tabla()
@@ -382,6 +382,7 @@ class App:
             self.acesor['values'] = self.acesores(1)        # read
 
     def venta(self):
+        # Procesar cotizacion y crear tiket
         cotVent = self.listaCotizador.search(price=self.price.get().replace("$",""))
         self.organizador.writeJson(name=(cotVent[0] if cotVent[0]==self.name.get() else self.name.get()),
                                    tipo=(cotVent[1] if cotVent[1]==self.type.get() else self.type.get()),
@@ -392,13 +393,13 @@ class App:
         messagebox.showinfo("Proceso completado","La venta ha sido registrada exitosamente, continua para imprimir el tiket.")
         self.impresora.create_ticket(venta=self.organizador.readJson(),
                                      colaborator=self.acesor.get(),guide=self.guia.get())
+        # Registrar la venta en db
         jsonVent = self.organizador.readJson()
-        #print(cotVent)
-        #self.listaCotizador.clear()
         self.organizador.create_csv(f"{jsonVent['name']},{jsonVent['tipo']},{jsonVent['time']},{jsonVent['price']},{jsonVent['utilidad']},{jsonVent['final']}")
         self.tablaCot.limpiar_tabla()
         self.main_menu()
 
     def run(self):
+        # Inicializar aplicacion
         self.main_menu()
         self.win.mainloop()
