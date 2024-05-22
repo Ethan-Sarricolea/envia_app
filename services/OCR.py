@@ -9,7 +9,7 @@ Nota: La ruta se debe cambiar por la de tesseract en el usuario
 import cv2
 import pytesseract
 import re
-from bin import comparador
+from services import comparador
 
 class REOPC:
     def __init__(self) -> None:
@@ -65,7 +65,7 @@ class REOPC:
             elif texto[0] in self.dias2:
                 texto = "2 Dia(s) aprox."
             elif texto[0] in self.dias1:
-                texto = "1 Dia aprox."
+                texto = "1 Dia(s) aprox."
         return texto
 
     def recibe_tiempo(self,imagen):

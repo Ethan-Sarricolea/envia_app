@@ -13,7 +13,7 @@ Ui llamara al OCR con los path recibidos para el analisis y esos
 import pyautogui
 import win32api
 import time
-from bin import OCR
+from services import OCR
 
 class Capturer:
     def __init__(self) -> None:

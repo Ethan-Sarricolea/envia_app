@@ -3,8 +3,6 @@ Estrcutrura de cotizaciones y lista de cotizaciones
 Author: Ethan Yahel Sarricolea Cortés
 """
 
-UTILIDAD = 0.15
-
 class Cotizacion:
     def __init__(self,name="",tipo="",time="",precio="") -> None:
         try:
@@ -14,10 +12,10 @@ class Cotizacion:
             self.number = False
         self.nombre = name
         self.precio = (float(precio) if self.number else "")
+        self.utilidad:float
+        self.final:float
         self.tiempo = time
         self.type = tipo
-        self.utilidad = (round(self.precio*UTILIDAD,2) if self.number else "")
-        self.final = (round(self.precio+self.utilidad,2) if self.number else "")
         self.siguiente = None
 
 class ListaCotizaciones:
@@ -44,7 +42,7 @@ class ListaCotizaciones:
                 array.append((actualCot.nombre,
                               actualCot.type,
                               actualCot.tiempo,
-                              actualCot.final))
+                              actualCot.precio))
                 actualCot = actualCot.siguiente
             return array
         else:
@@ -82,7 +80,11 @@ class ListaCotizaciones:
             del actual
             actual = siguiente
         self.cabeza = None
-           
+    
+    def finalPrice(self,utilidad):
+        # genera el precio final a partir de la utilidad (%) 
+        self.utilidad = (round(self.precio*utilidad,2))
+        self.final = (round(self.precio + self.utilidad,2))
 #
 """
 lista = ListaCotizaciones()

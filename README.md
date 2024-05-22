@@ -2,6 +2,15 @@
 
 EnviApp Beta
 
+## Nueva tarea
+
+final?
+    nombre de ventana = Confirmacion
+    ventana con la tabla de datos, boton de confirmar, boton de editar
+    se muestra el precio original de la cotizacion, luego la persona selecciona los datos que tengan errores
+    y los modifica, luego de modificarlos accede a continuar para mostrar la tabla con los precios finales
+    en esta sucede el proceso original de seleccion, formulario de confirmacion con numero de guia y luego el tiket 
+
 ### librerias
 
 Instalación de pytesseract: https://github.com/UB-Mannheim/tesseract/wiki

@@ -6,7 +6,7 @@ Author: Ethan Yahel Sarricolea Cortés
 from tkinter import *
 from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
-from bin import capturer,cotizaciones,organizier,tiketCreator,otherproduct
+from services import capturer,cotizaciones,organizier,tiketCreator,otherproduct
 from ui import user
 import time
 
@@ -149,7 +149,7 @@ class App:
     def __init__(self) -> None:
         #Const
         self.LARGESIZE = "1200x600"
-        self.SMALLSIZE = "200x100"
+        self.SMALLSIZE = "200x150"
 
         #window
         self.win = Tk()
@@ -187,6 +187,9 @@ class App:
         self.exitIcon = ImageTk.PhotoImage(self.exitIcon)
         self.captureButton = Button(self.win,image=self.sissorsTk,command=self.show_cotizaciones)
         self.leaveIcon = Button(self.win,image=self.exitIcon,command=self.main_menu)
+        self.kilosLabel = StringVar(self.win,value="Kilogramos")
+        self.kilos = ttk.Combobox(self.win,values=[1,2,3,4,5,7,10,15,20,25,30,40,50,60],
+                                  textvariable=self.kilosLabel,state="readonly")
 
         #Muestra de cotizaciones
         self.tablaCot = TablaCotizaciones(self)
@@ -197,12 +200,16 @@ class App:
         self.venderButton = Button(self.win,text="Vender",bg="SpringGreen2",width=20,
                                    command=self.forms_mode)
         self.agregarCot = Button(self.win,text="Añadir cotizacion",width=self.buttonsize,bg="yellow",command=self.productAddition)
+  
+        # Zona de correccion
+        self.editButton = Button(self.win,text="Editar",width=self.buttonsize,bg="orange",command=None)
+        self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=None)
 
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
         self.combobox = ttk.Combobox(self.win,values=[],
                                      textvariable=self.combobox_variable,state="readonly")
-        
+      
         # Pantalla de config
         self.tabla_acesores = TablaColaboradores(self)
         self.colabs = ttk.Combobox(self.win,state="radonly",values=[])
@@ -221,6 +228,24 @@ class App:
         self.guia = Entry(self.win)
         self.price_text = StringVar()
         self.price = Entry(self.win,textvariable=self.price_text,state="readonly")
+
+    def show_corrections(self,lista):
+        self.hide_all()
+        self.win.geometry(self.LARGESIZE)
+        self.editButton.place(x=100,y=510)
+        self.continuarButton.place(x=950,y=510)
+        self.leaveToMenu.place(x=20,y=50)
+        self.tabla_acesores.limpiar_tabla()
+        self.tablaCot.mostrar(lista) 
+
+    def cotizProducts(self):
+        print("Aqui se obtienen los precios finales des pues de la correccion")
+        print("Solo se cambia el precio por el precio final con cotizacion y se muestran los widgets de venta")
+
+    def edit_prod_select(self,event):
+        print("Aqui se obtienen los datos de la fila seleccionada")
+        datos = self.tablaCot.obtener_fila_seleccionada()
+        # Se abrira una ventana de correccion de datos con combobox echos con los datos ya guardados
 
     def cancelVent(self):
         # Mensaje de ancelar venta
@@ -346,6 +371,7 @@ class App:
         # Configurar ventana a modo de captura de pantalla
         self.hide_all()
         self.win.geometry(self.SMALLSIZE)
+        self.kilos.place(x=25,y=100)
         self.captureButton.place(x=15,y=10)
         self.leaveIcon.place(x=110,y=10)
 
@@ -355,10 +381,12 @@ class App:
         time.sleep(3)
         self.tablaCot.limpiar_tabla()
         self.listaCotizador = cotizaciones.ListaCotizaciones()
-        data = self.camara.manuable_scan(self.listaCotizador)
+        #data = self.camara.manuable_scan(self.listaCotizador)
         time.sleep(0.1)
         self.win.deiconify()
-        self.list_menu(data)
+        #self.list_menu(data)                                                    # Cambiar a pantalla de edición
+        data = [["DHL","Express","5 Dia(s) aprox.","50.00"]]
+        self.show_corrections(data)
 
     def forms_mode(self):
         # configurar ventana a modo formulario de correccion

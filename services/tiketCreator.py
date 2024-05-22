@@ -6,7 +6,7 @@ Author: Ethan Yahel Sarricolea Cortés
 #from reportlab.lib.pagesizes import letter
 #from reportlab.pdfgen import canvas
 #from PyPDF2 import PdfReader, PdfWriter
-from bin import clock
+from services import clock
 import subprocess
 
 class Printer:
