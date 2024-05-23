@@ -75,8 +75,11 @@ class Corrector:
             for element in self.lista:
                 status = True
                 if not element:
-                    messagebox.showerror("Error","Asegurate de agregar todos los elementos de la cotizacion")
-                    status = not status
+                    if element==self.__type:
+                        pass
+                    else:
+                        messagebox.showerror("Error","Asegurate de agregar todos los elementos de la cotizacion")
+                        status = not status
             if status:
                 self.win.destroy()
         except:

@@ -98,13 +98,16 @@ class ListaCotizaciones:
             actual = siguiente
         self.cabeza = None
     
-    def finalPrices(self,porcent):
+    def finalPrices(self,porcent,old):
         # Generar los precios finales a partir de la correccion de los datos
         actualCot = self.head
         if actualCot:
             while (actualCot!=None):
-                actualCot.utilidad = (round(actualCot.precio*porcent,2))
-                actualCot.final = (round(actualCot.precio + actualCot.utilidad,2))
+                if (actualCot.nombre==old[0] and actualCot.type==old[1] and
+                    actualCot.tiempo==old[2] and actualCot.precio==old[3]):
+                    actualCot.utilidad = (round(actualCot.precio*porcent,2))
+                    actualCot.final = (round(actualCot.precio + actualCot.utilidad,2))
+                    return
                 actualCot = actualCot.siguiente
         else:
             print("Error: No hay cotizaciones en la lista")
@@ -115,14 +118,37 @@ class ListaCotizaciones:
         if actualCot:
             while (actualCot!=None):
                 if (actualCot.nombre==old[0] and actualCot.type==old[1] and
-                    actualCot.tiempo==old[2] and actualCot.precio==old[3]):
+                    actualCot.tiempo==old[2] and actualCot.precio==float(old[3])):
                     actualCot.nombre=new[0]
                     actualCot.type=new[1]
                     actualCot.tiempo=new[2]
-                    actualCot.precio=new[3]
+                    actualCot.precio=float(new[3])
                 actualCot = actualCot.siguiente
         else:
             print("Error: No hay cotizaciones en la lista")
+
+    def mostrador(self):
+        if self.head:
+            array = []
+            actualCot = self.head
+            while(actualCot!=None):
+                array.append((actualCot.nombre,
+                              actualCot.type,
+                              actualCot.tiempo,
+                              actualCot.final))
+                actualCot = actualCot.siguiente
+            return array
+        else:
+            print("No hay cotizaciones en la lista")
+
+    def show(self):
+        actualCot = self.head
+        if actualCot:
+            while (actualCot != None):
+                print(actualCot.nombre,actualCot.type,actualCot.tiempo,actualCot.precio)
+                actualCot = actualCot.siguiente
+        else:
+            print("Lista vacia")
 
 #
 """

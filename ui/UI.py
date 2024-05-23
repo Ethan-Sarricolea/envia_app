@@ -6,7 +6,8 @@ Author: Ethan Yahel Sarricolea Cortés
 from tkinter import *
 from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
-from services import capturer,cotizaciones,organizier,tiketCreator,otherproduct
+from services import capturer,cotizaciones,organizier
+from services import tiketCreator,otherproduct,contador
 from ui import user,editor
 import time
 
@@ -164,6 +165,7 @@ class App:
         self.buttonsize = 20
 
         #Package
+        self.utilidades = contador.Counter()
         self.edicion = editor.Corrector()
         self.organizador = organizier.Register()
         self.camara = capturer.Capturer()
@@ -207,7 +209,7 @@ class App:
   
         # Zona de correccion
         self.editButton = Button(self.win,text="Editar",width=self.buttonsize,bg="orange",command=self.productEdition)
-        self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=None)    # Continuar a cotizaciones
+        self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=self.cotizProducts)    # Continuar a cotizaciones
 
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
@@ -243,13 +245,15 @@ class App:
         self.tablaCot.mostrar(lista) 
 
     def cotizProducts(self):
-        print("Aqui se obtienen los precios finales des pues de la correccion")
-        print("Solo se cambia el precio por el precio final con cotizacion y se muestran los widgets de venta")
-
-    def edit_prod_select(self,event):
-        print("Aqui se obtienen los datos de la fila seleccionada")
-        datos = self.tablaCot.obtener_fila_seleccionada()
-        # Se abrira una ventana de correccion de datos con combobox echos con los datos ya guardados
+        peso = self.kilos.get()
+        lista = self.listaCotizador.generarLista()
+        for cotiz in lista:
+            # print(cotiz)
+            porcent = self.utilidades.getPorcent(company=cotiz[0],tiempo=cotiz[2],peso=int(peso))
+            self.listaCotizador.finalPrices(porcent=porcent,old=cotiz)
+        newdata = self.listaCotizador.mostrador()
+        self.list_menu(newdata)
+        # boton de vender
 
     def cancelVent(self):
         # Mensaje de ancelar venta
@@ -324,8 +328,8 @@ class App:
         else:
             selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
             self.tablaCot.updateData(selected_item,status)
-            # print(data,status)
             self.listaCotizador.edit(data,status)
+            # self.listaCotizador.show()
 
     def productAddition(self):
         # Mostrar ventana Toplevel de agregar producto
@@ -394,19 +398,29 @@ class App:
         self.leaveIcon.place(x=110,y=10)
 
     def show_cotizaciones(self):
-        # Capturar la pantalla y obtener cotizaciones de manuable
-        self.win.withdraw()
-        time.sleep(3)
-        self.tablaCot.limpiar_tabla()
-        self.listaCotizador = cotizaciones.ListaCotizaciones()
-        #data = self.camara.manuable_scan(self.listaCotizador)
-        time.sleep(0.1)
-        self.win.deiconify()
-        #self.list_menu(data)                                                    # Cambiar a pantalla de edición
-        self.listaCotizador.addCotizacion(["DHL","Express","5 Dia(s) aprox.",50.00])
-        self.listaCotizador.addCotizacion(["ESTAFETA","Terrestre","1 Dia(s) aprox.",1.00])
-        data = [["DHL","Express","5 Dia(s) aprox.","50.00"],["ESTAFETA","Terrestre","1 Dia(s) aprox.",1.00]]
-        self.show_corrections(data)
+        if not (self.kilos.get()=="Kilogramos"):
+            # Capturar la pantalla y obtener cotizaciones de manuable
+            self.win.withdraw()
+            time.sleep(3)
+            self.tablaCot.limpiar_tabla()
+            self.listaCotizador = cotizaciones.ListaCotizaciones()
+            #data = self.camara.manuable_scan(self.listaCotizador)
+            time.sleep(0.1)
+            self.win.deiconify()
+            self.listaCotizador.addCotizacion("","","",275.30)
+            self.listaCotizador.addCotizacion("J&T","Terrestre","5 Dia(s) aprox.",78.43)
+            self.listaCotizador.addCotizacion("REDPACK","Ecoexpress","5 Dia(s) aprox.",95.46)
+            self.listaCotizador.addCotizacion("FEDEX","Express Saver","5 Dia(s) aprox.",133.09)
+            self.listaCotizador.addCotizacion("UPS","UPS Wolrdwide Saver","5 Dia(s) aprox.",152.58)
+            self.listaCotizador.addCotizacion("PAQUETEXPRESS","Estandar","5 Dia(s) aprox.",194.31)
+            self.listaCotizador.addCotizacion("REDPACK","Express","1 Dia(s) aprox.",209.13)
+            self.listaCotizador.addCotizacion("FEDEX","Standard Overnight","1 Dia(s) aprox.",211.40)
+            self.listaCotizador.addCotizacion("DHL","Economy Select Domestic","1 Dia(s) aprox.",214.38)
+            data = self.listaCotizador.generarLista()
+            # self.listaCotizador.show()
+            self.show_corrections(data)
+        else:
+            messagebox.showwarning("Error de datos","El peso no ha sido seleccionado")
 
     def forms_mode(self):
         # configurar ventana a modo formulario de correccion
