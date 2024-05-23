@@ -7,7 +7,7 @@ from tkinter import *
 from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
 from services import capturer,cotizaciones,organizier,tiketCreator,otherproduct
-from ui import user
+from ui import user,editor
 import time
 
 # Tabla de venta diaria
@@ -109,6 +109,9 @@ class TablaCotizaciones:
         else:
             messagebox.showwarning("Advertencia","Ninguna fila seleccionada.")
             return False
+        
+    def updateData(self,id,values):
+        self.tabla.item(id,values=values)
 
 # Tabla de colaboradores
 class TablaColaboradores:
@@ -161,6 +164,7 @@ class App:
         self.buttonsize = 20
 
         #Package
+        self.edicion = editor.Corrector()
         self.organizador = organizier.Register()
         self.camara = capturer.Capturer()
         self.adderProd = otherproduct.Adder()
@@ -202,8 +206,8 @@ class App:
         self.agregarCot = Button(self.win,text="Añadir cotizacion",width=self.buttonsize,bg="yellow",command=self.productAddition)
   
         # Zona de correccion
-        self.editButton = Button(self.win,text="Editar",width=self.buttonsize,bg="orange",command=None)
-        self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=None)
+        self.editButton = Button(self.win,text="Editar",width=self.buttonsize,bg="orange",command=self.productEdition)
+        self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=None)    # Continuar a cotizaciones
 
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
@@ -309,6 +313,20 @@ class App:
         self.exitButton.place(x=600,y=410,anchor=CENTER)
         self.title.place(x=400,y=0)
 
+    def productEdition(self):
+        # Guardar los datos originales del producto para editar la lista de cots
+        data = self.tablaCot.obtener_fila_seleccionada()
+        self.edicion.run(tipo=data[1],price=data[3])
+        self.edicion.win.wait_window()
+        status = self.edicion.returnToWindow()
+        if not status:
+            pass
+        else:
+            selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
+            self.tablaCot.updateData(selected_item,status)
+            # print(data,status)
+            self.listaCotizador.edit(data,status)
+
     def productAddition(self):
         # Mostrar ventana Toplevel de agregar producto
         self.adderProd.run()
@@ -332,8 +350,8 @@ class App:
         self.tablaCot.limpiar_tabla()
         self.win.geometry(self.LARGESIZE)
         self.leaveToMenu.place(x=20,y=50)
-        self.limpiarButton.place(x=100,y=510)
-        self.limpiarButton.config(command=self.tablaCot.limpiar_tabla)
+        #self.limpiarButton.place(x=100,y=510)
+        #self.limpiarButton.config(command=self.tablaCot.limpiar_tabla)
         self.venderButton.place(x=950,y=510)
         self.agregarCot.place(x=500,y=510)
         self.tablaCot.mostrar(lista)
@@ -347,7 +365,7 @@ class App:
             self.win.geometry(self.LARGESIZE)
             self.leaveToMenu.place(x=20,y=50)
             self.limpiarButton.place(x=100,y=510)
-            self.limpiarButton.config(command=self.tabla.limpiar_tabla)
+            #self.limpiarButton.config(command=self.tabla.limpiar_tabla)
             self.totalLabel.place(x=630,y=515)
             self.combobox.place(x=500,y=50)
             self.combobox.configure(values=(self.organizador.leer_database()))
@@ -385,7 +403,9 @@ class App:
         time.sleep(0.1)
         self.win.deiconify()
         #self.list_menu(data)                                                    # Cambiar a pantalla de edición
-        data = [["DHL","Express","5 Dia(s) aprox.","50.00"]]
+        self.listaCotizador.addCotizacion(["DHL","Express","5 Dia(s) aprox.",50.00])
+        self.listaCotizador.addCotizacion(["ESTAFETA","Terrestre","1 Dia(s) aprox.",1.00])
+        data = [["DHL","Express","5 Dia(s) aprox.","50.00"],["ESTAFETA","Terrestre","1 Dia(s) aprox.",1.00]]
         self.show_corrections(data)
 
     def forms_mode(self):

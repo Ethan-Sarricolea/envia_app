@@ -33,7 +33,7 @@ class ListaCotizaciones:
         else:
             self.head = newCot
 
-    def generarLista(self):
+    def generarLista(self):                             # Tabla de correcciones
         # Generar array de la lista de cotizaciones
         if self.head:
             array = []
@@ -43,6 +43,23 @@ class ListaCotizaciones:
                               actualCot.type,
                               actualCot.tiempo,
                               actualCot.precio))
+                actualCot = actualCot.siguiente
+            return array
+        else:
+            print("No hay cotizaciones en la lista")
+
+    def returnFinal(self):          # Tabla de registros
+        if self.head:
+            array = []
+            actualCot = self.head
+            while(actualCot!=None):
+                self.finalPrices(0.45)
+                array.append((actualCot.nombre,
+                              actualCot.type,
+                              actualCot.tiempo,
+                              actualCot.precio,
+                              actualCot.utilidad,
+                              actualCot.final))
                 actualCot = actualCot.siguiente
             return array
         else:
@@ -81,18 +98,42 @@ class ListaCotizaciones:
             actual = siguiente
         self.cabeza = None
     
-    def finalPrice(self,utilidad):
-        # genera el precio final a partir de la utilidad (%) 
-        self.utilidad = (round(self.precio*utilidad,2))
-        self.final = (round(self.precio + self.utilidad,2))
+    def finalPrices(self,porcent):
+        # Generar los precios finales a partir de la correccion de los datos
+        actualCot = self.head
+        if actualCot:
+            while (actualCot!=None):
+                actualCot.utilidad = (round(actualCot.precio*porcent,2))
+                actualCot.final = (round(actualCot.precio + actualCot.utilidad,2))
+                actualCot = actualCot.siguiente
+        else:
+            print("Error: No hay cotizaciones en la lista")
+        
+    def edit(self,old,new):
+        # intercambiar la cotizacion anterior con la nueva
+        actualCot=self.head
+        if actualCot:
+            while (actualCot!=None):
+                if (actualCot.nombre==old[0] and actualCot.type==old[1] and
+                    actualCot.tiempo==old[2] and actualCot.precio==old[3]):
+                    actualCot.nombre=new[0]
+                    actualCot.type=new[1]
+                    actualCot.tiempo=new[2]
+                    actualCot.precio=new[3]
+                actualCot = actualCot.siguiente
+        else:
+            print("Error: No hay cotizaciones en la lista")
+
 #
 """
 lista = ListaCotizaciones()
 lista.generarLista()
 lista.addCotizacion("Estafeta","Dia siguiente","1 Dia(S) aprox.",244.75)
-print(lista.generarLista())
 lista.addCotizacion("FedEx","Standard Overnight","1 Dia(S) aprox.",211.39)
-print(lista.generarLista())
-lista.search(244.75)
-lista.search("244.75")
+print("\n-----normal",lista.generarLista())
+print(lista.edit(old=["Estafeta","Dia siguiente","1 Dia(S) aprox.",244.75],
+           new=["ESTAFETA","Express","1 Dia(s) aprox.",500.00]))
+
+print("\n----Editada",lista.generarLista())
+print("\n-----Final",lista.returnFinal())
 #"""
