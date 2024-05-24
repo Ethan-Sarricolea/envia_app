@@ -409,12 +409,11 @@ class App:
             time.sleep(0.1)
             self.tablaCot.limpiar_tabla()
             self.listaCotizador = cotizaciones.ListaCotizaciones()
-            #data = self.camara.manuable_scan(self.listaCotizador)
+            data = self.camara.manuable_scan(self.listaCotizador)
             time.sleep(0.1)
             self.win.deiconify()
-
             # Esto es mientras no se este en la otra computadora
-            self.listaCotizador.addCotizacion("","","",275.30)
+            """self.listaCotizador.addCotizacion("","","",275.30)
             self.listaCotizador.addCotizacion("J&T","Terrestre","5 Dia(s) aprox.",78.43)
             self.listaCotizador.addCotizacion("REDPACK","Ecoexpress","5 Dia(s) aprox.",95.46)
             self.listaCotizador.addCotizacion("FEDEX","Express Saver","5 Dia(s) aprox.",133.09)
@@ -423,7 +422,7 @@ class App:
             self.listaCotizador.addCotizacion("REDPACK","Express","1 Dia(s) aprox.",209.13)
             self.listaCotizador.addCotizacion("FEDEX","Standard Overnight","1 Dia(s) aprox.",211.40)
             self.listaCotizador.addCotizacion("DHL","Economy Select Domestic","1 Dia(s) aprox.",214.38)
-            data = self.listaCotizador.generarLista()
+            data = self.listaCotizador.generarLista()"""
             # self.listaCotizador.show()
             self.show_corrections(data)
         else:
