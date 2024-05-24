@@ -7,6 +7,9 @@ EnviApp Beta
     Se corrigen las cotizaciones erroneas y al finalizar se muestran solo las de venta
     las cotizaciones se calculan de acorde al peso y tipo de envio
 
+Nota: 
+    Falta prueba con capturas reales.
+
 ### librerias
 
 Instalación de pytesseract: https://github.com/UB-Mannheim/tesseract/wiki
