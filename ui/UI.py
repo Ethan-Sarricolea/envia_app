@@ -67,10 +67,10 @@ class TablaCotizaciones:
         self.tabla = ttk.Treeview(self.app.win)
         self.tabla["columns"] = ("1", "2","3","4")  # Definir las columnas
         self.tabla.column("#0", width=1, minwidth=100, stretch=NO)  # Columnas
-        self.tabla.column("1", width=200, minwidth=100, stretch=NO)
-        self.tabla.column("2", width=200, minwidth=100, stretch=NO)
-        self.tabla.column("3", width=200, minwidth=100, stretch=NO)
-        self.tabla.column("4", width=200, minwidth=100, stretch=NO)
+        self.tabla.column("1", width=255, minwidth=100, stretch=NO)
+        self.tabla.column("2", width=245, minwidth=100, stretch=NO)
+        self.tabla.column("3", width=245, minwidth=100, stretch=NO)
+        self.tabla.column("4", width=245, minwidth=100, stretch=NO)
         self.tabla.heading("#0", text="", anchor=W)  # Encabezados
         self.tabla.heading("1", text="Nombre", anchor=W)
         self.tabla.heading("2", text="Tipo", anchor=W)
@@ -88,13 +88,13 @@ class TablaCotizaciones:
         # Insertar la cotizacion individual
         self.tabla.insert("", END, values=(lista[0], lista[1], lista[2], lista[5]))
         self.tabla.place_forget()
-        self.tabla.place(x=100,y=100,relheight=350/600)
+        self.tabla.place(x=100,y=100,relheight=400/600)
 
     def mostrar(self,lista):
         # Mostrar tabla en ventana principal
         self.limpiar_tabla()
         self.addCotizaciones(lista)
-        self.tabla.place(x=100,y=100,relheight=350/600)
+        self.tabla.place(x=100,y=100,relheight=400/600)
         
     def limpiar_tabla(self):
         # Eliminar todas las filas de la tabla
@@ -409,11 +409,11 @@ class App:
             time.sleep(0.1)
             self.tablaCot.limpiar_tabla()
             self.listaCotizador = cotizaciones.ListaCotizaciones()
-            data = self.camara.manuable_scan(self.listaCotizador)
+            #data = self.camara.manuable_scan(self.listaCotizador)
             time.sleep(0.1)
             self.win.deiconify()
             # Esto es mientras no se este en la otra computadora
-            """self.listaCotizador.addCotizacion("","","",275.30)
+            self.listaCotizador.addCotizacion("","","",275.30)
             self.listaCotizador.addCotizacion("J&T","Terrestre","5 Dia(s) aprox.",78.43)
             self.listaCotizador.addCotizacion("REDPACK","Ecoexpress","5 Dia(s) aprox.",95.46)
             self.listaCotizador.addCotizacion("FEDEX","Express Saver","5 Dia(s) aprox.",133.09)
@@ -422,7 +422,7 @@ class App:
             self.listaCotizador.addCotizacion("REDPACK","Express","1 Dia(s) aprox.",209.13)
             self.listaCotizador.addCotizacion("FEDEX","Standard Overnight","1 Dia(s) aprox.",211.40)
             self.listaCotizador.addCotizacion("DHL","Economy Select Domestic","1 Dia(s) aprox.",214.38)
-            data = self.listaCotizador.generarLista()"""
+            data = self.listaCotizador.generarLista()
             # self.listaCotizador.show()
             self.show_corrections(data)
         else:
