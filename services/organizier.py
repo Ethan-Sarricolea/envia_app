@@ -6,7 +6,7 @@ Author: Ethan Yahel Sarricolea Cortés
 import csv
 import os
 import json
-from bin import clock
+from services import clock
 
 class Register:
     def __init__(self) -> None:

@@ -16,7 +16,7 @@ class IMGcomaparator:
          r"src\logos\PAQUETEXPRESS.jpg",
          r"src\logos\REDPACK.jpg",
          r'src\logos\UPS.jpg']
-        self.nombres = ["DHL","Estafeta","FEDEX","J&T","PaqueteExpress","REDPACK","UPS"]
+        self.nombres = ["DHL","ESTAFETA","FEDEX","J&T","PAQUETEXPRESS","REDPACK","UPS"]
         
     def comparacion(self,image):            # Funcion a llamar para obtener el logo
         # Comparacion de la imagen con los logos

@@ -1,14 +1,48 @@
-# Prototipo
+# EnviApp Beta
 
-EnviApp Beta
+## Actualizacion
+                    
+    - Se corrigen las cotizaciones erroneas y al finalizar se muestran solo las de venta
+    - Las cotizaciones se calculan de acorde al peso y tipo de envio
 
-### librerias
+**Notas**: 
+    Falta prueba con la función manuable scan en (UI/show_cotizaciones line 405).
 
-Instalación de pytesseract: https://github.com/UB-Mannheim/tesseract/wiki
+## Consideraciones:
 
-## advertencia
-
-error: [ WARN:0@0.675] global shadow_sift.hpp:15 cv::xfeatures2d::SIFT_create DEPRECAs://github.com/PRECATED: cv.xfeatures2d.SIFT_create() is deprecated due SIFT tranfer to ain r
+Error de ejecucion: [ WARN:0@0.675] global shadow_sift.hpp:15 cv::xfeatures2d::SIFT_create DEPRECAs://github.com/PRECATED: cv.xfeatures2d.SIFT_create() is deprecated due SIFT tranfer to ain r
 the main repository. https://github.com/opencv/opencv/issues/16736 
 
-Resumen: Es posible que en otras versiones de openCV deje de funcionar la funcion xfeatures2d por lo que es necesario tomarlo en cuenta para las proximas versiones de la aplicacion
+    Es posible que en otras versiones de openCV deje de funcionar la funcion xfeatures2d por lo que es necesario tomarlo en cuenta para las proximas versiones de la aplicacion
+
+# Instalación
+
+1. Se clona el repositorio.
+
+    ```git clone https://github.com/Ethan-Sarricolea/envia_app.git ```
+
+2. Se desplaza a la carpeta clonada 
+
+    ```cd envia_app```
+
+3. Se crea el ejecutable de la app.
+
+    ```pyinstaller --onefile --windowed --icon=src\images\icono.ico EnviApp.py```
+
+# Dependencias:
+
+* Python instalado (3.11.9 utilizado en la creacion)
+* pyautogui
+* win32api
+* time
+* datetime
+* cv2
+* pytesseract
+    ```Instalación de pytesseract: https://github.com/UB-Mannheim/tesseract/wiki```
+* re
+* csv
+* os
+* json
+* tkinter
+* bcrypt
+* subprocess
