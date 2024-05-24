@@ -412,6 +412,8 @@ class App:
             #data = self.camara.manuable_scan(self.listaCotizador)
             time.sleep(0.1)
             self.win.deiconify()
+
+            # Esto es mientras no se este en la otra computadora
             self.listaCotizador.addCotizacion("","","",275.30)
             self.listaCotizador.addCotizacion("J&T","Terrestre","5 Dia(s) aprox.",78.43)
             self.listaCotizador.addCotizacion("REDPACK","Ecoexpress","5 Dia(s) aprox.",95.46)
