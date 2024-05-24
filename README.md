@@ -2,14 +2,10 @@
 
 EnviApp Beta
 
-## Nueva tarea
-
-final?
-    nombre de ventana = Confirmacion
-    ventana con la tabla de datos, boton de confirmar, boton de editar
-    se muestra el precio original de la cotizacion, luego la persona selecciona los datos que tengan errores
-    y los modifica, luego de modificarlos accede a continuar para mostrar la tabla con los precios finales
-    en esta sucede el proceso original de seleccion, formulario de confirmacion con numero de guia y luego el tiket 
+## Actualizacion
+                    
+    Se corrigen las cotizaciones erroneas y al finalizar se muestran solo las de venta
+    las cotizaciones se calculan de acorde al peso y tipo de envio
 
 ### librerias
 

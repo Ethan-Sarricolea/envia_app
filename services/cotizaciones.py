@@ -150,6 +150,37 @@ class ListaCotizaciones:
         else:
             print("Lista vacia")
 
+    def delete(self,cot):
+        actualCot = self.head
+        if actualCot:
+            if (actualCot.nombre==cot[0] and actualCot.type==cot[1] and
+                actualCot.tiempo==cot[2] and actualCot.precio==float(cot[3])):
+                self.head = actualCot.siguiente
+                actualCot = None
+                return
+            prev = None
+            while (actualCot!=None):
+                if (actualCot.nombre==cot[0] and actualCot.type==cot[1] and
+                    actualCot.tiempo==cot[2] and actualCot.precio==float(cot[3])):
+                    break
+                prev = actualCot
+                actualCot = actualCot.siguiente
+            if actualCot==None:
+                return
+            
+            prev.siguiente = actualCot.siguiente
+            actualCot = None
+
+    def delete_process(self):
+        companys = ["DHL","FEDEX","UPS","ESTAFETA"]
+        actualCot = self.head
+        while (actualCot!=None):
+            if actualCot.nombre in companys:
+                pass
+            else:
+                self.delete([actualCot.nombre,actualCot.type,actualCot.tiempo,actualCot.precio])
+            actualCot = actualCot.siguiente
+
 #
 """
 lista = ListaCotizaciones()

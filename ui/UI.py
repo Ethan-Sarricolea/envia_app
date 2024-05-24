@@ -246,6 +246,7 @@ class App:
 
     def cotizProducts(self):
         peso = self.kilos.get()
+        self.listaCotizador.delete_process()
         lista = self.listaCotizador.generarLista()
         for cotiz in lista:
             # print(cotiz)
@@ -320,16 +321,19 @@ class App:
     def productEdition(self):
         # Guardar los datos originales del producto para editar la lista de cots
         data = self.tablaCot.obtener_fila_seleccionada()
-        self.edicion.run(tipo=data[1],price=data[3])
-        self.edicion.win.wait_window()
-        status = self.edicion.returnToWindow()
-        if not status:
-            pass
-        else:
-            selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
-            self.tablaCot.updateData(selected_item,status)
-            self.listaCotizador.edit(data,status)
-            # self.listaCotizador.show()
+        if data:
+            self.edicion.run(tipo=data[1],price=data[3])
+            self.edicion.win.wait_window()
+            status = self.edicion.returnToWindow()
+            if not status:
+                pass
+            else:
+                selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
+                self.tablaCot.updateData(selected_item,status)
+                self.listaCotizador.edit(data,status)
+                # self.listaCotizador.delete(["J&T","Terrestre","5 Dia(s) aprox.",78.43])
+                # self.listaCotizador.show()
+
 
     def productAddition(self):
         # Mostrar ventana Toplevel de agregar producto
@@ -349,6 +353,7 @@ class App:
 
     def list_menu(self,lista):
         # Mostrar Tabla de cotizaciones de manuable
+        #
         self.hide_all()
         self.adds_count=0
         self.tablaCot.limpiar_tabla()
@@ -398,10 +403,10 @@ class App:
         self.leaveIcon.place(x=110,y=10)
 
     def show_cotizaciones(self):
-        if not (self.kilos.get()=="Kilogramos"):
+        if self.kilos.get()!="Kilogramos":
             # Capturar la pantalla y obtener cotizaciones de manuable
             self.win.withdraw()
-            time.sleep(3)
+            time.sleep(0.1)
             self.tablaCot.limpiar_tabla()
             self.listaCotizador = cotizaciones.ListaCotizaciones()
             #data = self.camara.manuable_scan(self.listaCotizador)
