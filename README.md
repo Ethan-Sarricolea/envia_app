@@ -5,20 +5,6 @@
 - Se corrigen las cotizaciones erroneas y al finalizar se muestran solo las de venta```
 - Las cotizaciones se calculan de acorde al peso y tipo de envio
 
-**Notas**: 
-# Esto es mientras no se este en la otra computadora
-            self.listaCotizador.addCotizacion("","","",153.12)
-            self.listaCotizador.addCotizacion("J&T","Terrestre","5 Dia(s) aprox.","78.43")
-            self.listaCotizador.addCotizacion("REDPACK","Ecoespress","5 Dia(s) aprox.","95.47")
-            self.listaCotizador.addCotizacion("UPS","UPS Standard","1 Dia(s) aprox.","125.32")
-            self.listaCotizador.addCotizacion("FEDEX","Express Saver","5 Dia(s) aprox.","132.98")
-            self.listaCotizador.addCotizacion("REDPACK","Express","1 Dia(s) aprox.","151.42")
-            self.listaCotizador.addCotizacion("PAQUETEEXPRESS","Estandar","5 Dia(s) aprox.","172.56")
-            self.listaCotizador.addCotizacion("DHL","Economy Select Domestic","5 Dia(s) aprox.","178.10")
-            self.listaCotizador.addCotizacion("FEDEX","Standard Overnight","1 Dia(s) aprox.","213.15")
-            self.listaCotizador.addCotizacion("UPS","UPS World Wide Saver","5 Dia(s) aprox.","247.66")
-            data = self.listaCotizador.generarLista()
-
 ## Consideraciones:
 
 Error de ejecucion: [ WARN:0@0.675] global shadow_sift.hpp:15 cv::xfeatures2d::SIFT_create DEPRECAs://github.com/PRECATED: cv.xfeatures2d.SIFT_create() is deprecated due SIFT tranfer to ain r
