@@ -12,6 +12,8 @@ estafeta (pendiente asi que sera 0 por el momento)
 class Counter:
     def __init__(self) -> None:
         self.__CONST = 0.5
+        # Los 0 en cada sublista son el procentaje de estafeta
+        # orden = [dhl,fedex terrestre, fedex 5 dias, estafeta]
         self.kilos = [1,2,3,4,5,7,10,15,20,25,30,40,50,60]
         self.__margen = [[1],[2],[45,65,65,65,0],
                          [45,65,65,65,0],[45,65,65,65,0],[65,65,65,45,0],
