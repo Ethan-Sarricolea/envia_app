@@ -3,7 +3,7 @@ Description: Ventana de agregar otro producto a la lista de cotizaciones
 Author: Ethan Yahel Sarricolea Cortés
 """
 
-from tkinter import Label,Toplevel,Entry,ttk,StringVar,Frame,Button,messagebox
+from tkinter import Label,Toplevel,Entry,ttk,StringVar,Frame,Button,messagebox,ttk
 
 class Adder:
     def continuar(self):
@@ -33,6 +33,14 @@ class Adder:
             return False
         
     def run(self):
+        self.companys = ["DHL","FEDEX","UPS","ESTAFETA"] #J&T, redpack ? "PaqueteExpress","REDPACK",
+        self.timeType = ["5+ Dia(s) aprox.",
+                         "5 Dia(s) aprox.",
+                         "4 Dia(s) aprox.",
+                         "3 Dia(s) aprox.",
+                         "2 Dia(s) aprox.",
+                         "1 Dia(s) aprox."]
+
         # Iniciar ventana toplavel
         self.adition = False
         self.win = Toplevel()
@@ -44,7 +52,8 @@ class Adder:
         self.__name = ttk.Combobox(self.row,values=["DHL","ESTAFETA","FEDEX","J&T","PQUETEXPRESS","REDPACK","UPS"],
                                    textvariable=self.nametext,state="readonly")
         self.__type = Entry(self.row)
-        self.__time = Entry(self.row)
+        self.timetext = StringVar(self.row, value="Tiempo de envio")
+        self.__time = ttk.Combobox(self.row,values=self.timeType,state="readonly",textvariable=self.timetext)
         self.__price = Entry(self.row)
         self.cancelButton = Button(self.win,text="Cancelar",bg="red",command=self.win.destroy)
         self.continuebutton = Button(self.win,text="Continuar",bg="green",command=self.continuar)
@@ -56,7 +65,6 @@ class Adder:
         self.__type.pack(pady=5)
         self.__type.insert(0,"Tipo de envio")
         self.__time.pack(pady=5)
-        self.__time.insert(0,"Tiempo de envio")
         self.__price.pack(pady=5)
         self.__price.insert(0,"Precio de envio")
         self.cancelButton.pack(side="left",padx=20)

@@ -53,7 +53,6 @@ class ListaCotizaciones:
             array = []
             actualCot = self.head
             while(actualCot!=None):
-                self.finalPrices(0.45)
                 array.append((actualCot.nombre,
                               actualCot.type,
                               actualCot.tiempo,
@@ -84,6 +83,18 @@ class ListaCotizaciones:
             while actualCot is not None:
                 if actualCot.precio == price or actualCot.precio == float(price):
                     return [actualCot.nombre, actualCot.type, actualCot.tiempo, actualCot.precio, actualCot.utilidad, actualCot.final]
+                actualCot = actualCot.siguiente
+            return None
+        else:
+            print("No hay cabeza")
+
+    def preSearch(self,price):
+        # Busqueda de cotizacion recientemente creada
+        actualCot = self.head
+        if actualCot:
+            while actualCot is not None:
+                if actualCot.precio == price or actualCot.precio == float(price):
+                    return [actualCot.nombre, actualCot.type, actualCot.tiempo, actualCot.precio]
                 actualCot = actualCot.siguiente
             return None
         else:

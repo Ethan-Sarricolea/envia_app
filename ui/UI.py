@@ -210,7 +210,7 @@ class App:
         # Zona de correccion
         self.editButton = Button(self.win,text="Editar",width=self.buttonsize,bg="orange",command=self.productEdition)
         self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=self.cotizProducts)    # Continuar a cotizaciones
-
+        
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
         self.combobox = ttk.Combobox(self.win,values=[],
@@ -343,7 +343,14 @@ class App:
         if not status:
             pass
         else:
+            peso = int(self.kilos.get())
+            # print(peso)
             self.listaCotizador.addCotizacion(name=status[0],tipo=status[1],tiempo=status[2],precio=status[3])
+            old = self.listaCotizador.preSearch(price=status[3])
+            # print(old)
+            porcent = self.utilidades.getPorcent(peso=peso, company=status[0],tiempo=status[2])
+            # print(porcent)
+            self.listaCotizador.finalPrices(porcent=porcent,old=old)
             newdate = self.listaCotizador.searchNew(status[3])
             self.tablaCot.addIndivcot(newdate)
             self.adds_count+=1
