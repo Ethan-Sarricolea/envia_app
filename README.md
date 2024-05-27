@@ -16,7 +16,7 @@ the main repository. https://github.com/opencv/opencv/issues/16736
 
 1. Se clona el repositorio.
 
-    `git clone https://github.com/Ethan-Sarricolea/envia_app.git`
+    git clone https://github.com/Ethan-Sarricolea/envia_app.git
 
 2. Se desplaza a la carpeta clonada 
 
@@ -24,7 +24,7 @@ the main repository. https://github.com/opencv/opencv/issues/16736
 
 3. Se crea el ejecutable de la app.
 
-    `pyinstaller --onefile --windowed --icon=src\images\icono.ico EnviApp.py`
+    pyinstaller --onefile --windowed --icon=src\images\icono.ico EnviApp.py
 
 # Dependencias:
 
