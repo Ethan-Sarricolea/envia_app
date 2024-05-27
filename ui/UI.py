@@ -409,7 +409,7 @@ class App:
             time.sleep(0.1)
             self.tablaCot.limpiar_tabla()
             self.listaCotizador = cotizaciones.ListaCotizaciones()
-            data = self.camara.manuable_scan(self.listaCotizador)
+            data = self.camara.manuable_scan(self.listaCotizador)# Remplazable con Nota de readme
             time.sleep(0.1)
             self.win.deiconify()
             # self.listaCotizador.show()
