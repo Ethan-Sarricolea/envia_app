@@ -20,11 +20,17 @@ the main repository. https://github.com/opencv/opencv/issues/16736
 
 2. Se desplaza a la carpeta clonada 
 
-    `cd envia_app`
+    cd envia_app
 
 3. Se crea el ejecutable de la app.
 
     pyinstaller --onefile --windowed --icon=src\images\icono.ico EnviApp.py
+o
+    python -m PyInstaller --onefile --windowed --icon=src\images\icono.ico EnviApp.py
+
+Nota: Antes de ejecutar el paso 3 se debe desactivar el antivirus.
+
+4. La carpeta `Tesseract-OCR` debe moverse a `C:\Program Files\`
 
 # Dependencias:
 
