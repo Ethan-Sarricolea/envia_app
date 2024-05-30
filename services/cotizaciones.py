@@ -129,7 +129,7 @@ class ListaCotizaciones:
         if actualCot:
             while (actualCot!=None):
                 if (actualCot.nombre==old[0] and actualCot.type==old[1] and
-                    actualCot.tiempo==old[2] and actualCot.precio==float(old[3])):
+                    actualCot.tiempo==old[2] and actualCot.precio==(old[3] if old[3]=="" else float(old[3]))):
                     actualCot.nombre=new[0]
                     actualCot.type=new[1]
                     actualCot.tiempo=new[2]

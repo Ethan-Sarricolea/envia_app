@@ -1,5 +1,10 @@
 # EnviApp Beta
 
+# Correcciones:
+
+- Validacion para la cancelacion de edicion de producto
+- editar sin contraseña el precio solo 2 ocaciones
+
 ## Actualizacion
                     
 - Se corrigen las cotizaciones erroneas y al finalizar se muestran solo las de venta```
