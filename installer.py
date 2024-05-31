@@ -1,4 +1,4 @@
-import subprocess,sys,os,time
+import subprocess,sys,os,time,webbrowser
 
 adminStatus = False
 
@@ -173,8 +173,14 @@ def window():
         root.update()  # Forzar actualización de la ventana
         root.after(500, lambda: download_packages())
 
+    def pythonlink():
+        webbrowser.open("https://www.microsoft.com/store/productId/9NRWMJP3717K?ocid=pdpshare")
+
     lab = tk.Label(root,text="Instalador de EnviApp")
     lab.pack()
+    tk.Button(root,text="Descargar python",
+              bg="blue",
+              command=pythonlink).pack()
     leave = tk.Button(root,text="Salir",
            bg="red",
            command=root.destroy)
