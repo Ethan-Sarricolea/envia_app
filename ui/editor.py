@@ -72,6 +72,8 @@ class Corrector:
         self.adition = True
         try:
             float(self.price.get())
+            if (self.timesEntry.get()=="Tiempo de envio" or self.companyEntry.get()=="Compañia"):
+                raise ValueError
             self.lista = [self.companyEntry.get(),
                     self.__type,
                     self.timesEntry.get(),
@@ -87,7 +89,8 @@ class Corrector:
             if status:
                 self.win.destroy()
         except:
-            messagebox.showerror("Error","asegurate de colocar correctamente el precio.")
+            self.adition = False
+            messagebox.showerror("Error","asegurate de colocar correctamente los datos")
 
     def returnToWindow(self):
         # Retornar status de uso de ventana
