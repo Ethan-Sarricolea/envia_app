@@ -8,7 +8,7 @@ from services import security
 
 class Corrector:
     def __init__(self) -> None:
-        self.companys = ["DHL","FEDEX","UPS","ESTAFETA"] #J&T, redpack ? "PaqueteExpress","REDPACK",
+        self.companys = ["DHL","ESTAFETA","FEDEX","J&T","PAQUETEXPRESS","REDPACK","UPS"], #J&T, redpack ? "PaqueteExpress","REDPACK",
         self.timeType = ["5+ Dia(s) aprox.",
                          "5 Dia(s) aprox.",
                          "4 Dia(s) aprox.",

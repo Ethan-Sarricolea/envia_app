@@ -19,17 +19,13 @@ the main repository. https://github.com/opencv/opencv/issues/16736
 
 # Instalación
 
-1. Se clona el repositorio.
+0. Instalar python desde microsoft: 
 
-    git clone https://github.com/Ethan-Sarricolea/envia_app.git
+    `https://www.microsoft.com/store/productId/9NRWMJP3717K?ocid=pdpshare`
 
-2. Se desplaza a la carpeta clonada 
+1. Ejecutar el instalador:
 
-    `cd envia_app`
-
-3. Se crea el ejecutable de la app.
-
-    pyinstaller --onefile --windowed --icon=src\images\icono.ico EnviApp.py
+    `installer.py`
 
 # Dependencias:
 
@@ -48,3 +44,5 @@ the main repository. https://github.com/opencv/opencv/issues/16736
 * tkinter
 * bcrypt
 * subprocess
+
+###### Palabra clave: ENVIAPP_ENV_VA

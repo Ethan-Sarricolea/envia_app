@@ -251,7 +251,10 @@ class App:
         for cotiz in lista:
             # print(cotiz)
             porcent = self.utilidades.getPorcent(company=cotiz[0],tiempo=cotiz[2],peso=int(peso))
-            self.listaCotizador.finalPrices(porcent=porcent,old=cotiz)
+            try:
+                self.listaCotizador.finalPrices(porcent=porcent,old=cotiz)
+            except TypeError:
+                messagebox.showerror("Error de calculo","No se ha podido cotizar el precio,\n verifica que los datos hayan sido colocados correctamente") #Llamen a dios
         newdata = self.listaCotizador.mostrador()
         self.list_menu(newdata)
         # boton de vender
@@ -416,7 +419,7 @@ class App:
             time.sleep(0.1)
             self.tablaCot.limpiar_tabla()
             self.listaCotizador = cotizaciones.ListaCotizaciones()
-            data = self.camara.manuable_scan(self.listaCotizador)
+            data = self.camara.manuable_scan(self.listaCotizador)# Remplazable con Nota de readme
             time.sleep(0.1)
             self.win.deiconify()
             # self.listaCotizador.show()
