@@ -208,6 +208,7 @@ class App:
         self.agregarCot = Button(self.win,text="Añadir cotizacion",width=self.buttonsize,bg="yellow",command=self.productAddition)
   
         # Zona de correccion
+        self.__editAttempts = 3
         self.editButton = Button(self.win,text="Editar",width=self.buttonsize,bg="orange",command=self.productEdition)
         self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=self.cotizProducts)    # Continuar a cotizaciones
 
@@ -325,12 +326,13 @@ class App:
         # Guardar los datos originales del producto para editar la lista de cots
         data = self.tablaCot.obtener_fila_seleccionada()
         if data:
-            self.edicion.run(tipo=data[1],price=data[3])
+            self.edicion.run(tipo=data[1],price=data[3],attempt=self.__editAttempts)
             self.edicion.win.wait_window()
             status = self.edicion.returnToWindow()
             if not status:
                 pass
             else:
+                self.__editAttempts-=1 if self.__editAttempts>0 else False
                 selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
                 self.tablaCot.updateData(selected_item,status)
                 self.listaCotizador.edit(data,status)
