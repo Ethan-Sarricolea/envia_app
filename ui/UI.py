@@ -251,7 +251,10 @@ class App:
         for cotiz in lista:
             # print(cotiz)
             porcent = self.utilidades.getPorcent(company=cotiz[0],tiempo=cotiz[2],peso=int(peso))
-            self.listaCotizador.finalPrices(porcent=porcent,old=cotiz)
+            try:
+                self.listaCotizador.finalPrices(porcent=porcent,old=cotiz)
+            except TypeError:
+                messagebox.showerror("Error de calculo","No se ha podido cotizar el precio,\n verifica que los datos hayan sido colocados correctamente") #Llamen a dios
         newdata = self.listaCotizador.mostrador()
         self.list_menu(newdata)
         # boton de vender
