@@ -307,7 +307,13 @@ class App:
     def hide_all(self):
         # Limpieza de ventana principal
         for widget in self.win.winfo_children():
-            widget.place_forget()
+            if isinstance(widget, Toplevel):
+                try:
+                    widget.closeAll()
+                except:
+                    widget.destroy()
+            else:
+                widget.place_forget()
 
     def main_menu(self):
         # Mostrar el menu princial
@@ -332,13 +338,15 @@ class App:
             if not status:
                 pass
             else:
-                self.__editAttempts-=1 if self.__editAttempts>0 else False
-                selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
-                self.tablaCot.updateData(selected_item,status)
-                self.listaCotizador.edit(data,status)
-                # self.listaCotizador.delete(["J&T","Terrestre","5 Dia(s) aprox.",78.43])
-                # self.listaCotizador.show()
-
+                try:
+                    self.__editAttempts-=1 if self.__editAttempts>0 else False
+                    selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
+                    self.tablaCot.updateData(selected_item,status)
+                    self.listaCotizador.edit(data,status)
+                    # self.listaCotizador.delete(["J&T","Terrestre","5 Dia(s) aprox.",78.43])
+                    # self.listaCotizador.show()
+                except:
+                    messagebox.showerror("Error","El proceso de edicion ha sido interrumpido")
 
     def productAddition(self):
         # Mostrar ventana Toplevel de agregar producto
@@ -414,7 +422,9 @@ class App:
             time.sleep(0.1)
             self.tablaCot.limpiar_tabla()
             self.listaCotizador = cotizaciones.ListaCotizaciones()
-            data = self.camara.manuable_scan(self.listaCotizador)# Remplazable con Nota de readme
+            # data = self.camara.manuable_scan(self.listaCotizador)# Remplazable con Nota de readme
+            self.listaCotizador.addCotizacion("FEDEX","Terrestre","1 Dia(s) aprox.",500)
+            data = self.listaCotizador.generarLista()
             time.sleep(0.1)
             self.win.deiconify()
             # self.listaCotizador.show()
