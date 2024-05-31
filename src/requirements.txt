@@ -1,6 +1,0 @@
-pyautogui
-pywin32
-opencv-python
-opencv-contrib-python
-pytesseract
-bcrypt
