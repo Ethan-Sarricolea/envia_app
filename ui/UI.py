@@ -210,7 +210,7 @@ class App:
         # Zona de correccion
         self.editButton = Button(self.win,text="Editar",width=self.buttonsize,bg="orange",command=self.productEdition)
         self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=self.cotizProducts)    # Continuar a cotizaciones
-        
+
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
         self.combobox = ttk.Combobox(self.win,values=[],
@@ -251,7 +251,10 @@ class App:
         for cotiz in lista:
             # print(cotiz)
             porcent = self.utilidades.getPorcent(company=cotiz[0],tiempo=cotiz[2],peso=int(peso))
-            self.listaCotizador.finalPrices(porcent=porcent,old=cotiz)
+            try:
+                self.listaCotizador.finalPrices(porcent=porcent,old=cotiz)
+            except TypeError:
+                messagebox.showerror("Error de calculo","No se ha podido cotizar el precio,\n verifica que los datos hayan sido colocados correctamente") #Llamen a dios
         newdata = self.listaCotizador.mostrador()
         self.list_menu(newdata)
         # boton de vender
@@ -343,14 +346,7 @@ class App:
         if not status:
             pass
         else:
-            peso = int(self.kilos.get())
-            # print(peso)
             self.listaCotizador.addCotizacion(name=status[0],tipo=status[1],tiempo=status[2],precio=status[3])
-            old = self.listaCotizador.preSearch(price=status[3])
-            # print(old)
-            porcent = self.utilidades.getPorcent(peso=peso, company=status[0],tiempo=status[2])
-            # print(porcent)
-            self.listaCotizador.finalPrices(porcent=porcent,old=old)
             newdate = self.listaCotizador.searchNew(status[3])
             self.tablaCot.addIndivcot(newdate)
             self.adds_count+=1
@@ -416,7 +412,7 @@ class App:
             time.sleep(0.1)
             self.tablaCot.limpiar_tabla()
             self.listaCotizador = cotizaciones.ListaCotizaciones()
-            data = self.camara.manuable_scan(self.listaCotizador)
+            data = self.camara.manuable_scan(self.listaCotizador)# Remplazable con Nota de readme
             time.sleep(0.1)
             self.win.deiconify()
             # self.listaCotizador.show()
