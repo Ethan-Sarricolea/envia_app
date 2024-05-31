@@ -8,7 +8,7 @@ from services import security
 
 class Corrector:
     def __init__(self) -> None:
-        self.companys = ["DHL","ESTAFETA","FEDEX","J&T","PAQUETEXPRESS","REDPACK","UPS"], #J&T, redpack ? "PaqueteExpress","REDPACK",
+        self.companys = ["DHL","ESTAFETA","FEDEX","J&T","PAQUETEXPRESS","REDPACK","UPS"]#J&T, redpack ? "PaqueteExpress","REDPACK",
         self.timeType = ["5+ Dia(s) aprox.",
                          "5 Dia(s) aprox.",
                          "4 Dia(s) aprox.",
@@ -39,29 +39,33 @@ class Corrector:
 
     def closeAll(self):
         self.win.destroy()
-        self.login.destroy()
+        if self.login:
+            self.login.destroy()
 
     def password(self):
-        self.login = Toplevel()
-        self.login.title("")
-        self.login.geometry("250x100")
-        self.login.resizable(0,0)
-        self.locker = security.Password()
+        if self.__attempt<=0:
+            self.login = Toplevel()
+            self.login.title("")
+            self.login.geometry("250x100")
+            self.login.resizable(0,0)
+            self.locker = security.Password()
 
-        #Componentes
-        self.label = Label(self.login,text="Contraseña de administrador")
-        self.entry = Entry(self.login,show="*")
-        # self.visibility = Button(self.login,text="V",command=self.view_status)
-        self.errorlabel = Label(self.login,text="",fg="red")
-        self.ok = Button(self.login,text="Continuar",bg="Green",command=self.passwordVerifi)#
-        self.cancel = Button(self.login,text="Volver",bg="Red",command=self.login.destroy)
+            #Componentes
+            self.label = Label(self.login,text="Contraseña de administrador")
+            self.entry = Entry(self.login,show="*")
+            # self.visibility = Button(self.login,text="V",command=self.view_status)
+            self.errorlabel = Label(self.login,text="",fg="red")
+            self.ok = Button(self.login,text="Continuar",bg="Green",command=self.passwordVerifi)#
+            self.cancel = Button(self.login,text="Volver",bg="Red",command=self.login.destroy)
 
-        self.label.pack()
-        self.errorlabel.pack()
-        self.entry.pack()
-        # self.visibility.pack(side="right",anchor="n",padx=5,pady=5)
-        self.cancel.pack(side="left")
-        self.ok.pack(side="right",padx=5,pady=5)
+            self.label.pack()
+            self.errorlabel.pack()
+            self.entry.pack()
+            # self.visibility.pack(side="right",anchor="n",padx=5,pady=5)
+            self.cancel.pack(side="left")
+            self.ok.pack(side="right",padx=5,pady=5)
+        else:
+            self.price.config(state="normal")
 
     def continuar(self):
         # Confirmar datos de cotizacion individual añadida
@@ -92,7 +96,10 @@ class Corrector:
         else:
             return False
 
-    def run(self,price,tipo):
+    def run(self,price,tipo,attempt):
+        self.login = None
+        self.__attempt = attempt
+        self.adition = False
         self.win = Toplevel()
         self.win.title("Editar cotizacion")
         self.win.resizable(0,0)
@@ -131,6 +138,7 @@ class Corrector:
         self.changePrice.pack(pady=10)
         self.cancelButton.pack(side="left",pady=10,padx=20)
         self.continueButton.pack(side="right",pady=10,padx=20)
+        # self.win.mainloop()
         
 """algo = Corrector()
 algo.run()"""

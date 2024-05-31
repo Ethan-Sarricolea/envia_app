@@ -1,10 +1,5 @@
 # EnviApp Beta
 
-# Correcciones:
-
-- Validacion para la cancelacion de edicion de producto
-- editar sin contraseña el precio solo 2 ocaciones
-
 ## Actualizacion
                     
 - Se corrigen las cotizaciones erroneas y al finalizar se muestran solo las de venta```
@@ -45,4 +40,4 @@ the main repository. https://github.com/opencv/opencv/issues/16736
 * bcrypt
 * subprocess
 
-###### Palabra clave: ENVIAPP_ENV_VA
+###### Palabra clave: ENVIAPP_ENV_VAR
