@@ -40,4 +40,4 @@ the main repository. https://github.com/opencv/opencv/issues/16736
 * bcrypt
 * subprocess
 
-###### Palabra clave: ENVIAPP_ENV_VA
+###### Palabra clave: ENVIAPP_ENV_VAR
