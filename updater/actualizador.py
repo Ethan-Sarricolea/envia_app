@@ -60,7 +60,8 @@ class Updater:
             else:
                 self.labl.config(text="El repositorio esta en su ultima version")
                 self.win.update()
-                time.sleep(0.5)
+                time.sleep(3)
+                self.win.destroy()
         except Exception as e:
             self.labl.config(text="Ha ocurrido un error:")
             self.win.update()
