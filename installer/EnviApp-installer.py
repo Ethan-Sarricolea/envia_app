@@ -1,59 +1,11 @@
 import subprocess,sys,os,time,webbrowser,git
 from pathlib import Path
+from tkinter import messagebox
 
 adminStatus = False
 
 librerias = ["winshell","pyautogui","pywin32","opencv-python","opencv-contrib-python","pytesseract","gitpython","bcrypt"]
 
-def actualizacion():
-    ruta_archivo = Path(__file__).resolve()
-    print(ruta_archivo)
-    ruta_archivo = ruta_archivo.parent
-    clear()
-    labl.pack(pady=20)
-    try:
-        # Abre el repositorio
-        repo = git.Repo(ruta_archivo)
-        
-        # Verifica si el repositorio está limpio (sin cambios no cometidos)
-        if repo.is_dirty(untracked_files=True):
-            labl.config(text="El repositorio tiene cambios no cometidos")
-            root.update()
-            time.sleep(0.5)
-            return
-        
-        # Obtén la rama actual
-        rama_actual = repo.active_branch.name
-
-        # Recupera la información más reciente del repositorio remoto
-        labl.config(text="Buscando actualizaciones...")
-        root.update()
-        time.sleep(0.5)
-        origin = repo.remotes.origin
-        origin.fetch()
-
-        # Verifica si hay diferencias entre la rama local y la remota
-        diferencias = repo.git.diff(f'{rama_actual}..origin/{rama_actual}')
-        if diferencias:
-            labl.config(text="Actualizacion detectada.")
-            root.update()
-            time.sleep(0.5)
-            labl.config(text="Actualizando...")
-            root.update()
-            time.sleep(0.5)
-            origin.pull()
-            labl.config(text="El repositorio ha sido actualizado")
-            root.update()
-            time.sleep(0.5)
-        else:
-            labl.config(text="El repositorio esta en su ultima version")
-            root.update()
-            time.sleep(0.5)
-    except Exception as e:
-        labl.config(text="Ha ocurrido un error")
-        root.update()
-        time.sleep(0.5)
-        print(f"Ocurrió un error: {e}")
 
 def crear_acceso_directo(ruta_objetivo):
     import winshell
@@ -154,7 +106,7 @@ def window():
     from tkinter import filedialog
     global root
     root = tk.Tk()
-    root.geometry("250x150")
+    root.geometry("250x100")
     root.title("EnviApp installer")
     root.resizable(0,0)
 
@@ -210,8 +162,7 @@ def window():
     lab.pack()
     tk.Button(root,text="Descargar python",
               bg="blue",
-              command=pythonlink).pack(pady=10)
-    tk.Button(root,text="Buscar actualizaciones",bg="gold",command=actualizacion).pack()
+              command=pythonlink).pack()
     leave = tk.Button(root,text="Salir",
            bg="red",
            command=root.destroy)
