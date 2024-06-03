@@ -5,10 +5,10 @@ Author: Ethan Yahel Sarricolea Cortés
 
 from tkinter import *
 from tkinter import ttk,messagebox
-from PIL import Image, ImageTk
 from services import capturer,cotizaciones,organizier
 from services import tiketCreator,otherproduct,contador
-from ui import user,editor
+from ui import user,editor,actualizador
+from PIL import Image, ImageTk
 import time
 
 # Tabla de venta diaria
@@ -487,4 +487,6 @@ class App:
     def run(self):
         # Inicializar aplicacion
         self.main_menu()
+        actualizaciones = actualizador.Updater()
+        actualizaciones.run()
         self.win.mainloop()
