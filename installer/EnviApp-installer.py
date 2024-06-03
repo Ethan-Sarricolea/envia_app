@@ -1,8 +1,59 @@
-import subprocess,sys,os,time,webbrowser
+import subprocess,sys,os,time,webbrowser,git
+from pathlib import Path
 
 adminStatus = False
 
 librerias = ["winshell","pyautogui","pywin32","opencv-python","opencv-contrib-python","pytesseract","gitpython","bcrypt"]
+
+def actualizacion():
+    ruta_archivo = Path(__file__).resolve()
+    print(ruta_archivo)
+    ruta_archivo = ruta_archivo.parent
+    clear()
+    labl.pack(pady=20)
+    try:
+        # Abre el repositorio
+        repo = git.Repo(ruta_archivo)
+        
+        # Verifica si el repositorio está limpio (sin cambios no cometidos)
+        if repo.is_dirty(untracked_files=True):
+            labl.config(text="El repositorio tiene cambios no cometidos")
+            root.update()
+            time.sleep(0.5)
+            return
+        
+        # Obtén la rama actual
+        rama_actual = repo.active_branch.name
+
+        # Recupera la información más reciente del repositorio remoto
+        labl.config(text="Buscando actualizaciones...")
+        root.update()
+        time.sleep(0.5)
+        origin = repo.remotes.origin
+        origin.fetch()
+
+        # Verifica si hay diferencias entre la rama local y la remota
+        diferencias = repo.git.diff(f'{rama_actual}..origin/{rama_actual}')
+        if diferencias:
+            labl.config(text="Actualizacion detectada.")
+            root.update()
+            time.sleep(0.5)
+            labl.config(text="Actualizando...")
+            root.update()
+            time.sleep(0.5)
+            origin.pull()
+            labl.config(text="El repositorio ha sido actualizado")
+            root.update()
+            time.sleep(0.5)
+        else:
+            labl.config(text="El repositorio esta en su ultima version")
+            root.update()
+            time.sleep(0.5)
+    except Exception as e:
+        labl.config(text="Ha ocurrido un error")
+        root.update()
+        time.sleep(0.5)
+        print(f"Ocurrió un error: {e}")
 
 def crear_acceso_directo(ruta_objetivo):
     import winshell
@@ -77,19 +128,19 @@ def clone_repo():
     if os.path.isdir(clone_dir):
         try:
             clone_dir= (entry.get()+"\\Envia_app")
-            import git
             root.geometry("250x100")
             clear()
             labl.pack()
             labl.config(text='Comenzando importación')
             root.update()
             time.sleep(2)
-            repo = git.Repo.clone_from(repo_url, clone_dir, branch=branch)
+            repos = git.Repo.clone_from(repo_url, clone_dir, branch=branch)
             labl.config(text=f"Repositorio clonado")
             root.update()
             time.sleep(0.5)
         except Exception as e:
             print(f'Error al clonar el repositorio: {e}')
+            repo()
             return
         time.sleep(3)
         admin()
@@ -98,14 +149,14 @@ def clone_repo():
         labl.config(text=f'La ruta de directorio no es valida')
         root.update()
     
-
 def window():
     import tkinter as tk
     from tkinter import filedialog
     global root
     root = tk.Tk()
-    root.geometry("250x100")
+    root.geometry("250x150")
     root.title("EnviApp installer")
+    root.resizable(0,0)
 
     global clear
     def clear():
@@ -123,6 +174,7 @@ def window():
             labl.config(text="Instalacion exitosa")
         else:
             labl.config(text="Instalacion exitosa. No hay contraseña de administrador")
+    
     global repo
     def repo():
         root.geometry("300x200")
@@ -144,8 +196,6 @@ def window():
 
     def run():
         clear()
-        global labl
-        labl = tk.Label(root,text="Comprobando dependencias...")
         labl.pack(pady=20)
         root.update()  # Forzar actualización de la ventana
         root.after(500, lambda: download_packages())
@@ -153,11 +203,15 @@ def window():
     def pythonlink():
         webbrowser.open("https://www.microsoft.com/store/productId/9NRWMJP3717K?ocid=pdpshare")
 
+    global labl
+    labl = tk.Label(root,text="Comprobando dependencias...")
+
     lab = tk.Label(root,text="Instalador de EnviApp",font=("TkDefaultFont", 14))
     lab.pack()
     tk.Button(root,text="Descargar python",
               bg="blue",
-              command=pythonlink).pack()
+              command=pythonlink).pack(pady=10)
+    tk.Button(root,text="Buscar actualizaciones",bg="gold",command=actualizacion).pack()
     leave = tk.Button(root,text="Salir",
            bg="red",
            command=root.destroy)
@@ -167,5 +221,4 @@ def window():
            command=run)
     cont.pack(side="right",padx=20,ipadx=5)
     root.mainloop()
-
 window()
