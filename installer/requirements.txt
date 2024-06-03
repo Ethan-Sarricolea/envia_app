@@ -1,6 +1,9 @@
+winshell
+win32api
 pyautogui
 pywin32
 opencv-python
 opencv-contrib-python
 pytesseract
+git
 bcrypt

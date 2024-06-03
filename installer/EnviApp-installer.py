@@ -2,6 +2,8 @@ import subprocess,sys,os,time,webbrowser
 
 adminStatus = False
 
+librerias = ["winshell","pyautogui","pywin32","opencv-python","opencv-contrib-python","pytesseract","gitpython","bcrypt"]
+
 def crear_acceso_directo(ruta_objetivo):
     import winshell
     from win32com.client import Dispatch
@@ -49,67 +51,18 @@ def detectPass():
 def download_packages():
     labl.config(text="Comprobando paquetes")
     root.update()
-    with open("","r") as librerias:
-        for lib in librerias:
-            status = True if is_package_installed(lib) else False
-            if status:
-                continue
-            else:
-                install(lib)
-                labl.config(text=f"{lib} installed")
-                root.update()
-                time.sleep(1)
-                # de aqui ya acaba
-    try:
-        import winshell
-    except ImportError:
-        install('winshell')
-    labl.config(text="winshell instalado")
-    root.update()
-    time.sleep(1)
-    try:
-        import pyautogui
-    except ImportError:
-        install('pyautogui')
-    labl.config(text="pyautogui instalado")
-    root.update()
-    time.sleep(1)
-    try:
-        import win32api
-    except ImportError:
-        install('pywin32')
-    labl.config(text="win32 instalado")
-    root.update()
-    time.sleep(1)
-    try:
-        import cv2
-        example = cv2.xfeatures2d.SIFT_create()
-        #raise ImportError('opencv-contrib-python needed for xfeatures2d')
-    except ImportError:
-        install('opencv-python')
-        install('opencv-contrib-python')
-    labl.config(text="opencv y opencv-contrib-python instalados")
-    root.update()
-    time.sleep(1)
-    try:
-        import pytesseract
-    except ImportError:
-        install('pytesseract',)
-    labl.config(text="libreria pytesseract instalada")
-    root.update()
-    time.sleep(1)
-    try:
-        import bcrypt
-    except ImportError:
-        install('bcrypt',)
-    labl.config(text="bcrypt instalado")
-    root.update()
-    time.sleep(1)
-    try:
-        import git
-    except ImportError:
-        install("gitpython",)
-        labl.config(text="gitpython instalado")
+    for lib in librerias:
+        status = True if is_package_installed(lib) else False
+        if status:
+            labl.config(text=f"{lib} installed")
+            root.update()
+            time.sleep(0.5)
+            continue
+        else:
+            install(lib)
+            labl.config(text=f"{lib} installing")
+            root.update()
+            time.sleep(1)
     root.update()
     time.sleep(0.5)
     labl.config(text="All required packages are installed.")
@@ -200,7 +153,7 @@ def window():
     def pythonlink():
         webbrowser.open("https://www.microsoft.com/store/productId/9NRWMJP3717K?ocid=pdpshare")
 
-    lab = tk.Label(root,text="Instalador de EnviApp")
+    lab = tk.Label(root,text="Instalador de EnviApp",font=("TkDefaultFont", 14))
     lab.pack()
     tk.Button(root,text="Descargar python",
               bg="blue",
