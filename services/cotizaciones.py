@@ -39,10 +39,17 @@ class ListaCotizaciones:
             array = []
             actualCot = self.head
             while(actualCot!=None):
-                array.append((actualCot.nombre,
-                              actualCot.type,
-                              actualCot.tiempo,
-                              actualCot.precio))
+                try:
+                    float(actualCot.precio)
+                    array.append((actualCot.nombre,
+                                actualCot.type,
+                                actualCot.tiempo,
+                                actualCot.precio))
+                except:
+                    self.delete((actualCot.nombre,
+                                actualCot.type,
+                                actualCot.tiempo,
+                                actualCot.precio))
                 actualCot = actualCot.siguiente
             return array
         else:
@@ -164,8 +171,9 @@ class ListaCotizaciones:
     def delete(self,cot):
         actualCot = self.head
         if actualCot:
+            # Si es la cabeza
             if (actualCot.nombre==cot[0] and actualCot.type==cot[1] and
-                actualCot.tiempo==cot[2] and actualCot.precio==float(cot[3])):
+                actualCot.tiempo==cot[2] and actualCot.precio==(cot[3] if cot[3]=="" or cot[3]==" " else float(cot[3]))):
                 self.head = actualCot.siguiente
                 actualCot = None
                 return
