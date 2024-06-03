@@ -12,7 +12,7 @@ class Updater:
         self.labl = tk.Label(self.win,text="Preparando actualizaciones")
         self.labl.pack(pady=20)
         self.win.after(3000,self.run_detection)
-        self.win.mainloop()
+        # self.win.mainloop()
 
     def run_detection(self):
         hilo = threading.Thread(target=self.actualizacion)
@@ -63,7 +63,8 @@ class Updater:
                 time.sleep(3)
                 self.win.destroy()
         except Exception as e:
-            self.labl.config(text="Ha ocurrido un error:")
+            self.labl.config(text="Ha ocurrido un error")
+            messagebox.showerror("Error:",e)
             self.win.update()
             time.sleep(0.5)
             messagebox.showerror("Error:",e)
