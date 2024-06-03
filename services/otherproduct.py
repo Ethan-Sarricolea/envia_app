@@ -49,7 +49,7 @@ class Adder:
         self.row = Frame(self.win)
         self.addLabel = Label(self.win,text="Añadir un producto")
         self.nametext = StringVar(self.win,value="Compañia")
-        self.__name = ttk.Combobox(self.row,values=["DHL","ESTAFETA","FEDEX","J&T","PAQUETEXPRESS","REDPACK","UPS"],
+        self.__name = ttk.Combobox(self.row,values=["DHL","ESTAFETA","FEDEX","J&T","PQUETEXPRESS","REDPACK","UPS"],
                                    textvariable=self.nametext,state="readonly")
         self.__type = Entry(self.row)
         self.timetext = StringVar(self.row, value="Tiempo de envio")

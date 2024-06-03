@@ -211,7 +211,7 @@ class App:
         self.__editAttempts = 3
         self.editButton = Button(self.win,text="Editar",width=self.buttonsize,bg="orange",command=self.productEdition)
         self.continuarButton = Button(self.win,text="Continua",width=self.buttonsize,bg="green",command=self.cotizProducts)    # Continuar a cotizaciones
-
+        
         # Combobox
         self.combobox_variable = StringVar(value="seleccionar cotización")
         self.combobox = ttk.Combobox(self.win,values=[],
@@ -250,7 +250,7 @@ class App:
         self.listaCotizador.delete_process()
         lista = self.listaCotizador.generarLista()
         for cotiz in lista:
-            # print(cotiz)
+            print(cotiz)
             porcent = self.utilidades.getPorcent(company=cotiz[0],tiempo=cotiz[2],peso=int(peso))
             try:
                 self.listaCotizador.finalPrices(porcent=porcent,old=cotiz)
@@ -338,15 +338,13 @@ class App:
             if not status:
                 pass
             else:
-                try:
-                    self.__editAttempts-=1 if self.__editAttempts>0 else False
-                    selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
-                    self.tablaCot.updateData(selected_item,status)
-                    self.listaCotizador.edit(data,status)
-                    # self.listaCotizador.delete(["J&T","Terrestre","5 Dia(s) aprox.",78.43])
-                    # self.listaCotizador.show()
-                except:
-                    messagebox.showerror("Error","El proceso de edicion ha sido interrumpido")
+                self.__editAttempts-=1 if self.__editAttempts>0 else False
+                selected_item = self.tablaCot.tabla.selection()[0]  # Obtener el ID de la fila seleccionada
+                self.tablaCot.updateData(selected_item,status)
+                self.listaCotizador.edit(data,status)
+                # self.listaCotizador.delete(["J&T","Terrestre","5 Dia(s) aprox.",78.43])
+                # self.listaCotizador.show()
+
 
     def productAddition(self):
         # Mostrar ventana Toplevel de agregar producto
@@ -356,7 +354,14 @@ class App:
         if not status:
             pass
         else:
+            peso = int(self.kilos.get())
+            # print(peso)
             self.listaCotizador.addCotizacion(name=status[0],tipo=status[1],tiempo=status[2],precio=status[3])
+            old = self.listaCotizador.preSearch(price=status[3])
+            # print(old)
+            porcent = self.utilidades.getPorcent(peso=peso, company=status[0],tiempo=status[2])
+            # print(porcent)
+            self.listaCotizador.finalPrices(porcent=porcent,old=old)
             newdate = self.listaCotizador.searchNew(status[3])
             self.tablaCot.addIndivcot(newdate)
             self.adds_count+=1
@@ -422,8 +427,10 @@ class App:
             time.sleep(0.1)
             self.tablaCot.limpiar_tabla()
             self.listaCotizador = cotizaciones.ListaCotizaciones()
-            # data = self.camara.manuable_scan(self.listaCotizador)# Remplazable con Nota de readme
-            self.listaCotizador.addCotizacion("FEDEX","Terrestre","1 Dia(s) aprox.",500)
+            # data = self.camara.manuable_scan(self.listaCotizador)
+            self.listaCotizador.addCotizacion("DHL","time","1 dia","")
+            self.listaCotizador.addCotizacion("ESTAFETA","otra cosa","4 dia",50)
+            self.listaCotizador.addCotizacion("J&T","terrestre","5+ dia",20)
             data = self.listaCotizador.generarLista()
             time.sleep(0.1)
             self.win.deiconify()
