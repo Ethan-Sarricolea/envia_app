@@ -1,5 +1,10 @@
 # EnviApp Beta instalador
 
+## Correcciones
+
+Encontrar una forma diferente de comprobar las importaciones (usando subprocess)
+Disminuir el tamaño del ejecutable
+
 ## Consideraciones:
 
 Es necesario instalar python 3.11. en el instalador esta la opcion directa

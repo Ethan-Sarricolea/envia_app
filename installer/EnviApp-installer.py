@@ -22,6 +22,19 @@ def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
     time.sleep(0.5)
 
+def is_package_installed(package_name):
+    try:
+        result = subprocess.run(
+            [sys.executable, '-m', 'pip', 'show', package_name],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        return result.returncode == 0
+    except Exception as e:
+        print(f"Error al verificar el paquete: {e}")
+        return False
+
 def detectPass():
     if os.getenv("ENVIAPP_ENV_VAR"):
         labl.config(text="Contraseña de administrador encontrada")
@@ -36,6 +49,17 @@ def detectPass():
 def download_packages():
     labl.config(text="Comprobando paquetes")
     root.update()
+    with open("","r") as librerias:
+        for lib in librerias:
+            status = True if is_package_installed(lib) else False
+            if status:
+                continue
+            else:
+                install(lib)
+                labl.config(text=f"{lib} installed")
+                root.update()
+                time.sleep(1)
+                # de aqui ya acaba
     try:
         import winshell
     except ImportError:
