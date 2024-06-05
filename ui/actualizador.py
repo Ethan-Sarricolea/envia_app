@@ -1,3 +1,7 @@
+"""
+Version no funcional para actualizar repositorio
+"""
+
 from tkinter import messagebox
 from pathlib import Path
 import git,time,threading
@@ -29,6 +33,7 @@ class Updater:
             
             # Verifica si el repositorio está limpio (sin cambios no cometidos)
             if repo.is_dirty(untracked_files=True):
+                 # Cada que se añada un registro habra cambios (tomar en cuenta)
                 self.labl.config(text="El repositorio tiene cambios no cometidos")
                 self.win.update()
                 time.sleep(0.5)
